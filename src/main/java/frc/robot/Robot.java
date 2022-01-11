@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.SwerveDrive;
 import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
 
@@ -44,7 +45,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    
+    if(RobotContainer.controller.getLeftTriggerAxis() >= Constants.CONTROLLER.XBOX.THRESHOLD){
+      CommandScheduler.getInstance().schedule(new ShooterCommand(false));
+    }
+
+    if(RobotContainer.controller.getRightTriggerAxis() >= Constants.CONTROLLER.XBOX.THRESHOLD){
+      CommandScheduler.getInstance().schedule(new ShooterCommand(true));
+    }
   }
 
   @Override

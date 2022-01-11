@@ -52,6 +52,22 @@ public interface Constants {
         int FRONT_RIGHT_ROTATION = 5;
         int BACK_LEFT_ROTATION = 6;
         int BACK_RIGHT_ROTATION = 7;
+
+        int INTAKE_LEFT = 8;
+        int INTAKE_RIGHT = 9;
+
+        int TURRET = 10;
+
+        int SHOOTER_LEFT = 11;
+        int SHOOTER_RIGHT = 12;
+
+        int INDEXER_LEFT = 13;
+        int INDEXER_RIGHT = 14;
+
+        int CLIMBER_LEFT = 15;
+        int CLIMBER_RIGHT = 16;
+        
+        int HOOD = 17;
     }
 
     /**
@@ -61,13 +77,15 @@ public interface Constants {
         float EXTERNAL_ENCODER_RESOLUTION = 4096.0f;
         float INTERNAL_ENCODER_RESOLUTION = 2048.0f; 
         Encoder FRONT_LEFT_ENCODER = new Encoder(0, EXTERNAL_ENCODER_RESOLUTION);
-        Encoder FRONT_RIGHT_ENCODER = new Encoder(0, EXTERNAL_ENCODER_RESOLUTION);
-        Encoder BACK_LEFT_ENCODER = new Encoder(0, EXTERNAL_ENCODER_RESOLUTION);
-        Encoder BACK_RIGHT_ENCODER = new Encoder(0, EXTERNAL_ENCODER_RESOLUTION);
+        Encoder FRONT_RIGHT_ENCODER = new Encoder(1, EXTERNAL_ENCODER_RESOLUTION);
+        Encoder BACK_LEFT_ENCODER = new Encoder(2, EXTERNAL_ENCODER_RESOLUTION);
+        Encoder BACK_RIGHT_ENCODER = new Encoder(3, EXTERNAL_ENCODER_RESOLUTION);
         int FRONT_LEFT_LIMIT = 0;
         int FRONT_RIGHT_LIMIT = 0;
         int BACK_LEFT_LIMIT = 0;
         int BACK_RIGHT_LIMIT = 0;
+        Encoder SHOOTER_ENCODER = new Encoder(4, EXTERNAL_ENCODER_RESOLUTION);
+        Encoder HOOD_ENCODER = new Encoder(5, EXTERNAL_ENCODER_RESOLUTION);
         SerialPort.Port GYRO_PORT = SerialPort.Port.kUSB;
     }
 
@@ -128,7 +146,9 @@ public interface Constants {
      * use Units class where can
      */
     interface ROBOT {
-        Units WHEEL_RADIUS = new Units(2, units.INCHES);      
+        Units WHEEL_RADIUS = new Units(2, units.INCHES);   
+        double INTAKE_SPEED = 0.5d;   
+        double SHOOTER_SPEED = 0.5d;   
     }
 
 } 

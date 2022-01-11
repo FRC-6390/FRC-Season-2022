@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.SwerveDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -34,6 +35,8 @@ public class RobotContainer {
   }
  
   private void configureButtonBindings() {
+    leftBumber.whenHeld(new IntakeCommand(false));
+    rightBumber.whenHeld(new IntakeCommand(true));
     
   }
 

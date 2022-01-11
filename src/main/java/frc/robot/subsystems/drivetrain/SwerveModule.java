@@ -53,7 +53,7 @@ public class SwerveModule {
       rotationMotor.setNeutralMode(NeutralMode.Brake);
       driveMotor.setNeutralMode(NeutralMode.Brake);
     }
-    
+      
     public void setDesiredState(SwerveModuleState desiredState){
       Rotation2d currentRotation = getAngle();
       SwerveModuleState state = SwerveModuleState.optimize(desiredState, currentRotation);
