@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LimeLightCommand;
 import frc.robot.commands.SwerveDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -16,6 +17,8 @@ public class RobotContainer {
   y = new JoystickButton(controller, Constants.CONTROLLER.XBOX.BUTTON.Y),
   leftBumber = new JoystickButton(controller, Constants.CONTROLLER.XBOX.BUTTON.LEFT_BUMPER),
   rightBumber = new JoystickButton(controller, Constants.CONTROLLER.XBOX.BUTTON.RIGHT_BUMPER),
+  leftTrigger = new JoystickButton(controller, Constants.CONTROLLER.XBOX.BUTTON.LEFT_TRIGGER),
+  rightTrigger = new JoystickButton(controller, Constants.CONTROLLER.XBOX.BUTTON.RIGHT_TRIGGER),
   back = new JoystickButton(controller, Constants.CONTROLLER.XBOX.BUTTON.BACK),
   start = new JoystickButton(controller, Constants.CONTROLLER.XBOX.BUTTON.START),
   leftStick = new JoystickButton(controller, Constants.CONTROLLER.XBOX.BUTTON.LEFT_JOYSTICK),
@@ -37,7 +40,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     leftBumber.whenHeld(new IntakeCommand(false));
     rightBumber.whenHeld(new IntakeCommand(true));
-    
+    rightTrigger.whileHeld(new LimeLightCommand(true));
+    rightTrigger.whenReleased(new LimeLightCommand(false));
   }
 
 }
