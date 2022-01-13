@@ -10,6 +10,9 @@ import frc.robot.commands.SwerveDrive;
 import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
 
 public class Robot extends TimedRobot {
+
+  private Command autonomousCommand;
+
   @Override
   public void robotInit() {
   }
@@ -32,7 +35,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    
+    autonomousCommand = RobotContainer.getAutonomousCommand();
+
+    // schedule the autonomous command
+    if(autonomousCommand != null) {
+      autonomousCommand.schedule();
+    }
   }
 
   @Override
