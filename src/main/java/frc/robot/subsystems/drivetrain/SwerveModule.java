@@ -43,7 +43,7 @@ public class SwerveModule {
       }};
 
       moduleEncoderConfiguration = new CANCoderConfiguration(){{
-        magnetOffsetDegrees = new Rotation2d(offset).getDegrees();
+        magnetOffsetDegrees = Rotation2d.fromDegrees(offset).getDegrees();
       }};
 
       rotationMotor.configAllSettings(rotationConfiguration);

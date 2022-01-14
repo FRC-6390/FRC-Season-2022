@@ -42,6 +42,11 @@ public class SwerveDriveTrain extends SubsystemBase {
     backLeftRotationMotor = new TalonFX(Constants.MOTOR.BACK_LEFT_ROTATION);
     backRightRotationMotor = new TalonFX(Constants.MOTOR.BACK_RIGHT_ROTATION);
 
+    frontLeftModuleEncoder = new CANCoder(Constants.SENSOR.FRONT_LEFT_ENCODER.getEncoderId());
+    frontRightModuleEncoder = new CANCoder(Constants.SENSOR.FRONT_RIGHT_ENCODER.getEncoderId());
+    backLeftModuleEncoder = new CANCoder(Constants.SENSOR.BACK_LEFT_ENCODER.getEncoderId());
+    backRightModuleEncoder = new CANCoder(Constants.SENSOR.BACK_RIGHT_ENCODER.getEncoderId());
+
     frontLeftSwerveLocation = new Translation2d(Constants.SWERVE.LOCATION_FROM_CENTER.get(units.METERS), Constants.SWERVE.LOCATION_FROM_CENTER.get(units.METERS));
     frontRightSwerveLocation = new Translation2d(Constants.SWERVE.LOCATION_FROM_CENTER.get(units.METERS), -Constants.SWERVE.LOCATION_FROM_CENTER.get(units.METERS));
     backLeftSwerveLocation = new Translation2d(-Constants.SWERVE.LOCATION_FROM_CENTER.get(units.METERS), Constants.SWERVE.LOCATION_FROM_CENTER.get(units.METERS));
@@ -57,7 +62,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     robotPosition = new Pose2d(0,0,new Rotation2d());
     swerveDriveOdometry = new SwerveDriveOdometry(swerveDriveKinematics, gyro.getRotation2d(), robotPosition);
 
-    powerDistributionPanel = new PowerDistribution(0, ModuleType.kRev);
+    powerDistributionPanel = new PowerDistribution(0, ModuleType.kCTRE);
 
     driveMotorArray = new TalonFX[] {frontLeftDriveMotor,frontRightDriveMotor,backLeftDriveMotor,backRightDriveMotor};
     rotationMotorArray = new TalonFX[] {frontLeftRotationMotor,frontRightRotationMotor,backLeftRotationMotor,backRightRotationMotor};
@@ -66,6 +71,9 @@ public class SwerveDriveTrain extends SubsystemBase {
   }
 
   public SwerveDriveTrain() {
+    
+  }
+  public static void resetAll() {
     resetRobotPosition(true);
     resetGyro();
     resetModuleEncoders();
@@ -108,6 +116,7 @@ public class SwerveDriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-
+    
+      System.out.println("Gyro: " + gyro.getRotation2d().getDegrees());
   }
 }

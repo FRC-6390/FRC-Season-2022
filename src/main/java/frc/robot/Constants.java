@@ -23,18 +23,18 @@ public interface Constants {
         Module BACK_RIGHT = new Module(SENSOR.FRONT_LEFT_ENCODER, MOTOR.FRONT_LEFT_DRIVE, MOTOR.FRONT_LEFT_ROTATION);
 
         Units MAX_SPEED = new Units(0.3, units.METERS);
-        double PRECENT_MAX_SPEED = 0.5;
+        double PRECENT_MAX_SPEED = 0.1;
         
         double FRONT_LEFT_OFFSET = 230.0;
         double FRONT_RIGHT_OFFSET = 164.0;
         double BACK_LEFT_OFFSET = 103.0;
         double BACK_RIGHT_OFFSET = 193.0;
 
-        double DRIVE_GEAR_RATIO = 6.12;
-        double ROTATION_GEAR_RATIO = 12.8;
+        double DRIVE_GEAR_RATIO = 8.16;     //6.12
+        double ROTATION_GEAR_RATIO = 12.8; 
 
         PID DRIVE_PID = new PID(0, 0, 0, 0);
-        PID ROTATION_PID = new PID(0, 0, 0, 0);
+        PID ROTATION_PID = new PID(1, 0, 0, 0);
 
         Units LOCATION_FROM_CENTER = new Units(0.3302, units.METERS);
     }

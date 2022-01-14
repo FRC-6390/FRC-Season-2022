@@ -28,7 +28,9 @@ public class SwerveDrive extends CommandBase {
 
     double rightXAxis = angularLimiter.calculate(inDeadZone(controller.getRightX()) ? 0 : controller.getRightX() * Constants.SWERVE.PRECENT_MAX_SPEED);
 
-    System.out.println(leftXAxis);
+    
+    // System.out.println("Raw - "+controller.getLeftX()+ " " +  controller.getLeftY() +  " " + controller.getRightX()); 
+    // System.out.println("Slew - "+leftXAxis + " " +  leftYAxis +  " " + rightXAxis);
     SwerveDriveTrain.drive(leftXAxis, leftYAxis, rightXAxis, true);
   }
 
@@ -41,6 +43,6 @@ public class SwerveDrive extends CommandBase {
   }
 
   private boolean inDeadZone(double value){
-    return (value >= Constants.CONTROLLER.XBOX.DEAD_ZONE_MAX || value <= Constants.CONTROLLER.XBOX.DEAD_ZONE_MIN);
+    return !(value >= Constants.CONTROLLER.XBOX.DEAD_ZONE_MAX || value <= Constants.CONTROLLER.XBOX.DEAD_ZONE_MIN);
   }
 }
