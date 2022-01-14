@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.drivetrain.DesiredPosition.DesiredSpeeds;
 import frc.robot.utils.Units.units;
 
 public class SwerveDriveTrain extends SubsystemBase {
@@ -77,11 +78,19 @@ public class SwerveDriveTrain extends SubsystemBase {
     resetRobotPosition(true);
     resetGyro();
     resetModuleEncoders();
-    setMotorNeutralMode(NeutralMode.Brake);
+    setMotorMode(NeutralMode.Brake);
   }
 
   public static void drive(double xSpeed, double ySpeed, double angularSpeed, boolean fieldOrientated){
     SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(fieldOrientated ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, angularSpeed, gyro.getRotation2d()) : new ChassisSpeeds(xSpeed,ySpeed,angularSpeed));
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SWERVE.MAX_SPEED.get(units.METERS));
+    for (int i = 0; i < swerveModuleStates.length; i++) swerveModuleArray[i].setDesiredState(swerveModuleStates[i]);
+  }
+
+  public static void driveToDesiredPositon(DesiredPosition desiredPosition){
+    DesiredSpeeds speeds = desiredPosition.getDesiredSpeeds(robotPosition);
+    SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(speeds.x,speeds.y,speeds.theta,gyro.getRotation2d()));
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SWERVE.MAX_SPEED.get(units.METERS));
     for (int i = 0; i < swerveModuleStates.length; i++) swerveModuleArray[i].setDesiredState(swerveModuleStates[i]);
   }
 
@@ -98,7 +107,7 @@ public class SwerveDriveTrain extends SubsystemBase {
   }
 
   private static NeutralMode mode = NeutralMode.Brake;
-  public static void switchMotorNeutralMode(){
+  public static void switchMotorMode(){
     mode = mode.equals(NeutralMode.Brake) ? NeutralMode.Coast : NeutralMode.Brake;
     for (int i = 0; i < driveMotorArray.length; i++) {
       driveMotorArray[i].setNeutralMode(mode);
@@ -106,7 +115,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     }
   }
 
-  public static void setMotorNeutralMode(NeutralMode newMode){
+  public static void setMotorMode(NeutralMode newMode){
     mode = newMode;
     for (int i = 0; i < driveMotorArray.length; i++) {
       driveMotorArray[i].setNeutralMode(mode);
