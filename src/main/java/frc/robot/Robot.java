@@ -2,20 +2,15 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.SwerveDrive;
 import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
+import frc.robot.RobotContainer;
 
 public class Robot extends TimedRobot {
-
-  private Command autonomousCommand;
-  Debouncer debouncerStart = new Debouncer(0.1, DebounceType.kFalling);
-  Debouncer debouncerBack = new Debouncer(0.1, DebounceType.kFalling);
 
   @Override
   public void robotInit() {
@@ -25,11 +20,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    if(debouncerBack.calculate(RobotContainer.controller.getBackButton())) {
+    if(RobotContainer.back.get()) {
       System.out.println("backButton");
-      SwerveDriveTrain.switchMotorNeutralMode();
+      SwerveDriveTrain.switchMotorMode();
     }
-    if(debouncerStart.calculate(RobotContainer.controller.getStartButton())) {
+    if(RobotContainer.start.get()) {
       System.out.println("startButton");
       SwerveDriveTrain.resetAll();
     }
@@ -37,22 +32,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    SwerveDriveTrain.setMotorNeutralMode(NeutralMode.Brake);
+    SwerveDriveTrain.setMotorMode(NeutralMode.Brake);
   }
 
   @Override
   public void disabledPeriodic() {
-    if(RobotContainer.controller.getBackButton()) SwerveDriveTrain.switchMotorNeutralMode();
+    //if(RobotContainer.back.get()) SwerveDriveTrain.switchMotorNeutralMode();
   }
 
   @Override
   public void autonomousInit() {
-    autonomousCommand = RobotContainer.getAutonomousCommand();
 
-    // schedule the autonomous command
-    if(autonomousCommand != null) {
-      autonomousCommand.schedule();
-    }
   }
 
   @Override

@@ -95,9 +95,10 @@ public interface Constants {
     interface CONTROLLER {
         interface XBOX {
             int PORT = 0;
-            double THRESHOLD = 0.5;
-            double DEAD_ZONE_MAX = 0.15;
-            double DEAD_ZONE_MIN = -0.15;
+            double THRESHOLD = 0.5d;
+            float DEBOUNCE_PERIOD = 0.5f;
+            double DEAD_ZONE_MAX = 0.15d;
+            double DEAD_ZONE_MIN = -0.15d;
             interface BUTTON {
                 int A = 1;
                 int B = 2;
