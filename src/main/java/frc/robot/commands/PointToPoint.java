@@ -41,7 +41,7 @@ public class PointToPoint extends CommandBase {
     //iterate over json here 
     desiredList = new ArrayList<>();
     for(int z = 0; z < jsonManager.posList.size(); z++){
-      //desiredList.add(DesiredPosition.fromCords(jsonManager.xList.get(z), jsonManager.yList.get(z), jsonManager.thetaList.get(z)));
+      desiredList.add(DesiredPosition.fromCords(jsonManager.xList.get(z), jsonManager.yList.get(z), jsonManager.thetaList.get(z)));
     }
     System.out.println(desiredList);
 
@@ -52,14 +52,14 @@ public class PointToPoint extends CommandBase {
 
   @Override
   public void execute() {
-    // SwerveDriveTrain.driveToPosition(desiredPosition);
-    // if(desiredPosition.atDesiredPosition()){
-    //   if(desiredIterator.hasNext())
-    //     desiredPosition = desiredIterator.next();
-    //   else
-    //     done = true;
+    SwerveDriveTrain.driveToDesiredPosition(desiredPosition);
+    if(desiredPosition.atDesiredPosition()){
+      if(desiredIterator.hasNext())
+        desiredPosition = desiredIterator.next();
+      else
+        done = true;
       
-    // } 
+    } 
   }
 
   @Override

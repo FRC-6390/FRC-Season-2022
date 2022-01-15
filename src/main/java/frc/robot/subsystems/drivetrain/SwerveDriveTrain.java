@@ -87,7 +87,7 @@ public class SwerveDriveTrain extends SubsystemBase {
     for (int i = 0; i < swerveModuleStates.length; i++) swerveModuleArray[i].setDesiredState(swerveModuleStates[i]);
   }
 
-  public static void driveToDesiredPositon(DesiredPosition desiredPosition){
+  public static void driveToDesiredPosition(DesiredPosition desiredPosition){
     DesiredSpeeds speeds = desiredPosition.getDesiredSpeeds(robotPosition);
     SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(speeds.x,speeds.y,speeds.theta,gyro.getRotation2d()));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SWERVE.MAX_SPEED.get(units.METERS));
@@ -125,7 +125,6 @@ public class SwerveDriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
       System.out.println("Gyro: " + gyro.getRotation2d().getDegrees());
   }
 }
