@@ -16,8 +16,7 @@ public class DebouncedButton extends JoystickButton{
         debouncer = new Debouncer(this, debouncePeriod);
     }
 
-    @Override
-    public boolean get() {
+    public boolean debounced() {
         return debouncer.get();
     }
     

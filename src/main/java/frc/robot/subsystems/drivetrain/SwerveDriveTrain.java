@@ -14,6 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.DesiredPosition.DesiredSpeeds;
@@ -74,6 +75,7 @@ public class SwerveDriveTrain extends SubsystemBase {
   public SwerveDriveTrain() {
     
   }
+  
   public static void resetAll() {
     resetRobotPosition(true);
     resetGyro();
@@ -81,8 +83,8 @@ public class SwerveDriveTrain extends SubsystemBase {
     setMotorMode(NeutralMode.Brake);
   }
 
-  public static void drive(double xSpeed, double ySpeed, double angularSpeed, boolean fieldOrientated){
-    SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(fieldOrientated ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, angularSpeed, gyro.getRotation2d()) : new ChassisSpeeds(xSpeed,ySpeed,angularSpeed));
+  public static void drive(double xSpeed, double ySpeed, double rotationSpeed, boolean fieldOrientated){
+    SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(fieldOrientated ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationSpeed, gyro.getRotation2d()) : new ChassisSpeeds(xSpeed, ySpeed, rotationSpeed));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SWERVE.MAX_SPEED.get(units.METERS));
     for (int i = 0; i < swerveModuleStates.length; i++) swerveModuleArray[i].setDesiredState(swerveModuleStates[i]);
   }
@@ -126,5 +128,6 @@ public class SwerveDriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
       System.out.println("Gyro: " + gyro.getRotation2d().getDegrees());
+      SmartDashboard.putNumber("Robot Position (Angle)", swerveDriveOdometry.getPoseMeters().getRotation().getDegrees());
   }
 }

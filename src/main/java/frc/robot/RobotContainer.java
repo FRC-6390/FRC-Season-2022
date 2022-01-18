@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LimeLightCommand;
 import frc.robot.utils.DebouncedButton;
 import frc.robot.Constants.CONTROLLER.XBOX;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -15,8 +16,6 @@ public class RobotContainer {
   y = new JoystickButton(controller, XBOX.BUTTON.Y),
   leftBumber = new JoystickButton(controller, XBOX.BUTTON.LEFT_BUMPER),
   rightBumber = new JoystickButton(controller, XBOX.BUTTON.RIGHT_BUMPER),
-  back = new DebouncedButton(controller, XBOX.BUTTON.BACK, XBOX.DEBOUNCE_PERIOD),
-  start = new DebouncedButton(controller, XBOX.BUTTON.START, XBOX.DEBOUNCE_PERIOD),
   leftStick = new JoystickButton(controller, XBOX.BUTTON.LEFT_JOYSTICK),
   rightStick = new JoystickButton(controller, XBOX.BUTTON.RIGHT_JOYSTICK),
   // POV
@@ -29,13 +28,20 @@ public class RobotContainer {
   right = new JoystickButton(controller, XBOX.POV.BOTTOM_RIGHT),
   left = new JoystickButton(controller, XBOX.POV.LEFT);
 
+  public static DebouncedButton back = new DebouncedButton(controller, XBOX.BUTTON.BACK, XBOX.DEBOUNCE_PERIOD),
+  start = new DebouncedButton(controller, XBOX.BUTTON.START, XBOX.DEBOUNCE_PERIOD);
+
   public RobotContainer() {
     configureButtonBindings();
   }
  
   private void configureButtonBindings() {
     leftBumber.whenHeld(new IntakeCommand(false));
+    // start.debounced();
     rightBumber.whenHeld(new IntakeCommand(true));
+
+    a.whenHeld(new LimeLightCommand(true));
+    a.whenReleased(new LimeLightCommand(false));
   }
 
 }
