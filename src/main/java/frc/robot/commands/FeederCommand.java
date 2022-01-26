@@ -1,10 +1,8 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
-import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.subsystems.FeederSubsystem;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class FeederCommand extends CommandBase {
@@ -16,11 +14,12 @@ public class FeederCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
   public void execute() {
-    IntakeSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.FEEDER_SPEED : Constants.ROBOT.FEEDER_SPEED);
+    FeederSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.FEEDER_SPEED : Constants.ROBOT.FEEDER_SPEED);
   }
 
   @Override

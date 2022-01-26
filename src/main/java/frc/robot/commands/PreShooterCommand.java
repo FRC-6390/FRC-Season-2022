@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PreShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class IntakeCommand extends CommandBase {
+public class PreShooterCommand extends CommandBase {
 
   private boolean reverse = false;
 
-  public IntakeCommand(boolean reverse) {
+  public PreShooterCommand(boolean reverse) {
     this.reverse = reverse;
   }
 
@@ -17,7 +17,7 @@ public class IntakeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    IntakeSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.INTAKE_SPEED : Constants.ROBOT.INTAKE_SPEED);
+    PreShooterSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.PRE_SHOOTER_SPEED : Constants.ROBOT.PRE_SHOOTER_SPEED);
   }
 
   @Override

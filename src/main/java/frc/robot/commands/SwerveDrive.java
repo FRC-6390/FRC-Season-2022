@@ -28,9 +28,6 @@ public class SwerveDrive extends CommandBase {
 
     double rightXAxis = -angularLimiter.calculate(inDeadZone(controller.getRightX()) ? 0 : controller.getRightX() * Constants.SWERVE.PRECENT_MAX_SPEED);
 
-    
-    // System.out.println("Raw - "+controller.getLeftX()+ " " +  controller.getLeftY() +  " " + controller.getRightX()); 
-    // System.out.println("Slew - "+leftXAxis + " " +  leftYAxis +  " " + rightXAxis);
     SwerveDriveTrain.drive(leftXAxis, leftYAxis, rightXAxis, true);
   }
 

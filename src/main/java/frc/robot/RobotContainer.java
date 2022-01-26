@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.FeederCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LimeLightCommand;
+import frc.robot.commands.PreShooterCommand;
 import frc.robot.utils.DebouncedButton;
 import frc.robot.Constants.CONTROLLER.XBOX;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -37,8 +38,9 @@ public class RobotContainer {
   }
  
   private void configureButtonBindings() {
-    leftBumber.whenHeld(new IntakeCommand(false));
     // start.debounced();
+
+    leftBumber.whenHeld(new IntakeCommand(false));
     rightBumber.whenHeld(new IntakeCommand(true));
 
     x.whenHeld(new FeederCommand(false));

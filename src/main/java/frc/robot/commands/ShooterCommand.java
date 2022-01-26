@@ -20,8 +20,14 @@ public class ShooterCommand extends CommandBase {
   public void initialize() {}
 
   @Override
-  public void execute() {
-    ShooterSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.SHOOTER_SPEED : Constants.ROBOT.SHOOTER_SPEED);
+  public void execute() { 
+    //not sure if there is an encoder
+    if(/*Not Full Speed */){
+      ShooterSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.SHOOTER_SPEED : Constants.ROBOT.SHOOTER_SPEED);
+    }else{
+      ShooterSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.SHOOTER_SPEED : Constants.ROBOT.SHOOTER_SPEED);
+      new PreShooterCommand(reverse);
+    }
   }
 
   @Override
