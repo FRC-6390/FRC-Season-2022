@@ -152,7 +152,8 @@ public interface Constants {
      */
     interface ROBOT {
         Units WHEEL_RADIUS = new Units(2, units.INCHES);   
-        double INTAKE_SPEED = 0.5d;   
+        double INTAKE_SPEED = 0.5d;
+        double FEEDER_SPEED = 0.5d;   
         double SHOOTER_SPEED = 0.5d;   
     }
 
