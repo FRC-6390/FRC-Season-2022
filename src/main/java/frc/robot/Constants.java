@@ -56,7 +56,11 @@ public interface Constants {
         int INTAKE_LEFT = 8;
         int INTAKE_RIGHT = 9;
 
+        int FEEDER = 0/*TBD*/;
+
         int TURRET = 10;
+
+        int PRE_SHOOTER = 0/*TBD*/;
 
         int SHOOTER_LEFT = 11;
         int SHOOTER_RIGHT = 12;
