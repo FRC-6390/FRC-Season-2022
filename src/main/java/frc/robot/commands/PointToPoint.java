@@ -57,10 +57,10 @@ public class PointToPoint extends CommandBase {
     if(desiredPosition.atDesiredPosition()){
       if(desiredIterator.hasNext()){
         desiredPosition = desiredIterator.next();
-        done = true;
       }
       else{
         done = true;
+        SwerveDriveTrain.stopAllDrive();
         System.out.println("AUTO COMPLETE");
       }
       

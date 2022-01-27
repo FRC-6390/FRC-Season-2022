@@ -75,13 +75,6 @@ public class SwerveDriveTrain extends SubsystemBase {
   public SwerveDriveTrain() {
     
   }
-  
-  public static void resetAll() {
-    resetRobotPosition(true);
-    resetGyro();
-    resetModuleEncoders();
-    setMotorMode(NeutralMode.Brake);
-  }
 
   public static void drive(double xSpeed, double ySpeed, double rotationSpeed, boolean fieldOrientated){
     SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(fieldOrientated ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationSpeed, gyro.getRotation2d()) : new ChassisSpeeds(xSpeed, ySpeed, rotationSpeed));
@@ -96,12 +89,28 @@ public class SwerveDriveTrain extends SubsystemBase {
     for (int i = 0; i < swerveModuleStates.length; i++) swerveModuleArray[i].setDesiredState(swerveModuleStates[i]);
   }
 
-  public static void resetGyro(){
-    gyro.reset();
+  public static void stopAllDrive(){
+    SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, 0, gyro.getRotation2d()));
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SWERVE.MAX_SPEED.get(units.METERS));
+    for (int i = 0; i < swerveModuleStates.length; i++) swerveModuleArray[i].setDesiredState(swerveModuleStates[i]);
   }
 
-  public static void resetRobotPosition(boolean resetRotation){
-    robotPosition = new Pose2d(0, 0, resetRotation ? new Rotation2d(0) : gyro.getRotation2d());
+  public static void resetAll() {
+    resetRobotPosition();
+    resetGyro();
+    resetModuleEncoders();
+    setMotorMode(NeutralMode.Brake);
+  }
+
+  public static void resetGyro(){
+    gyro.reset();
+    swerveDriveOdometry.resetPosition(robotPosition, gyro.getRotation2d());
+  }
+
+  public static void resetRobotPosition(){
+    System.out.println("pos");
+    robotPosition = new Pose2d(0.0, 0.0, new Rotation2d(0.0));
+    swerveDriveOdometry.resetPosition(robotPosition, gyro.getRotation2d());
   }
 
   public static void resetModuleEncoders(){
@@ -126,10 +135,10 @@ public class SwerveDriveTrain extends SubsystemBase {
   }
 
   public static double getGyro(){
-    // return gyro.getRotation2d().getDegrees();                                        returns values but does not return to 0 keeps going past 360
+   return gyro.getRotation2d().getDegrees();                                        //returns values but does not return to 0 keeps going past 360
     // return swerveDriveOdometry.getPoseMeters().getRotation().getDegrees();           does not reutrn anything 0.000000000
     // return swerveModuleArray[1].getAngle().getDegrees();                             return wierd values not sure if its right
-    return frontRightModuleEncoder.getPosition();
+    //return swerveDriveOdometry.getPoseMeters().getY();
   }
 
   @Override
@@ -139,6 +148,6 @@ public class SwerveDriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("Robot Position (X) --------", swerveDriveOdometry.getPoseMeters().getX());
     SmartDashboard.putNumber("Robot Position (Y) ---------", swerveDriveOdometry.getPoseMeters().getY());
     SmartDashboard.putNumber("Robot Position (Angle) ---------", swerveDriveOdometry.getPoseMeters().getRotation().getDegrees());
-    SmartDashboard.putNumber("Gyro: -------", gyro.getRotation2d().getDegrees());
+    SmartDashboard.putNumber("Gyro: -------",swerveDriveOdometry.getPoseMeters().getRotation().getDegrees());
   }
 }

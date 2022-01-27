@@ -62,6 +62,7 @@ public class DesiredPosition {
 
         if(drivePid.underThreshold(speeds.xDistance)){
             speeds.xDone = true;
+            System.out.println("X COMPLETE");
         }
 
         return drivePid.calculateSpeed(speeds.xDistance);
@@ -86,6 +87,7 @@ public class DesiredPosition {
 
         if(drivePid.underThreshold(speeds.yDistance)){
             speeds.yDone = true;
+            System.out.println("Y COMPLETE");
         }
 
         return drivePid.calculateSpeed(speeds.yDistance);
@@ -105,6 +107,7 @@ public class DesiredPosition {
 
         if(rotationPid.underThreshold(speeds.thetaDistance)){
             speeds.thetaDone = true;
+            System.out.println("THETA COMPLETE");
         }
 
         return rotationPid.calculateSpeed(speeds.thetaDistance);
@@ -135,7 +138,7 @@ public class DesiredPosition {
     }
 
     public static DesiredPosition fromCords(double x, double y, double theta, DesiredSettings... settings){
-        return fromCords(x,y,theta, new DesiredPID(false), new DesiredPID(true), settings);
+        return fromCords(x, y, theta, new DesiredPID(false), new DesiredPID(true), settings);
     }
 
     public static DesiredPosition fromCords(double x, double y, double theta, DesiredPID drivePid, DesiredPID rotationPid, DesiredSettings... settings){
@@ -154,9 +157,9 @@ public class DesiredPosition {
         public boolean xDone, yDone, thetaDone;
 
         public DesiredSpeeds(){
-            this.x = 0;
-            this.y = 0;
-            this.theta = 0;
+            this.x = 0.0;
+            this.y = 0.0;
+            this.theta = 0.0;
         }
     }
 
@@ -216,8 +219,8 @@ public class DesiredPosition {
         double SPEED_LIMIT = 0.03;
         
         enum DRIVE{
-            P(0.075),
-            I(0.1),
+            P(0.02),
+            I(0.15),
             D(0.0),
             I_LIMIT(0.25),
             THRESHOLD(0.025);
@@ -233,7 +236,7 @@ public class DesiredPosition {
         }
 
         enum ROTATION{
-            P(0.0015),
+            P(0.0005),
             I(0.007),
             D(0.0),
             I_LIMIT(10.0),

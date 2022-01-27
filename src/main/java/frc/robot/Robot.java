@@ -11,9 +11,13 @@ import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
 
 public class Robot extends TimedRobot {
 
+  
+
   @Override
   public void robotInit() {
+    new SwerveDriveTrain();
     SwerveDriveTrain.resetAll();
+
   }
 
   @Override
@@ -25,7 +29,7 @@ public class Robot extends TimedRobot {
     }
     if(RobotContainer.start.debounced()) {
       System.out.println("startButton");
-      SwerveDriveTrain.resetAll();
+      SwerveDriveTrain.resetRobotPosition();
     }
   }
 
@@ -42,6 +46,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    SwerveDriveTrain.resetAll();
     CommandScheduler.getInstance().schedule(new PointToPoint());
   }
 
