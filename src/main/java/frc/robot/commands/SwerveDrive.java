@@ -24,12 +24,12 @@ public class SwerveDrive extends CommandBase {
   @Override
   public void execute() {
     
-    double leftXAxis = -xSpeedLimiter.calculate(inDeadZone(controller.getLeftY()) ? 0 : controller.getLeftY()) * Constants.SWERVE.PRECENT_MAX_SPEED;
-    double leftYAxis = -ySpeedLimiter.calculate(inDeadZone(controller.getLeftX()) ? 0 : controller.getLeftX()) * Constants.SWERVE.PRECENT_MAX_SPEED;
+    double leftXAxis = xSpeedLimiter.calculate(inDeadZone(controller.getLeftY()) ? 0 : controller.getLeftY()) * Constants.SWERVE.PRECENT_MAX_SPEED;
+    double leftYAxis = ySpeedLimiter.calculate(inDeadZone(controller.getLeftX()) ? 0 : controller.getLeftX()) * Constants.SWERVE.PRECENT_MAX_SPEED;
 
-    double rightXAxis = -angularLimiter.calculate(inDeadZone(controller.getRightX()) ? 0 : controller.getRightX()) * Constants.SWERVE.PRECENT_MAX_SPEED;
+    double rightXAxis = angularLimiter.calculate(inDeadZone(controller.getRightX()) ? 0 : controller.getRightX()) * Constants.SWERVE.PRECENT_MAX_SPEED;
 
-    SwerveDriveTrain.drive(leftXAxis, leftYAxis, rightXAxis, true);
+    SwerveDriveTrain.drive(leftXAxis * Constants.SWERVE.PRECENT_MAX_SPEED, leftYAxis * Constants.SWERVE.PRECENT_MAX_SPEED, rightXAxis * Constants.SWERVE.PRECENT_MAX_SPEED, true);
 
     SmartDashboard.putNumber("Gyro Test-------", SwerveDriveTrain.getGyro());
   }

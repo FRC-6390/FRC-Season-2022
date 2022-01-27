@@ -23,7 +23,7 @@ public interface Constants {
         Module BACK_RIGHT = new Module(SENSOR.FRONT_LEFT_ENCODER, MOTOR.FRONT_LEFT_DRIVE, MOTOR.FRONT_LEFT_ROTATION);
 
         Units MAX_SPEED = new Units(0.3, units.METERS);
-        double PRECENT_MAX_SPEED = 0.1;
+        double PRECENT_MAX_SPEED = 0.3;
         
         double FRONT_LEFT_OFFSET = 230.0;
         double FRONT_RIGHT_OFFSET = 164.0;

@@ -77,14 +77,14 @@ public class SwerveDriveTrain extends SubsystemBase {
   }
 
   public static void drive(double xSpeed, double ySpeed, double rotationSpeed, boolean fieldOrientated){
-    SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(fieldOrientated ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationSpeed, gyro.getRotation2d()) : new ChassisSpeeds(xSpeed, ySpeed, rotationSpeed));
+    SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(fieldOrientated ? ChassisSpeeds.fromFieldRelativeSpeeds(-xSpeed, -ySpeed, -rotationSpeed, gyro.getRotation2d()) : new ChassisSpeeds(xSpeed, ySpeed, rotationSpeed));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SWERVE.MAX_SPEED.get(units.METERS));
     for (int i = 0; i < swerveModuleStates.length; i++) swerveModuleArray[i].setDesiredState(swerveModuleStates[i]);
   }
 
   public static void driveToDesiredPosition(DesiredPosition desiredPosition){
     DesiredSpeeds speeds = desiredPosition.getDesiredSpeeds(robotPosition);
-    SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(speeds.x,speeds.y,speeds.theta,gyro.getRotation2d()));
+    SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(speeds.x, speeds.y, speeds.theta,gyro.getRotation2d()));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SWERVE.MAX_SPEED.get(units.METERS));
     for (int i = 0; i < swerveModuleStates.length; i++) swerveModuleArray[i].setDesiredState(swerveModuleStates[i]);
   }

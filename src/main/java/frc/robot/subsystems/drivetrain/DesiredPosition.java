@@ -138,11 +138,11 @@ public class DesiredPosition {
     }
 
     public static DesiredPosition fromCords(double x, double y, double theta, DesiredSettings... settings){
-        return fromCords(x, y, theta, new DesiredPID(false), new DesiredPID(true), settings);
+        return fromCords(-x, -y, -theta, new DesiredPID(false), new DesiredPID(true), settings);
     }
 
     public static DesiredPosition fromCords(double x, double y, double theta, DesiredPID drivePid, DesiredPID rotationPid, DesiredSettings... settings){
-        return new DesiredPosition(new Pose2d(x,y,Rotation2d.fromDegrees(theta)), drivePid, rotationPid, settings);
+        return new DesiredPosition(new Pose2d(x, y, Rotation2d.fromDegrees(-theta)), drivePid, rotationPid, settings);
     }
 
     public static enum DesiredSettings{
@@ -219,9 +219,9 @@ public class DesiredPosition {
         double SPEED_LIMIT = 0.03;
         
         enum DRIVE{
-            P(0.02),
-            I(0.15),
-            D(0.0),
+            P(0.04),
+            I(0.04),
+            D(0.05),
             I_LIMIT(0.25),
             THRESHOLD(0.025);
 

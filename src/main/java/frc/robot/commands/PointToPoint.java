@@ -10,6 +10,7 @@ import frc.robot.RobotContainer;
 import frc.robot.utils.json.JsonManager;
 import frc.robot.subsystems.drivetrain.DesiredPosition;
 import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
+import frc.robot.subsystems.drivetrain.DesiredPosition.DesiredSettings;
 
 public class PointToPoint extends CommandBase {
 
@@ -42,7 +43,7 @@ public class PointToPoint extends CommandBase {
     //iterate over json here 
     desiredList = new ArrayList<>();
     for(int z = 0; z < jsonManager.posList.size(); z++){
-      desiredList.add(DesiredPosition.fromCords(jsonManager.xList.get(z), jsonManager.yList.get(z), jsonManager.thetaList.get(z)));
+      desiredList.add(DesiredPosition.fromCords(jsonManager.xList.get(z), jsonManager.yList.get(z), jsonManager.thetaList.get(z), DesiredSettings.Ignore_Rotation));
     }
     System.out.println(desiredList);
 
