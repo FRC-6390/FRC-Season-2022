@@ -47,7 +47,7 @@ public class JsonManager {
         // String file = "C:\\Users\\<YOUNAMEIGUESS>\\Doc>uments\\GitHub\\FRC-Season-2021\\src\\main\\java\\frc\\robot\\files\\utils\\autos\\" + autoName + ".json";
         
         //needs to be tested
-        String file = Filesystem.getDeployDirectory()+"/"+ autoName + ".json";
+        String file = Filesystem.getDeployDirectory()+"/autos/"+ autoName + ".json";
         System.out.println(file);
         
         String json = readFileAsString(file);

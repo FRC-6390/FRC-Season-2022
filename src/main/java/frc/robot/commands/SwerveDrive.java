@@ -4,6 +4,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SwerveDrive extends CommandBase {
@@ -29,6 +30,8 @@ public class SwerveDrive extends CommandBase {
     double rightXAxis = -angularLimiter.calculate(inDeadZone(controller.getRightX()) ? 0 : controller.getRightX() * Constants.SWERVE.PRECENT_MAX_SPEED);
 
     SwerveDriveTrain.drive(leftXAxis, leftYAxis, rightXAxis, true);
+
+    SmartDashboard.putNumber("Gyro Test-------", SwerveDriveTrain.getGyro());
   }
 
   @Override

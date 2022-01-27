@@ -4,6 +4,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
+import frc.robot.subsystems.vission.LimeLightTurretSubsystem;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -22,7 +23,7 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void execute() { 
     //not sure if there is an encoder
-    if(/*Not Full Speed */){
+    if(ShooterSubsystem.getVolocity() < LimeLightTurretSubsystem.getVelocityReomended()){
       ShooterSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.SHOOTER_SPEED : Constants.ROBOT.SHOOTER_SPEED);
     }else{
       ShooterSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.SHOOTER_SPEED : Constants.ROBOT.SHOOTER_SPEED);

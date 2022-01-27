@@ -84,12 +84,9 @@ public interface Constants {
         Encoder FRONT_RIGHT_ENCODER = new Encoder(1, EXTERNAL_ENCODER_RESOLUTION);
         Encoder BACK_LEFT_ENCODER = new Encoder(2, EXTERNAL_ENCODER_RESOLUTION);
         Encoder BACK_RIGHT_ENCODER = new Encoder(3, EXTERNAL_ENCODER_RESOLUTION);
-        int FRONT_LEFT_LIMIT = 0;
-        int FRONT_RIGHT_LIMIT = 0;
-        int BACK_LEFT_LIMIT = 0;
-        int BACK_RIGHT_LIMIT = 0;
-        Encoder SHOOTER_ENCODER = new Encoder(4, EXTERNAL_ENCODER_RESOLUTION);
-        Encoder HOOD_ENCODER = new Encoder(5, EXTERNAL_ENCODER_RESOLUTION);
+        Encoder LEFT_SHOOTER_ENCODER = new Encoder(4, EXTERNAL_ENCODER_RESOLUTION);
+        Encoder RIGHT_SHOOTER_ENCODER = new Encoder(5, EXTERNAL_ENCODER_RESOLUTION);
+        Encoder HOOD_ENCODER = new Encoder(6, EXTERNAL_ENCODER_RESOLUTION);
         SerialPort.Port GYRO_PORT = SerialPort.Port.kUSB;
     }
 

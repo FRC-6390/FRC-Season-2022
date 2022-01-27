@@ -42,12 +42,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-
+    CommandScheduler.getInstance().schedule(new PointToPoint());
   }
 
   @Override
   public void autonomousPeriodic() {
-    CommandScheduler.getInstance().schedule(new PointToPoint());
   }
 
   @Override

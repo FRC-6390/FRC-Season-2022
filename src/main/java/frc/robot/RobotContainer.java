@@ -3,7 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.FeederCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.LimeLightCommand;
+import frc.robot.commands.LimeLightBallCommand;
 import frc.robot.commands.PreShooterCommand;
 import frc.robot.utils.DebouncedButton;
 import frc.robot.Constants.CONTROLLER.XBOX;
@@ -46,8 +46,8 @@ public class RobotContainer {
     x.whenHeld(new FeederCommand(false));
     y.whenHeld(new FeederCommand(true));
 
-    a.whenHeld(new LimeLightCommand(true));
-    a.whenReleased(new LimeLightCommand(false));
+    a.whenHeld(new LimeLightBallCommand(true));
+    a.whenReleased(new LimeLightBallCommand(false));
   }
 
 }

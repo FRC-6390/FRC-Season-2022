@@ -125,9 +125,20 @@ public class SwerveDriveTrain extends SubsystemBase {
     }
   }
 
+  public static double getGyro(){
+    // return gyro.getRotation2d().getDegrees();                                        returns values but does not return to 0 keeps going past 360
+    // return swerveDriveOdometry.getPoseMeters().getRotation().getDegrees();           does not reutrn anything 0.000000000
+    // return swerveModuleArray[1].getAngle().getDegrees();                             return wierd values not sure if its right
+    return frontRightModuleEncoder.getPosition();
+  }
+
   @Override
   public void periodic() {
-      System.out.println("Gyro: " + gyro.getRotation2d().getDegrees());
-      SmartDashboard.putNumber("Robot Position (Angle)", swerveDriveOdometry.getPoseMeters().getRotation().getDegrees());
+    robotPosition = swerveDriveOdometry.update(gyro.getRotation2d(), frontLeftSwerveModule.getState(), frontRightSwerveModule.getState(),
+    backLeftSwerveModule.getState(), backRightSwerveModule.getState());
+    SmartDashboard.putNumber("Robot Position (X) --------", swerveDriveOdometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("Robot Position (Y) ---------", swerveDriveOdometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("Robot Position (Angle) ---------", swerveDriveOdometry.getPoseMeters().getRotation().getDegrees());
+    SmartDashboard.putNumber("Gyro: -------", gyro.getRotation2d().getDegrees());
   }
 }

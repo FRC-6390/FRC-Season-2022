@@ -33,6 +33,7 @@ public class PointToPoint extends CommandBase {
     System.out.println("AUTO_________________: " + autoSelected);
 
     try {
+      System.out.println("READING AUTO FILE");
       jsonManager.readJson(autoSelected);
     } catch (Exception e) {
       e.printStackTrace();
@@ -54,10 +55,14 @@ public class PointToPoint extends CommandBase {
   public void execute() {
     SwerveDriveTrain.driveToDesiredPosition(desiredPosition);
     if(desiredPosition.atDesiredPosition()){
-      if(desiredIterator.hasNext())
+      if(desiredIterator.hasNext()){
         desiredPosition = desiredIterator.next();
-      else
         done = true;
+      }
+      else{
+        done = true;
+        System.out.println("AUTO COMPLETE");
+      }
       
     } 
   }

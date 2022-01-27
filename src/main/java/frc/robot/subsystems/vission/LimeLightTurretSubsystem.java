@@ -12,7 +12,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-public class LimeLightSubsystem extends SubsystemBase{
+public class LimeLightTurretSubsystem extends SubsystemBase{
     public boolean held, done;
     private NetworkTable table;
     public NetworkTableEntry pipeline, ledMode, camMode, txvalue, tyvalue;
@@ -24,7 +24,7 @@ public class LimeLightSubsystem extends SubsystemBase{
     }
 
 
-    public LimeLightSubsystem(){
+    public LimeLightTurretSubsystem(){
       setMotorsIdleMode(IdleMode.kCoast);
     }
 
@@ -37,7 +37,7 @@ public class LimeLightSubsystem extends SubsystemBase{
     }
 
 
-    public LimeLightSubsystem(boolean isHeld) {
+    public LimeLightTurretSubsystem(boolean isHeld) {
         held = isHeld;
         table = NetworkTableInstance.getDefault().getTable("limelight");
         ledMode = table.getEntry("ledMode");
@@ -45,6 +45,11 @@ public class LimeLightSubsystem extends SubsystemBase{
         txvalue = table.getEntry("tx");
         tyvalue = table.getEntry("ty");
         pipeline = table.getEntry("pipeline");
+    }
+
+    public static double getVelocityReomended(){
+      //based of distance and network table
+      return 0;
     }
 
     public void ChangePipeline(int Pipeline){
