@@ -1,4 +1,6 @@
-package frc.robot.subsystems.drivetrain;
+package frc.robot.subsystems.drivetrain.swerve;
+
+import java.util.ArrayList;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -17,15 +19,20 @@ import frc.robot.utils.Units.units;
 
 public class SwerveModule {
 
+    public static ArrayList<SwerveModule> modules = new ArrayList<>();
     private final TalonFX driveMotor, rotationMotor;
     private final CANCoder moduleEncoder;
     private CANCoderConfiguration moduleEncoderConfiguration;
     private TalonFXConfiguration rotationConfiguration, driveConfiguration;
     
-    public SwerveModule(TalonFX driveMotor, TalonFX rotationMotor, CANCoder moduleEncoder, double offset) {
-      this.driveMotor = driveMotor;
-      this.rotationMotor = rotationMotor;
-      this.moduleEncoder = moduleEncoder;
+    public SwerveModule(int driveMotorId, int rotationMotorId, int moduleEncoderId, double offset) {
+      this(new SwerveModuleConfiguration(driveMotorId, rotationMotorId, moduleEncoderId, offset));
+    }
+      
+    public SwerveModule(SwerveModuleConfiguration moduleConfiguration) {
+      driveMotor = new TalonFX(moduleConfiguration.driveMotorId);
+      rotationMotor = new TalonFX(moduleConfiguration.rotationMotorId);
+      moduleEncoder = new CANCoder(moduleConfiguration.encouderId);
 
       rotationMotor.configFactoryDefault();
       driveMotor.configFactoryDefault();
@@ -43,7 +50,7 @@ public class SwerveModule {
       }};
 
       moduleEncoderConfiguration = new CANCoderConfiguration(){{
-        magnetOffsetDegrees = Rotation2d.fromDegrees(offset).getDegrees();
+        magnetOffsetDegrees = Rotation2d.fromDegrees(moduleConfiguration.offset).getDegrees();
       }};
 
       rotationMotor.configAllSettings(rotationConfiguration);
@@ -52,8 +59,10 @@ public class SwerveModule {
 
       rotationMotor.setNeutralMode(NeutralMode.Brake);
       driveMotor.setNeutralMode(NeutralMode.Brake);
+
+      modules.add(this);
     }
-      
+
     public void setDesiredState(SwerveModuleState desiredState){
       Rotation2d currentRotation = getAngle();
       SwerveModuleState state = SwerveModuleState.optimize(desiredState, currentRotation);
@@ -89,6 +98,25 @@ public class SwerveModule {
       double wheelRotations = motorRotations / Constants.SWERVE.DRIVE_GEAR_RATIO;
       double positionMeters = wheelRotations * (2 * Math.PI * Units.inchesToMeters(2));
       return positionMeters;
-    } 
-}
+    }
 
+    public TalonFX getDriveMotor() {
+        return driveMotor;
+    }
+
+    public CANCoder getModuleEncoder() {
+        return moduleEncoder;
+    }
+
+    public TalonFX getRotationMotor() {
+        return rotationMotor;
+    }
+
+    public static SwerveModuleState[] getAllStates(){
+      SwerveModuleState[] states = new SwerveModuleState[modules.size()];
+      for (int i = 0; i < modules.size(); i++) {
+        states[i] = modules.get(i).getState();
+      } 
+      return states;
+    }
+}

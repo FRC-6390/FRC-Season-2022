@@ -13,7 +13,7 @@ import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
 
 public class PointToPoint extends CommandBase {
 
-  public SwerveDriveTrain drivetrain;
+  public SwerveDriveTrain swerveDrive;
   public RobotContainer robotContainer;
   public JsonManager jsonManager;
   private List<DesiredPosition> desiredList;
@@ -21,7 +21,9 @@ public class PointToPoint extends CommandBase {
   private DesiredPosition desiredPosition;
   private boolean done;
 
-  public PointToPoint() {}
+  public PointToPoint(SwerveDriveTrain swerveDrive) {
+    this.swerveDrive = swerveDrive;
+  }
 
   @Override
   public void initialize() {
@@ -53,7 +55,8 @@ public class PointToPoint extends CommandBase {
 
   @Override
   public void execute() {
-    SwerveDriveTrain.driveToDesiredPosition(desiredPosition);
+
+    swerveDrive.drive(desiredPosition);
     if(desiredPosition.atDesiredPosition()){
       if(desiredIterator.hasNext()){
         desiredPosition = desiredIterator.next();

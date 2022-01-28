@@ -3,6 +3,7 @@ package frc.robot;
 import frc.robot.utils.Units.units;
 import frc.robot.utils.Units;
 import edu.wpi.first.wpilibj.SerialPort;
+import frc.robot.subsystems.drivetrain.swerve.SwerveModuleConfiguration;
 import frc.robot.utils.Encoder;
 import frc.robot.utils.PID;
 import frc.robot.utils.Module;
@@ -17,18 +18,21 @@ public interface Constants {
      * put any sweremodules here with the Module class
      */
     interface SWERVE {
-        Module FRONT_LEFT = new Module(SENSOR.FRONT_LEFT_ENCODER, MOTOR.FRONT_LEFT_DRIVE, MOTOR.FRONT_LEFT_ROTATION);
-        Module FRONT_RIGHT = new Module(SENSOR.FRONT_LEFT_ENCODER, MOTOR.FRONT_LEFT_DRIVE, MOTOR.FRONT_LEFT_ROTATION);
-        Module BACK_LEFT = new Module(SENSOR.FRONT_LEFT_ENCODER, MOTOR.FRONT_LEFT_DRIVE, MOTOR.FRONT_LEFT_ROTATION);
-        Module BACK_RIGHT = new Module(SENSOR.FRONT_LEFT_ENCODER, MOTOR.FRONT_LEFT_DRIVE, MOTOR.FRONT_LEFT_ROTATION);
-
-        Units MAX_SPEED = new Units(0.3, units.METERS);
-        double PRECENT_MAX_SPEED = 0.1;
-        
         double FRONT_LEFT_OFFSET = 230.0;
         double FRONT_RIGHT_OFFSET = 164.0;
         double BACK_LEFT_OFFSET = 103.0;
         double BACK_RIGHT_OFFSET = 193.0;
+
+        SwerveModuleConfiguration FRONT_LEFT = new SwerveModuleConfiguration(MOTOR.FRONT_LEFT_DRIVE, MOTOR.FRONT_LEFT_ROTATION, SENSOR.FRONT_LEFT_ENCODER.getEncoderId(), FRONT_LEFT_OFFSET);
+        SwerveModuleConfiguration FRONT_RIGHT = new SwerveModuleConfiguration(MOTOR.FRONT_RIGHT_DRIVE, MOTOR.FRONT_RIGHT_ROTATION, SENSOR.FRONT_RIGHT_ENCODER.getEncoderId(), FRONT_RIGHT_OFFSET);
+        SwerveModuleConfiguration BACK_LEFT = new SwerveModuleConfiguration(MOTOR.BACK_LEFT_DRIVE, MOTOR.BACK_LEFT_ROTATION, SENSOR.BACK_LEFT_ENCODER.getEncoderId(),  BACK_LEFT_OFFSET);
+        SwerveModuleConfiguration BACK_RIGHT = new SwerveModuleConfiguration(MOTOR.BACK_RIGHT_DRIVE, MOTOR.BACK_RIGHT_ROTATION, SENSOR.BACK_RIGHT_ENCODER.getEncoderId(), BACK_RIGHT_OFFSET);
+        
+        Units MAX_SPEED = new Units(0.3, units.METERS);
+        double MAX_VOLTAGE = 12.0;
+        double PRECENT_MAX_SPEED = 0.05;
+        
+        
 
         double DRIVE_GEAR_RATIO = 8.16;     //6.12
         double ROTATION_GEAR_RATIO = 12.8; 
@@ -36,7 +40,7 @@ public interface Constants {
         PID DRIVE_PID = new PID(0, 0, 0, 0);
         PID ROTATION_PID = new PID(1, 0, 0, 0);
 
-        Units LOCATION_FROM_CENTER = new Units(0.3302, units.METERS);
+        Units LOCATION_FROM_CENTER = new Units(12, units.INCHES);
     }
     
     /**

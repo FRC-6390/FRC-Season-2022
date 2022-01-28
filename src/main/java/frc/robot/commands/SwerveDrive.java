@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class SwerveDrive extends CommandBase {
 
   private XboxController controller;
+  private SwerveDriveTrain swerveDrive;
   private final SlewRateLimiter xSpeedLimiter = new SlewRateLimiter(3);
   private final SlewRateLimiter ySpeedLimiter = new SlewRateLimiter(3);
   private final SlewRateLimiter angularLimiter = new SlewRateLimiter(3);
 
-  public SwerveDrive(XboxController controller) {
+  public SwerveDrive(SwerveDriveTrain swerveDrive, XboxController controller) {
     this.controller = controller;
+    this.swerveDrive = swerveDrive;
   }
 
   @Override
@@ -29,13 +31,13 @@ public class SwerveDrive extends CommandBase {
 
     double rightXAxis = -angularLimiter.calculate(inDeadZone(controller.getRightX()) ? 0 : controller.getRightX() * Constants.SWERVE.PRECENT_MAX_SPEED);
 
-    SwerveDriveTrain.drive(leftXAxis, leftYAxis, rightXAxis, true);
-
-    SmartDashboard.putNumber("Gyro Test-------", SwerveDriveTrain.getGyro());
+    swerveDrive.drive(leftXAxis  * Constants.SWERVE.PRECENT_MAX_SPEED, leftYAxis * Constants.SWERVE.PRECENT_MAX_SPEED, rightXAxis * Constants.SWERVE.PRECENT_MAX_SPEED, true);
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    swerveDrive.drive(0, 0, 0, false);
+  }
 
   @Override
   public boolean isFinished() {

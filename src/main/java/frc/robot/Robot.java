@@ -11,9 +11,11 @@ import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
 
 public class Robot extends TimedRobot {
 
+  private SwerveDriveTrain swerveDrive = new SwerveDriveTrain();
+
   @Override
   public void robotInit() {
-    SwerveDriveTrain.resetAll();
+    swerveDrive.reset();
   }
 
   @Override
@@ -21,17 +23,17 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     if(RobotContainer.back.debounced()) {
       System.out.println("backButton");
-      SwerveDriveTrain.switchMotorMode();
+      swerveDrive.switchMotorMode();
     }
     if(RobotContainer.start.debounced()) {
       System.out.println("startButton");
-      SwerveDriveTrain.resetAll();
+      swerveDrive.resetPose(RobotContainer.leftStick.get());
     }
   }
 
   @Override
   public void disabledInit() {
-    SwerveDriveTrain.setMotorMode(NeutralMode.Brake);
+    swerveDrive.setMotorMode(NeutralMode.Brake);
     CommandScheduler.getInstance().cancelAll();
   }
 
@@ -42,7 +44,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    CommandScheduler.getInstance().schedule(new PointToPoint());
+    CommandScheduler.getInstance().schedule(new PointToPoint(swerveDrive));
   }
 
   @Override
@@ -51,8 +53,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    SwerveDriveTrain.resetAll();
-    CommandScheduler.getInstance().schedule(new SwerveDrive(RobotContainer.controller));
+    swerveDrive.reset();
+    CommandScheduler.getInstance().schedule(new SwerveDrive(swerveDrive,RobotContainer.controller));
   }
 
   @Override
