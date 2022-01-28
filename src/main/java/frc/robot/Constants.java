@@ -9,7 +9,7 @@ import frc.robot.utils.Module;
 
 public interface Constants {
 
-    //Pleases only put constants in one section and link it to others if neeeded, if you feel none of the sections below fit
+    //Please only put constants in one section and link it to others if neeeded, if you feel none of the sections below fit
     //what you are trying to add, create a new interface with the name of the section your constant falls under, be as general as possible
     //NOTE all variables and interface names must be CAPS with variables having "_" for spaces and interfaces having no "_"
 
@@ -98,8 +98,8 @@ public interface Constants {
             int PORT = 0;
             double THRESHOLD = 0.5d;
             float DEBOUNCE_PERIOD = 0.5f;
-            double DEAD_ZONE_MAX = 0.15d;
-            double DEAD_ZONE_MIN = -0.15d;
+            double DEAD_ZONE_MAX = 0.1d;
+            double DEAD_ZONE_MIN = -0.1d;
             interface BUTTON {
                 int A = 1;
                 int B = 2;

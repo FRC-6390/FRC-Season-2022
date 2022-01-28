@@ -36,8 +36,13 @@ public class ShooterSubsystem extends SubsystemBase {
     public static double getVolocity(){
       double left = leftEncoder.getVelocity();
       double right = rightEncoder.getVelocity();
-      double volocity = left * right / 2;
+      double volocity = left + right / 2;
       return volocity;
+    }
+
+    public static double getEncoderPositions(){
+      double position = (leftEncoder.getAbsolutePosition() + rightEncoder.getAbsolutePosition()) / 2;
+      return position;
     }
 
     @Override

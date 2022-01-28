@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
 import frc.robot.subsystems.vission.LimeLightTurretSubsystem;
 import edu.wpi.first.networktables.NetworkTable;
@@ -19,7 +20,7 @@ public class LimeLightTurretCommand extends CommandBase {
   public boolean held, done;
   private NetworkTable table;
   public NetworkTableEntry pipeline, ledMode, camMode, txvalue, tavalue, tyvalue, tvvalue, tVertvalue, tHorvalue;
-  public double tx, ta, ty, tv, heading_error, distance_error, rotation_adjust, distance_adjust, desiredArea, rotation, sideways, pAim, pDrive, pSideways, distance, height, angle;
+  public double tx, ta, ty, tv, heading_error, distance_error, rotation_adjust, distance_adjust, desiredArea, rotation, sideways, pAim, pDrive, pSideways, trackTarget, distance, height, angle;
 
   public LimeLightTurretCommand(LimeLightTurretSubsystem limelight) {
     this.limelight = limelight;
@@ -65,21 +66,30 @@ public class LimeLightTurretCommand extends CommandBase {
     ta = tavalue.getDouble(0.0);
 
 
-    rotation = pAim * -tx;
-
     // to find distance from target d = height / tanAngle of camera
     height = 2.6416 - 0/*Limelight height from ground*/; 
     angle = Math.toRadians(45 + ty);
-    distance = height / Math.tan(angle);
-
-    LimeLightTurretSubsystem.setMotorSpeed(rotation * 0.5);
-
-    //if position == encoder left, scan right
+    distance = height / Math.tan(angle); //change the hood based off distance and network table
 
 
-    //if position == encoder right, scan left
+    rotation = 0.0f;
+    if (tv == 0.0f){
+      // We don't see the target, seek for the target by rotating the turret
+      if(ShooterSubsystem.getEncoderPositions() < 0 ){
+        rotation = 0.3f;
+      }
+      if(ShooterSubsystem.getEncoderPositions() < -0 ){
+        rotation = -0.3f;
+      } 
+    }
+    else{
+      // We do see the target, execute aiming code
+      heading_error = tx;
+      rotation = pAim * tx;
+    }
 
-    
+    trackTarget += rotation;
+    LimeLightTurretSubsystem.setMotorSpeed(rotation);
   }
 
   @Override

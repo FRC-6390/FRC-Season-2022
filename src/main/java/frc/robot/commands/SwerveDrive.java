@@ -30,8 +30,6 @@ public class SwerveDrive extends CommandBase {
     double rightXAxis = angularLimiter.calculate(inDeadZone(controller.getRightX()) ? 0 : controller.getRightX()) * Constants.SWERVE.PRECENT_MAX_SPEED;
 
     SwerveDriveTrain.drive(leftXAxis * Constants.SWERVE.PRECENT_MAX_SPEED, leftYAxis * Constants.SWERVE.PRECENT_MAX_SPEED, rightXAxis * Constants.SWERVE.PRECENT_MAX_SPEED, true);
-
-    SmartDashboard.putNumber("Gyro Test-------", SwerveDriveTrain.getGyro());
   }
 
   @Override
