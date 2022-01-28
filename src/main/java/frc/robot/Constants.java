@@ -16,24 +16,24 @@ public interface Constants {
         Translation2d[] SWERVE_LOCATIONS = {ROBOT.FRONT_LEFT, ROBOT.FRONT_RIGHT, ROBOT.BACK_LEFT, ROBOT.BACK_RIGHT};
         int FRONT_LEFT_DRIVE = 0;
         int FRONT_LEFT_ROTATION = 4;
-        int FRONT_LEFT_ENCODER = 0;
+        int FRONT_LEFT_ENCODER = 8;
         
         int FRONT_RIGHT_DRIVE = 1;
         int FRONT_RIGHT_ROTATION = 5;
-        int FRONT_RIGHT_ENCODER = 1;
+        int FRONT_RIGHT_ENCODER = 9;
 
         int BACK_LEFT_DRIVE = 2;
         int BACK_LEFT_ROTATION = 6;
-        int BACK_LEFT_ENCODER = 2;
+        int BACK_LEFT_ENCODER = 10;
 
         int BACK_RIGHT_DRIVE = 3;
         int BACK_RIGHT_ROTATION = 7;
-        int BACK_RIGHT_ENCODER = 3;
+        int BACK_RIGHT_ENCODER = 11;
 
-        double FRONT_LEFT_OFFSET = 230.0;
-        double FRONT_RIGHT_OFFSET = 164.0;
-        double BACK_LEFT_OFFSET = 103.0;
-        double BACK_RIGHT_OFFSET = 193.0;
+        double FRONT_LEFT_OFFSET = -Math.toRadians(310.25390625);
+        double FRONT_RIGHT_OFFSET = -Math.toRadians(15.20233154296875);
+        double BACK_LEFT_OFFSET = -Math.toRadians(79.80194091796875);
+        double BACK_RIGHT_OFFSET = -Math.toRadians(349.530029296875);
     }
 
     public interface CONTROLLER {

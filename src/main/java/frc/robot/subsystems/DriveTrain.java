@@ -25,7 +25,7 @@ public class DriveTrain extends SubsystemBase {
 
   private SwerveDriveKinematics kinematics;
   private SwerveDriveOdometry odometry;
-  private SwerveModule[] swerveModules = {};
+  private SwerveModule[] swerveModules = new SwerveModule[4];
   private AHRS gyro;
   private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0,0,0);
   private double startingX, startingY;
@@ -45,7 +45,10 @@ public class DriveTrain extends SubsystemBase {
     kinematics = new SwerveDriveKinematics(SWERVE.SWERVE_LOCATIONS);
     odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d());
     pose = new Pose2d(startingX,startingY,gyro.getRotation2d());
-
+    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot X", ()->pose.getX());
+    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Y", ()->pose.getY());
+    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Rotation",()->pose.getRotation().getDegrees());
+  
 
   }
 
@@ -78,8 +81,6 @@ public class DriveTrain extends SubsystemBase {
 
     for (int i = 0; i < states.length; i++) swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
     pose = odometry.update(gyro.getRotation2d(), states);
-    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("X", ()->pose.getX());
-    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Y", ()->pose.getY());
-    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Rotation",()->pose.getRotation().getDegrees());
-  }
+   }
+
 }

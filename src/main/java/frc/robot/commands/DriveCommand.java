@@ -1,6 +1,7 @@
 
 package frc.robot.commands;
 
+import java.lang.module.ModuleDescriptor.Requires;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -20,6 +21,10 @@ public class DriveCommand extends CommandBase {
     x = xSupplier;
     y = ySupplier;
     r = rSupplier;
+    addRequirements(subsystem);
+    tab.addNumber("X Axis", x);
+    tab.addNumber("Y Axis", y);
+    tab.addNumber("R Axis", r);
   }
 
   @Override
@@ -27,19 +32,12 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    tab.addNumber("X", x);
-    tab.addNumber("Y", y);
-    tab.addNumber("R", r);
+    
     driveTrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(x.getAsDouble(),y.getAsDouble(),r.getAsDouble(),driveTrain.rotation()));
   }
 
   @Override
   public void end(boolean interrupted) {
     driveTrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
-  }
-
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }
