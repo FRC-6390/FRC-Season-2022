@@ -5,15 +5,17 @@ import java.awt.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.AUTO;
 import frc.robot.Constants.CONTROLLER;
 import frc.robot.Constants.SWERVE;
+import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.DebouncedButton;
 
 public class RobotContainer {
 
-  private static DriveTrain driveTrain = new DriveTrain(0, 0);
+  public static DriveTrain driveTrain = new DriveTrain(0, 0);
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -38,7 +40,8 @@ public class RobotContainer {
   start = new DebouncedButton(controller, CONTROLLER.START, CONTROLLER.DEBOUNCE_PERIOD);
   
   public RobotContainer() {
-    driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->-modifyAxis(controller.getLeftX()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftY())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
+    driveTrain.reset(true);
+    driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->-modifyAxis(controller.getLeftY()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftX())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
     configureButtonBindings();
   }
  
@@ -64,7 +67,7 @@ public class RobotContainer {
 
   private static double modifyAxis(double value) {
     // Deadband
-    value = deadband(value, 0.05);
+    value = deadband(value, CONTROLLER.DEAD_ZONE);
 
     // Square the axis
     value = Math.copySign(value * value, value);
@@ -74,6 +77,10 @@ public class RobotContainer {
 
   public Command getDriveCommand(){
     return driveTrain.getDefaultCommand();
+  }
+
+  public Command getAutoCommand(){
+    return new DesiredPositionCommand(driveTrain, AUTO.AUTO_1_POSITIONS);
   }
 
 }

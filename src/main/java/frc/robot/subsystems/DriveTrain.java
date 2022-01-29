@@ -53,8 +53,9 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void reset(boolean zeroGyro){
+    System.out.println("reset");
     if(zeroGyro) zero();
-    pose = new Pose2d(startingX,startingY,gyro.getRotation2d());    
+    odometry.resetPosition(new Pose2d(startingX,startingY,gyro.getRotation2d()), gyro.getRotation2d());   
   }
 
   public void zero(){
@@ -66,7 +67,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public Rotation2d rotation(){
-    return gyro.getRotation2d();
+    if (gyro.isMagnetometerCalibrated()) {
+      return Rotation2d.fromDegrees(gyro.getFusedHeading());
+    }
+    return Rotation2d.fromDegrees(360.0 - gyro.getYaw());
   }
 
   public void drive(ChassisSpeeds speeds){
@@ -78,9 +82,8 @@ public class DriveTrain extends SubsystemBase {
     
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SWERVE.MAX_VELCOCITY);
-
-    for (int i = 0; i < states.length; i++) swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
     pose = odometry.update(gyro.getRotation2d(), states);
+    for (int i = 0; i < states.length; i++) swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
    }
 
 }

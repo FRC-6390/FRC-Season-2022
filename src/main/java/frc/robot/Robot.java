@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DesiredPosition;
 
 public class Robot extends TimedRobot {
 
@@ -17,6 +18,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    if(RobotContainer.start.debounced()){
+      RobotContainer.driveTrain.reset(RobotContainer.left.get());
+    }
     CommandScheduler.getInstance().run();
     
   }
@@ -32,10 +36,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    CommandScheduler.getInstance().schedule(container.getAutoCommand());
   }
 
   @Override
   public void autonomousPeriodic() {
+    // if(RobotContainer.a.get()){
+    //   System.out.println("a");
+    // }
   }
 
   @Override

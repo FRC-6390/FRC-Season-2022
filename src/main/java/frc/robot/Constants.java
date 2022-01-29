@@ -3,9 +3,12 @@ package frc.robot;
 import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SPI.Port;
+import frc.robot.subsystems.DesiredPosition;
 
 public interface Constants {
 
@@ -30,10 +33,10 @@ public interface Constants {
         int BACK_RIGHT_ROTATION = 7;
         int BACK_RIGHT_ENCODER = 11;
 
-        double FRONT_LEFT_OFFSET = -Math.toRadians(310.25390625);
-        double FRONT_RIGHT_OFFSET = -Math.toRadians(15.20233154296875);
-        double BACK_LEFT_OFFSET = -Math.toRadians(79.80194091796875);
-        double BACK_RIGHT_OFFSET = -Math.toRadians(349.530029296875);
+        double FRONT_LEFT_OFFSET = -Math.toRadians(312); //79.44488525390625 //309.375
+        double FRONT_RIGHT_OFFSET = -Math.toRadians(15); //211.102294921875 //15.0238037109375
+        double BACK_LEFT_OFFSET = -Math.toRadians(79);//335.56365966796875 //78.56597900390625
+        double BACK_RIGHT_OFFSET = -Math.toRadians(350);//155.126953125 //348.046875
     }
 
     public interface CONTROLLER {
@@ -71,12 +74,19 @@ public interface Constants {
         int POV = 11;
     }
 
+    public interface AUTO {
+        frc.robot.utils.PID DEFUALT_DRIVE_PID = new frc.robot.utils.PID(1,0,0);
+        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0,0,0);
+        DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(1,0)};
+    }
+
     public interface ELEVATOR {
         
     }
 
     public interface INTAKE {
-        
+        int LEFT = 0;
+        int RIGHT = 0;
     }
 
     public interface FEEDER {
@@ -84,7 +94,17 @@ public interface Constants {
     }
 
     public interface SHOOTER {
-        
+        int LEFT = 0;
+        int RIGHT = 0;
+        int TURRET = 0;
+        int PRE = 0;
+        double TURRET_MAX = 0;
+        double TURRET_MIN = 0;
+        double HIGH_VELOCITY = 0;
+        double LOW_VELOCITY = 0;
+        double TIMEOUT = 3;
+        frc.robot.utils.PID TURRET_PID = new frc.robot.utils.PID(0,0,0);
+        frc.robot.utils.PID SHOOTER_PID = new frc.robot.utils.PID(0,0,0);
     }
 
     public interface ODOMETERY {
@@ -100,12 +120,17 @@ public interface Constants {
     }
 
     public interface ROBOT {
-        double TRACKWIDTH = 0.7112;
-        double WHEELBASE = 0.7112;
+        double TRACKWIDTH = 0.47;
+        double WHEELBASE = 0.47;
         Translation2d FRONT_LEFT = new Translation2d(TRACKWIDTH/2, WHEELBASE/2);
         Translation2d FRONT_RIGHT = new Translation2d(TRACKWIDTH/2, -WHEELBASE/2);
         Translation2d BACK_LEFT = new Translation2d(-TRACKWIDTH/2, WHEELBASE/2);
         Translation2d BACK_RIGHT = new Translation2d(-TRACKWIDTH/2, -WHEELBASE/2);
         SerialPort.Port GYRO_PORT = SerialPort.Port.kUSB;    
+    }
+
+    public interface PID {
+        double DEFUALT_LIMIT = 0.05;
+        double DEFUALT_THRESHOLD = 0.05;
     }
 } 

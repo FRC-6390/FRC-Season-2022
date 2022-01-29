@@ -32,7 +32,6 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    
     driveTrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(x.getAsDouble(),y.getAsDouble(),r.getAsDouble(),driveTrain.rotation()));
   }
 
