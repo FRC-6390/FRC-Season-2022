@@ -33,10 +33,10 @@ public interface Constants {
         int BACK_RIGHT_ROTATION = 7;
         int BACK_RIGHT_ENCODER = 11;
 
-        double FRONT_LEFT_OFFSET = -Math.toRadians(312); //79.44488525390625 //309.375
-        double FRONT_RIGHT_OFFSET = -Math.toRadians(15); //211.102294921875 //15.0238037109375
-        double BACK_LEFT_OFFSET = -Math.toRadians(79);//335.56365966796875 //78.56597900390625
-        double BACK_RIGHT_OFFSET = -Math.toRadians(350);//155.126953125 //348.046875
+        double FRONT_LEFT_OFFSET = -Math.toRadians(309.814453125); //79.44488525390625 //309.375 //312
+        double FRONT_RIGHT_OFFSET = -Math.toRadians(373.963623046875); //211.102294921875 //15.0238037109375 //15
+        double BACK_LEFT_OFFSET = -Math.toRadians(79.00543212890625);//335.56365966796875 //78.56597900390625 //79
+        double BACK_RIGHT_OFFSET = -Math.toRadians(348.22265625);//155.126953125 //348.046875 //350
     }
 
     public interface CONTROLLER {
@@ -76,8 +76,8 @@ public interface Constants {
 
     public interface AUTO {
         frc.robot.utils.PID DEFUALT_DRIVE_PID = new frc.robot.utils.PID(1,0,0);
-        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0,0,0);
-        DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(1,0)};
+        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(45,0,0);
+        DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(0,0, 90)};
     }
 
     public interface ELEVATOR {
@@ -126,7 +126,7 @@ public interface Constants {
         Translation2d FRONT_RIGHT = new Translation2d(TRACKWIDTH/2, -WHEELBASE/2);
         Translation2d BACK_LEFT = new Translation2d(-TRACKWIDTH/2, WHEELBASE/2);
         Translation2d BACK_RIGHT = new Translation2d(-TRACKWIDTH/2, -WHEELBASE/2);
-        SerialPort.Port GYRO_PORT = SerialPort.Port.kUSB;    
+        SerialPort.Port GYRO_PORT = SerialPort.Port.kMXP;    
     }
 
     public interface PID {

@@ -61,6 +61,10 @@ public class DriveTrain extends SubsystemBase {
   public void zero(){
     gyro.zeroYaw();
   }
+
+  public AHRS getGyro(){
+    return gyro;
+  }
   
   public Pose2d pos(){
     return pose;

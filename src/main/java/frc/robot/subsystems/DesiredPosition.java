@@ -49,7 +49,7 @@ public class DesiredPosition {
         double x = ignoreDrive ? 0 : xPID.calculate(currentPos.getX());
         double y = ignoreDrive ? 0 : yPID.calculate(currentPos.getY());
         double t = ignoreRotation ? 0 : rPID.calculate(currentPos.getRotation().getDegrees());
-        System.out.println(ignoreDrive);
+        // System.out.println("Ignore Drive: " + ignoreDrive);
         return ChassisSpeeds.fromFieldRelativeSpeeds(x, y, t, new Rotation2d());
     }
 

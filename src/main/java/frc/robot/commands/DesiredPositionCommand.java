@@ -48,7 +48,7 @@ public class DesiredPositionCommand extends CommandBase {
     public void initialize() {
       currentCord = cords[i];
       done = false;
-      if(shuffleboard)setupShuffleboard();
+      // if(shuffleboard)setupShuffleboard();
     }
   
     @Override
