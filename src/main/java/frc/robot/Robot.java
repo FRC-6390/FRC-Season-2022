@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DesiredPosition;
+import frc.robot.utils.PID;
 
 public class Robot extends TimedRobot {
 
@@ -14,6 +15,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     container = new RobotContainer();
+    Robot.suppressExitWarning(true);
   }
 
   @Override
@@ -61,5 +63,6 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 }
