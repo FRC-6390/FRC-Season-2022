@@ -1,5 +1,9 @@
 package frc.robot.commands;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -12,23 +16,21 @@ import frc.robot.subsystems.DriveTrain;
 public class DesiredPositionCommand extends CommandBase {
 
     private DriveTrain driveTrain;
-    private DesiredPosition cords[];
-    private int i = 0;
     private DesiredPosition currentCord;
     private boolean done;
     private ShuffleboardLayout waypointLayout = Shuffleboard.getTab("Auto").getLayout("Waypoint", BuiltInLayouts.kList).withSize(2, 8).withPosition(0, 0);
     private ShuffleboardLayout drivelayout = Shuffleboard.getTab("Auto").getLayout("Drive PID", BuiltInLayouts.kList).withSize(2, 8).withPosition(2, 0);
     private ShuffleboardLayout rotationlayout = Shuffleboard.getTab("Auto").getLayout("Rotation PID", BuiltInLayouts.kList).withSize(2, 8).withPosition(4, 0);
     private static boolean shuffleboard = true;
+    private Iterator<DesiredPosition> cords;
 
     public DesiredPositionCommand(DriveTrain subsystem, DesiredPosition... cords) {
       driveTrain = subsystem;
-      this.cords = cords;
+      this.cords = Arrays.asList(cords).iterator();
       
     }
 
     private void setupShuffleboard(){
-      waypointLayout.addNumber("Id", () -> i);
       waypointLayout.addNumber("X", () -> currentCord.x());
       waypointLayout.addNumber("Y", () -> currentCord.y());
       waypointLayout.addNumber("Theta", () -> currentCord.theta());
@@ -46,18 +48,18 @@ public class DesiredPositionCommand extends CommandBase {
   
     @Override
     public void initialize() {
-      currentCord = cords[i];
+      currentCord = cords.next();
       done = false;
       // if(shuffleboard)setupShuffleboard();
     }
   
     @Override
-    public void execute() {    
-        if(!cords[i].threashhold()){
-            driveTrain.drive(cords[i].getChassisSpeeds(driveTrain.pos()));
+    public void execute() {  
+        if(!currentCord.threashhold()){
+          driveTrain.drive(currentCord.getChassisSpeeds(driveTrain));
         }else{
-          if(i > cords.length-1) done = true;
-          //else i++;
+          if (!cords.hasNext()) done = true;
+          else currentCord = cords.next();
         }
     }
   

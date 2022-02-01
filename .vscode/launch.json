@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch PID",
+      "request": "launch",
+      "mainClass": "frc.robot.utils.PID",
+      "projectName": "FRC-Season-2022"
+    },
+    {
+      "type": "java",
+      "name": "Launch Robot",
+      "request": "launch",
+      "mainClass": "frc.robot.Robot",
+      "projectName": "FRC-Season-2022"
+    },
+    {
+      "type": "java",
       "name": "Launch Main",
       "request": "launch",
       "mainClass": "frc.robot.Main",

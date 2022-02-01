@@ -31,7 +31,7 @@ public class DynamicAuto extends CommandBase {
 
                   }
                 */
-                driveTrain.drive(cords[i].getChassisSpeeds(driveTrain.pos()));
+                //driveTrain.drive(cords[i].getChassisSpeeds(driveTrain.pos()));
             }
         }
         done = true;
