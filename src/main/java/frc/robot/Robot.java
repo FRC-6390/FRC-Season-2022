@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -14,12 +15,17 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     container = new RobotContainer();
+    
+    RobotContainer.driveTrain.getGyro().calibrate();
+    System.out.println("Gyro Calibrated");
   }
 
   @Override
   public void robotPeriodic() {
     if(RobotContainer.start.debounced()){
-      RobotContainer.driveTrain.reset(RobotContainer.left.get());
+      RobotContainer.driveTrain.reset(RobotContainer.top.get());
+      RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
+      RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 1);
     }
     CommandScheduler.getInstance().run();
     
