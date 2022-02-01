@@ -29,6 +29,9 @@ public class Robot extends TimedRobot {
       RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
       RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 1);
     }
+    
+    RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
+    RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
     CommandScheduler.getInstance().run();
     
   }
