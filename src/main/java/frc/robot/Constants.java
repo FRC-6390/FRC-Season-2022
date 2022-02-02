@@ -33,10 +33,10 @@ public interface Constants {
         int BACK_RIGHT_ROTATION = 7;
         int BACK_RIGHT_ENCODER = 11;
 
-        double FRONT_LEFT_OFFSET = -Math.toRadians(309.814453125); //79.44488525390625 //309.375 //312
-        double FRONT_RIGHT_OFFSET = -Math.toRadians(373.963623046875); //211.102294921875 //15.0238037109375 //15
-        double BACK_LEFT_OFFSET = -Math.toRadians(79.00543212890625);//335.56365966796875 //78.56597900390625 //79
-        double BACK_RIGHT_OFFSET = -Math.toRadians(348.22265625);//155.126953125 //348.046875 //350
+        double FRONT_LEFT_OFFSET = -Math.toRadians(309.375);//309.814453125); //79.44488525390625 //309.375 //312
+        double FRONT_RIGHT_OFFSET = -Math.toRadians(15.463256835937502);//16.16363525390625); //211.102294921875 //15.0238037109375 //15 //373.963623046875
+        double BACK_LEFT_OFFSET = -Math.toRadians(79.88433837890625);//80.0628662109375);//335.56365966796875 //78.56597900390625 //79 //79.00543212890625
+        double BACK_RIGHT_OFFSET = -Math.toRadians(348.486328125);//348.22265625);//155.126953125 //348.046875 //350
     }
 
     public interface CONTROLLER {
@@ -126,7 +126,7 @@ public interface Constants {
         Translation2d FRONT_RIGHT = new Translation2d(TRACKWIDTH/2, -WHEELBASE/2);
         Translation2d BACK_LEFT = new Translation2d(-TRACKWIDTH/2, WHEELBASE/2);
         Translation2d BACK_RIGHT = new Translation2d(-TRACKWIDTH/2, -WHEELBASE/2);
-        SerialPort.Port GYRO_PORT = SerialPort.Port.kMXP;    
+        SerialPort.Port GYRO_PORT = SerialPort.Port.kUSB;    
     }
 
     public interface PID {
