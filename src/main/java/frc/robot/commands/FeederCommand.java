@@ -19,7 +19,7 @@ public class FeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-    FeederSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.FEEDER_SPEED : Constants.ROBOT.FEEDER_SPEED);
+    FeederSubsystem.setMotorSpeed(reverse ? -Constants.FEEDER.FEEDER_VELOCITY : Constants.FEEDER.FEEDER_VELOCITY);
   }
 
   @Override

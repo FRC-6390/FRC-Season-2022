@@ -11,7 +11,7 @@ public class PreShooterSubsystem extends SubsystemBase {
     private static CANSparkMax preShooter;
 
     static {
-        preShooter = new CANSparkMax(Constants.MOTOR.PRE_SHOOTER, MotorType.kBrushless);
+        preShooter = new CANSparkMax(Constants.SHOOTER.HIGH_VELOCITY, MotorType.kBrushless);
     }
 
     public PreShooterSubsystem(){

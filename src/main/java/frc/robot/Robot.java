@@ -4,38 +4,44 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.PointToPoint;
+// import frc.robot.commands.PointToPoint;
 import frc.robot.commands.ShooterCommand;
-import frc.robot.commands.SwerveDrive;
+import frc.robot.commands.SwerveDriveCommand;
+import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
 
 public class Robot extends TimedRobot {
 
-  
+  RobotContainer container;
 
   @Override
   public void robotInit() {
-    new SwerveDriveTrain();
-    SwerveDriveTrain.resetAll();
+    // new SwerveDriveTrain();
+    // SwerveDriveTrain.resetAll();
 
+    container = new RobotContainer();
+    
+    RobotContainer.driveTrain.getGyro().calibrate();
+    System.out.println("Gyro Calibrated");
+    Robot.suppressExitWarning(true);
   }
 
   @Override
   public void robotPeriodic() {
+    if(RobotContainer.start.debounced()){
+      RobotContainer.driveTrain.reset(RobotContainer.top.get());
+      RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
+      RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 1);
+    }
+    
+    RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
+    RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
     CommandScheduler.getInstance().run();
-    if(RobotContainer.back.debounced()) {
-      System.out.println("backButton");
-      SwerveDriveTrain.switchMotorMode();
-    }
-    if(RobotContainer.start.debounced()) {
-      System.out.println("startButton");
-      SwerveDriveTrain.resetRobotPosition();
-    }
   }
 
   @Override
   public void disabledInit() {
-    SwerveDriveTrain.setMotorMode(NeutralMode.Brake);
+    // SwerveDriveTrain.setMotorMode(NeutralMode.Brake);
     CommandScheduler.getInstance().cancelAll();
   }
 
@@ -46,8 +52,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    SwerveDriveTrain.resetAll();
-    CommandScheduler.getInstance().schedule(new PointToPoint());
+    // SwerveDriveTrain.resetAll();
+    // CommandScheduler.getInstance().schedule(new PointToPoint());
   }
 
   @Override
@@ -56,19 +62,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    SwerveDriveTrain.resetAll();
-    CommandScheduler.getInstance().schedule(new SwerveDrive(RobotContainer.controller));
+    // SwerveDriveTrain.resetAll();
+    // CommandScheduler.getInstance().schedule(new SwerveDrive(RobotContainer.controller));
   }
 
   @Override
   public void teleopPeriodic() {
-    if(RobotContainer.controller.getLeftTriggerAxis() >= Constants.CONTROLLER.XBOX.THRESHOLD){
-      CommandScheduler.getInstance().schedule(new ShooterCommand(false));
-    }
+    // if(RobotContainer.controller.getLeftTriggerAxis() >= Constants.CONTROLLER.XBOX.THRESHOLD){
+    //   CommandScheduler.getInstance().schedule(new ShooterCommand(false));
+    // }
 
-    if(RobotContainer.controller.getRightTriggerAxis() >= Constants.CONTROLLER.XBOX.THRESHOLD){
-      CommandScheduler.getInstance().schedule(new ShooterCommand(true));
-    }
+    // if(RobotContainer.controller.getRightTriggerAxis() >= Constants.CONTROLLER.XBOX.THRESHOLD){
+    //   CommandScheduler.getInstance().schedule(new ShooterCommand(true));
+    // }
   }
 
   @Override

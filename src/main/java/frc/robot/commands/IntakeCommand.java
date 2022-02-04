@@ -17,7 +17,7 @@ public class IntakeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    IntakeSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.INTAKE_SPEED : Constants.ROBOT.INTAKE_SPEED);
+    IntakeSubsystem.setMotorSpeed(reverse ? -Constants.INTAKE.INTAKE_VELOCITY : Constants.INTAKE.INTAKE_VELOCITY);
   }
 
   @Override

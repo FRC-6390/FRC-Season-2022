@@ -4,6 +4,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.drivetrain.SwerveDriveTrain;
 import frc.robot.subsystems.vission.LimeLightTurretSubsystem;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -15,13 +16,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class LimeLightBallCommand extends CommandBase {
 
   private LimeLightTurretSubsystem limelight;
-
+  private SwerveDriveTrain driveTrain;
   public boolean held, done;
   private NetworkTable table;
   public NetworkTableEntry pipeline, ledMode, camMode, txvalue, tavalue, tyvalue, tvvalue, tVertvalue, tHorvalue;
   public double tx, ta, ty, tv, heading_error, distance_error, rotation_adjust, distance_adjust, desiredArea, rotation, sideways, pAim, pDrive, pSideways;
 
-  public LimeLightBallCommand(LimeLightTurretSubsystem limelight) {
+  public LimeLightBallCommand(SwerveDriveTrain subsystem, LimeLightTurretSubsystem limelight) {
     this.limelight = limelight;
   }
 
@@ -77,10 +78,10 @@ public class LimeLightBallCommand extends CommandBase {
     distance_adjust = (desiredArea - ta) * pDrive;
 
     if(tx == 0.0){
-      SwerveDriveTrain.drive(0, 0, 0.04, false);
+      driveTrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, 0.04, driveTrain.rotation()));
     }
     else if(tx != 0.0){
-      SwerveDriveTrain.drive(distance_adjust, sideways, 0, false);
+      driveTrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(distance_adjust, sideways, 0, driveTrain.rotation()));
     }
     // else if(ta >= 1.5){
     //   Robot.driveTrain.drive(distance_adjust, 0, rotation, false);
@@ -90,6 +91,7 @@ public class LimeLightBallCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    driveTrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
   }
 
   @Override

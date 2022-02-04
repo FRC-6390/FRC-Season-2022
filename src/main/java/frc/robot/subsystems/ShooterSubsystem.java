@@ -13,10 +13,10 @@ public class ShooterSubsystem extends SubsystemBase {
     public static CANCoder leftEncoder, rightEncoder;
 
     static {
-        shooterLeft = new CANSparkMax(Constants.MOTOR.SHOOTER_LEFT, MotorType.kBrushless);
-        shooterRight = new CANSparkMax(Constants.MOTOR.SHOOTER_RIGHT, MotorType.kBrushless);
-        leftEncoder = new CANCoder(Constants.SENSOR.LEFT_SHOOTER_ENCODER.getEncoderId());
-        rightEncoder = new CANCoder(Constants.SENSOR.RIGHT_SHOOTER_ENCODER.getEncoderId());
+        shooterLeft = new CANSparkMax(Constants.SHOOTER.LEFT, MotorType.kBrushless);
+        shooterRight = new CANSparkMax(Constants.SHOOTER.RIGHT, MotorType.kBrushless);
+        leftEncoder = new CANCoder(Constants.SHOOTER.LEFT_ENCODER);
+        rightEncoder = new CANCoder(Constants.SHOOTER.RIGHT_ENCODER);
     }
 
     public ShooterSubsystem(){

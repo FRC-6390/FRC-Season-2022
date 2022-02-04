@@ -17,7 +17,7 @@ public class PreShooterCommand extends CommandBase {
 
   @Override
   public void execute() {
-    PreShooterSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.PRE_SHOOTER_SPEED : Constants.ROBOT.PRE_SHOOTER_SPEED);
+    PreShooterSubsystem.setMotorSpeed(reverse ? -Constants.SHOOTER.HIGH_VELOCITY : Constants.SHOOTER.HIGH_VELOCITY);
   }
 
   @Override

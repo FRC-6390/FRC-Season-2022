@@ -81,7 +81,7 @@ public class SwerveDriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(DriverStation.isTeleop())driveTrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(x.getAsDouble(),y.getAsDouble(),r.getAsDouble(),driveTrain.rotation()));
+    if(DriverStation.isTeleop())driveTrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(x.getAsDouble(),0,r.getAsDouble(),driveTrain.rotation()));
   }
 
   @Override

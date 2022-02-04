@@ -20,7 +20,7 @@ public class LimeLightTurretSubsystem extends SubsystemBase{
     private static CANSparkMax turretMotor;
 
     static{
-      turretMotor = new CANSparkMax(Constants.MOTOR.TURRET, MotorType.kBrushless);
+      turretMotor = new CANSparkMax(Constants.TURRET.TURRET_MAX, MotorType.kBrushless);
     }
 
 

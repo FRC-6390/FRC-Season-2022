@@ -24,9 +24,9 @@ public class ShooterCommand extends CommandBase {
   public void execute() { 
     //not sure if there is an encoder
     if(ShooterSubsystem.getVolocity() < LimeLightTurretSubsystem.getVelocityReomended()){
-      ShooterSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.SHOOTER_SPEED : Constants.ROBOT.SHOOTER_SPEED);
+      ShooterSubsystem.setMotorSpeed(reverse ? -Constants.SHOOTER.HIGH_VELOCITY : Constants.SHOOTER.HIGH_VELOCITY);
     }else{
-      ShooterSubsystem.setMotorSpeed(reverse ? -Constants.ROBOT.SHOOTER_SPEED : Constants.ROBOT.SHOOTER_SPEED);
+      ShooterSubsystem.setMotorSpeed(reverse ? -Constants.SHOOTER.HIGH_VELOCITY : Constants.SHOOTER.HIGH_VELOCITY);
       new PreShooterCommand(reverse);
     }
   }
