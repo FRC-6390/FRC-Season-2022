@@ -7,6 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -26,7 +27,7 @@ public class DriveTrain extends SubsystemBase {
   private SwerveDriveKinematics kinematics;
   private SwerveDriveOdometry odometry;
   private SwerveModule[] swerveModules = new SwerveModule[4];
-  private AHRS gyro;
+  private PigeonIMU gyro;
   private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0,0,0);
   private double startingX, startingY;
   private Pose2d pose;
@@ -35,7 +36,7 @@ public class DriveTrain extends SubsystemBase {
   public DriveTrain(double startingX, double startingY) {
     this.startingX = startingX;
     this.startingY = startingY;
-    gyro = new AHRS(ROBOT.GYRO_PORT); 
+    gyro = new PigeonIMU(ROBOT.GYRO_PORT); 
 
     swerveModules[0] = Mk3SwerveModuleHelper.createFalcon500(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0),Mk3SwerveModuleHelper.GearRatio.STANDARD, SWERVE.FRONT_LEFT_DRIVE, SWERVE.FRONT_LEFT_ROTATION, SWERVE.FRONT_LEFT_ENCODER, SWERVE.FRONT_LEFT_OFFSET);
     swerveModules[1] = Mk3SwerveModuleHelper.createFalcon500(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0),Mk3SwerveModuleHelper.GearRatio.STANDARD, SWERVE.FRONT_RIGHT_DRIVE, SWERVE.FRONT_RIGHT_ROTATION, SWERVE.FRONT_RIGHT_ENCODER, SWERVE.FRONT_RIGHT_OFFSET);
@@ -43,8 +44,8 @@ public class DriveTrain extends SubsystemBase {
     swerveModules[3] = Mk3SwerveModuleHelper.createFalcon500(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0),Mk3SwerveModuleHelper.GearRatio.STANDARD, SWERVE.BACK_RIGHT_DRIVE, SWERVE.BACK_RIGHT_ROTATION, SWERVE.BACK_RIGHT_ENCODER, SWERVE.BACK_RIGHT_OFFSET);
 
     kinematics = new SwerveDriveKinematics(SWERVE.SWERVE_LOCATIONS);
-    odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d());
-    pose = new Pose2d(startingX,startingY,gyro.getRotation2d());
+    odometry = new SwerveDriveOdometry(kinematics, rotation());
+    pose = new Pose2d(startingX,startingY, rotation());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot X", ()->pose.getX());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Y", ()->pose.getY());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Rotation",()->pose.getRotation().getDegrees());
@@ -55,14 +56,14 @@ public class DriveTrain extends SubsystemBase {
   public void reset(boolean zeroGyro){
     System.out.println("reset");
     if(zeroGyro) zero();
-    odometry.resetPosition(new Pose2d(startingX,startingY,gyro.getRotation2d()), gyro.getRotation2d());   
+    odometry.resetPosition(new Pose2d(startingX,startingY,rotation()),rotation());   
   }
 
   public void zero(){
-    gyro.zeroYaw();
+    gyro.setFusedHeading(0.0);
   }
 
-  public AHRS getGyro(){
+  public PigeonIMU getGyro(){
     return gyro;
   }
   
@@ -71,10 +72,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public Rotation2d rotation(){
-    if (gyro.isMagnetometerCalibrated()) {
-      return Rotation2d.fromDegrees(gyro.getFusedHeading());
-    }
-    return Rotation2d.fromDegrees(360.0 - gyro.getYaw());
+    return Rotation2d.fromDegrees(gyro.getFusedHeading());
   }
 
   public void drive(ChassisSpeeds speeds){
@@ -86,7 +84,7 @@ public class DriveTrain extends SubsystemBase {
     
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SWERVE.MAX_VELCOCITY);
-    pose = odometry.update(gyro.getRotation2d(), states);
+    pose = odometry.update(rotation(), states);
     for (int i = 0; i < states.length; i++) swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
    }
 

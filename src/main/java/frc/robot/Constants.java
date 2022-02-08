@@ -126,7 +126,8 @@ public interface Constants {
         Translation2d FRONT_RIGHT = new Translation2d(TRACKWIDTH/2, -WHEELBASE/2);
         Translation2d BACK_LEFT = new Translation2d(-TRACKWIDTH/2, WHEELBASE/2);
         Translation2d BACK_RIGHT = new Translation2d(-TRACKWIDTH/2, -WHEELBASE/2);
-        SerialPort.Port GYRO_PORT = SerialPort.Port.kUSB;    
+        // intort GYRO_PORT = SerialPort.Port.kUSB;   
+        int GYRO_PORT = 50; 
     }
 
     public interface PID {
