@@ -91,6 +91,7 @@ public class DesiredPositionCommand extends CommandBase {
         }else{
           if (!cords.hasNext()){
             done = true;
+            //auto ends
             System.out.println("AUTO COMPLETE");
           }
           else currentCord = cords.next();
