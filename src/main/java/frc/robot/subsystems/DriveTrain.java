@@ -49,8 +49,6 @@ public class DriveTrain extends SubsystemBase {
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot X", ()->pose.getX());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Y", ()->pose.getY());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Rotation",()->pose.getRotation().getDegrees());
-  
-
   }
 
   public void reset(boolean zeroGyro){
@@ -89,3 +87,5 @@ public class DriveTrain extends SubsystemBase {
    }
 
 }
+
+

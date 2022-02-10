@@ -80,7 +80,7 @@ public class RobotContainer {
   }
 
   public Command getAutoCommand(){
-    return new DesiredPositionCommand(driveTrain, AUTO.AUTO_1_POSITIONS);
+    return new DesiredPositionCommand(driveTrain);
   }
 
 }
