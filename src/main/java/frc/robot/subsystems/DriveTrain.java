@@ -81,10 +81,12 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
+    SwerveModuleState[] odometryStates = new SwerveModuleState[4];
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SWERVE.MAX_VELCOCITY);
     for (int i = 0; i < states.length; i++) {
       swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
       states[i] = getState(swerveModules[i].getDriveVelocity(), swerveModules[i].getSteerAngle());
+      //odometryStates[i] = getState(swerveModules[i].getDriveVelocity(), swerveModules[i].getSteerAngle());
     }
     pose = odometry.update(rotation(), states);
   }
