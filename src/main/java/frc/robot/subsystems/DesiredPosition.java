@@ -46,8 +46,8 @@ public class DesiredPosition {
     }
     
     public ChassisSpeeds getChassisSpeeds(DriveTrain currentPos){
-        double x = ignoreDrive ? 0 : xPID.calculate(currentPos.pos().getX());
-        double y = ignoreDrive ? 0 : yPID.calculate(currentPos.pos().getY());
+        double x = ignoreDrive ? 0 : xPID.calculate(currentPos.pos().getX() * 2.5);
+        double y = ignoreDrive ? 0 : yPID.calculate(currentPos.pos().getY() * 2.5);
         double t = ignoreRotation ? 0 : rPID.calculate(currentPos.pos().getRotation().getDegrees());
         //System.out.println(ignoreDrive);
         return ChassisSpeeds.fromFieldRelativeSpeeds(x, y, t, currentPos.rotation());
