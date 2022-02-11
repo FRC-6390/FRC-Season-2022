@@ -14,6 +14,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -81,9 +82,23 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SWERVE.MAX_VELCOCITY);
+    for (int i = 0; i < states.length; i++) {
+      swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
+      states[i] = getState(swerveModules[i].getDriveVelocity(), swerveModules[i].getSteerAngle());
+    }
     pose = odometry.update(rotation(), states);
-    for (int i = 0; i < states.length; i++) swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
-   }
+  }
+
+  public SwerveModuleState getState(double velocity, double angle) {
+    return new SwerveModuleState(nativeUnitsToDistanceMeters(velocity*10), Rotation2d.fromDegrees(angle));
+  }
+
+  private double nativeUnitsToDistanceMeters(double sensorCounts){
+    double motorRotations = (double)sensorCounts / 4096d;
+    double wheelRotations = motorRotations / 8.16;
+    double positionMeters = wheelRotations * (2 * Math.PI * Units.inchesToMeters(2));
+    return positionMeters;
+  } 
 
 }
 
