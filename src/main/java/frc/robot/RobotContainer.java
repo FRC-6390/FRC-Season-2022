@@ -11,6 +11,7 @@ import frc.robot.Constants.SWERVE;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.LimeLightTurretCommand;
+import frc.robot.commands.PointToPoint;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.DebouncedButton;
 
@@ -84,7 +85,7 @@ public class RobotContainer {
   }
 
   public Command getAutoCommand(){
-    return new DesiredPositionCommand(driveTrain, AUTO.AUTO_1_POSITIONS);
+    return new PointToPoint(driveTrain);
   }
 
 }

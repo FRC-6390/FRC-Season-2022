@@ -76,7 +76,7 @@ public interface Constants {
 
     public interface AUTO {
         frc.robot.utils.PID DEFUALT_DRIVE_PID = new frc.robot.utils.PID(1,0,0);
-        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0.01,0.001,0);
+        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0.015,0.001,0);
         DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(1,0,0)};
     }
 
