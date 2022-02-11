@@ -10,6 +10,7 @@ import frc.robot.Constants.CONTROLLER;
 import frc.robot.Constants.SWERVE;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.LimeLightTurretCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.DebouncedButton;
 
@@ -51,6 +52,9 @@ public class RobotContainer {
           if(start.get())driveTrain.reset(leftStick.get());
       }
     });
+
+    a.whenHeld(new LimeLightTurretCommand(true));
+    a.whenReleased(new LimeLightTurretCommand(false));
   }
 
   private static double deadband(double value, double deadband) {
@@ -80,7 +84,7 @@ public class RobotContainer {
   }
 
   public Command getAutoCommand(){
-    return new DesiredPositionCommand(driveTrain);
+    return new DesiredPositionCommand(driveTrain, AUTO.AUTO_1_POSITIONS);
   }
 
 }
