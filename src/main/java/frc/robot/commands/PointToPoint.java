@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.utils.PID;
 import frc.robot.utils.json.JsonManager;
 import frc.robot.subsystems.DesiredPosition;
 import frc.robot.subsystems.DriveTrain;
@@ -70,7 +73,10 @@ public class PointToPoint extends CommandBase {
     desiredList = new ArrayList<>();
     for(int z = 0; z < jsonManager.posList.size(); z++){
       
-      desiredList.add(new DesiredPosition (jsonManager.xList.get(z), jsonManager.yList.get(z), jsonManager.thetaList.get(z)));
+      // desiredList.add(new DesiredPosition (jsonManager.xList.get(z), jsonManager.yList.get(z), jsonManager.thetaList.get(z)));
+
+      desiredList.add(new DesiredPosition (new Pose2d(jsonManager.xList.get(z), jsonManager.yList.get(z), Rotation2d.fromDegrees(jsonManager.thetaList.get(z)))));
+      
     }
     System.out.println(desiredList);
 

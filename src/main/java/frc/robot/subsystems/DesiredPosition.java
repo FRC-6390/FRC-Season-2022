@@ -41,8 +41,6 @@ public class DesiredPosition {
         xPID.setSetpoint(pos.getX());
         yPID.setSetpoint(pos.getY());
         rPID.setSetpoint(pos.getRotation().getDegrees());
-
-
     }
     
     public ChassisSpeeds getChassisSpeeds(DriveTrain currentPos){
