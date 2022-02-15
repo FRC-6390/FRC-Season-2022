@@ -14,10 +14,13 @@ public class JsonPosData {
     @SerializedName("theta")
     private double theta;
 
-    @SerializedName("drive")
+    @SerializedName("customPID")
+    private boolean customPID;
+
+    @SerializedName("drivePID")
     private List<JsonPidData> drive = null;
 
-    @SerializedName("rotation")
+    @SerializedName("rotationPID")
     private List<JsonPidData> rotation = null;
 
 
@@ -44,6 +47,12 @@ public class JsonPosData {
         this.theta = theta;
     }
 
+    public boolean getCustomPID() {
+        return customPID;
+    }
+    public void setCustomPID(boolean customPID) {
+        this.customPID = customPID;
+    }
 
     public List<JsonPidData> getDrive(){
         return drive;

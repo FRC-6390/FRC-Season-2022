@@ -62,13 +62,14 @@ public class PointToPoint extends CommandBase {
       System.out.println("READING AUTO FILE");
       jsonManager.readJson(autoSelected);
     } catch (Exception e) {
-      System.out.println("AUTO ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRROR");
+      System.out.println("AUTO ERROR");
       e.printStackTrace();
     }
 
     //iterate over json here 
     desiredList = new ArrayList<>();
     for(int z = 0; z < jsonManager.posList.size(); z++){
+      
       desiredList.add(new DesiredPosition (jsonManager.xList.get(z), jsonManager.yList.get(z), jsonManager.thetaList.get(z)));
     }
     System.out.println(desiredList);
