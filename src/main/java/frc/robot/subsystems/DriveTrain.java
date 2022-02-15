@@ -46,9 +46,9 @@ public class DriveTrain extends SubsystemBase {
     kinematics = new SwerveDriveKinematics(SWERVE.SWERVE_LOCATIONS);
     odometry = new SwerveDriveOdometry(kinematics, rotation());
     pose = new Pose2d(startingX,startingY, rotation());
-    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot X", ()->pose.getX() * 2.5);
-    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Y", ()->pose.getY() * 2.5);
-    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Rotation",()->pose.getRotation().getDegrees());
+    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot X", ()->x());
+    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Y", ()->y());
+    tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Rotation",()->rotation().getDegrees());
   }
 
   public void reset(boolean zeroGyro){
@@ -65,8 +65,12 @@ public class DriveTrain extends SubsystemBase {
     return gyro;
   }
   
-  public Pose2d pos(){
-    return pose;
+  public double x(){
+    return pose.getX()*2.5;
+  }
+
+  public double y(){
+    return pose.getY()*2.5;
   }
 
   public Rotation2d rotation(){

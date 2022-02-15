@@ -5,7 +5,7 @@ import frc.robot.Constants;
 
 public class PID {
 
-    double p,i,d,limit,error, prevError,setpoint, errorSum,threshold;
+    double p,i,d,limit,error, prevError,setpoint, errorSum,threshold, current;
     double previousTime = Timer.getFPGATimestamp();
 
     public PID(double p, double i, double d){
@@ -26,6 +26,7 @@ public class PID {
     }
 
     public double calculate(double current){
+        this.current = current;
         error = setpoint - current;
         double dt = Timer.getFPGATimestamp() - previousTime;
         if(Math.abs(error) < limit) errorSum += error * i;
@@ -61,8 +62,11 @@ public class PID {
     }
 
     public boolean atSetpoint(){
-        return !(Math.abs((error)) < threshold);
+        return !Double.isNaN(current) ? (Math.abs((setpoint-current)) < threshold) : false;
+    }
 
+    public double getError(){
+        return error;
     }
 
 }

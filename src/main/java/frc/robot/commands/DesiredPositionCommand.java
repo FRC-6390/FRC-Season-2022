@@ -3,12 +3,9 @@ package frc.robot.commands;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DesiredPosition;
 import frc.robot.subsystems.DriveTrain;
@@ -35,13 +32,17 @@ public class DesiredPositionCommand extends CommandBase {
       waypointLayout.addNumber("Y", () -> currentCord.y());
       waypointLayout.addNumber("Theta", () -> currentCord.theta());
       waypointLayout.addBoolean("At Threshold", () -> currentCord.threashhold());
-      drivelayout.addNumber("P", () -> currentCord.getDrivePID().getP());
-      drivelayout.addNumber("I", () -> currentCord.getDrivePID().getI());
-      drivelayout.addNumber("D", () -> currentCord.getDrivePID().getD());
-      drivelayout.addNumber("Setpoint", () -> currentCord.getDrivePID().getSetpoint());
+      drivelayout.addNumber("P", () -> currentCord.getXPID().getP());
+      drivelayout.addNumber("I", () -> currentCord.getXPID().getI());
+      drivelayout.addNumber("D", () -> currentCord.getXPID().getD());
+      drivelayout.addNumber("X Error", () -> currentCord.getXPID().getError());
+      drivelayout.addNumber("Y Error", () -> currentCord.getYPID().getError());
+      drivelayout.addNumber("X Setpoint", () -> currentCord.getXPID().getSetpoint());
+      drivelayout.addNumber("Y Setpoint", () -> currentCord.getYPID().getSetpoint());   
       rotationlayout.addNumber("P", () -> currentCord.getRotationPID().getP());
       rotationlayout.addNumber("I", () -> currentCord.getRotationPID().getI());
       rotationlayout.addNumber("D", () -> currentCord.getRotationPID().getD());
+      rotationlayout.addNumber("Error", () -> currentCord.getRotationPID().getError());
       rotationlayout.addNumber("Setpoint", () -> currentCord.getRotationPID().getSetpoint());
       shuffleboard = false;
     }
@@ -50,7 +51,7 @@ public class DesiredPositionCommand extends CommandBase {
     public void initialize() {
       currentCord = cords.next();
       done = false;
-      // if(shuffleboard)setupShuffleboard();
+      if(shuffleboard)setupShuffleboard();
     }
   
     @Override

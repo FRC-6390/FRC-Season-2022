@@ -39,15 +39,19 @@ public class PointToPoint extends CommandBase {
     waypointLayout.addNumber("Y", () -> desiredPosition.y());
     waypointLayout.addNumber("Theta", () -> desiredPosition.theta());
     waypointLayout.addBoolean("At Threshold", () -> desiredPosition.threashhold());
-    drivelayout.addNumber("P", () -> desiredPosition.getDrivePID().getP());
-    drivelayout.addNumber("I", () -> desiredPosition.getDrivePID().getI());
-    drivelayout.addNumber("D", () -> desiredPosition.getDrivePID().getD());
-    drivelayout.addNumber("Setpoint", () -> desiredPosition.getDrivePID().getSetpoint());
+    drivelayout.addNumber("P", () -> desiredPosition.getXPID().getP());
+    drivelayout.addNumber("I", () -> desiredPosition.getXPID().getI());
+    drivelayout.addNumber("D", () -> desiredPosition.getXPID().getD());
+    drivelayout.addNumber("X Error", () -> desiredPosition.getXPID().getError());
+    drivelayout.addNumber("Y Error", () -> desiredPosition.getYPID().getError());
+    drivelayout.addNumber("X Setpoint", () -> desiredPosition.getXPID().getSetpoint());
+    drivelayout.addNumber("Y Setpoint", () -> desiredPosition.getYPID().getSetpoint());   
     rotationlayout.addNumber("P", () -> desiredPosition.getRotationPID().getP());
     rotationlayout.addNumber("I", () -> desiredPosition.getRotationPID().getI());
     rotationlayout.addNumber("D", () -> desiredPosition.getRotationPID().getD());
+    rotationlayout.addNumber("Error", () -> desiredPosition.getRotationPID().getError());
     rotationlayout.addNumber("Setpoint", () -> desiredPosition.getRotationPID().getSetpoint());
- 
+    //shuffleboard = false;
   }
 
   @Override

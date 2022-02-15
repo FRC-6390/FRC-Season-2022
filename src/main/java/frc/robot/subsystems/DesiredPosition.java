@@ -11,7 +11,7 @@ public class DesiredPosition {
 
     private PID xPID, yPID, rPID;
     public boolean ignoreRotation = false, ignoreDrive = false;
-    public double x, y, t;
+    public double x, y, t, currentX, currentY, CurrentT;
 
     public DesiredPosition(double t) {
         this(new Pose2d(0,0,Rotation2d.fromDegrees(t)));
@@ -36,20 +36,20 @@ public class DesiredPosition {
         this.y = pos.getY();
         this.t = pos.getRotation().getDegrees();
         xPID = new PID(pos.getX(), drive.getP(), drive.getI(), drive.getD());
-        yPID = new PID(pos.getY(), drive.getP(), drive.getI(), drive.getD());;
+        yPID = new PID(pos.getY(), drive.getP(), drive.getI(), drive.getD());
         rPID = rotation;
         xPID.setSetpoint(pos.getX());
         yPID.setSetpoint(pos.getY());
         rPID.setSetpoint(pos.getRotation().getDegrees());
-
+        
 
     }
     
     public ChassisSpeeds getChassisSpeeds(DriveTrain currentPos){
-        double x = ignoreDrive ? 0 : xPID.calculate(currentPos.pos().getX() * 2.5);
-        double y = ignoreDrive ? 0 : yPID.calculate(currentPos.pos().getY() * 2.5);
-        double t = ignoreRotation ? 0 : rPID.calculate(currentPos.pos().getRotation().getDegrees());
-        //System.out.println(ignoreDrive);
+        double x = ignoreDrive ? 0 : xPID.calculate(currentPos.x());
+        double y = ignoreDrive ? 0 : yPID.calculate(currentPos.y());
+        double t = ignoreRotation ? 0 : rPID.calculate(currentPos.rotation().getDegrees());
+        System.out.println(t);
         return ChassisSpeeds.fromFieldRelativeSpeeds(x, y, t, currentPos.rotation());
     }
 
@@ -57,8 +57,12 @@ public class DesiredPosition {
         return ((xPID.atSetpoint() && yPID.atSetpoint()) || ignoreDrive) && (rPID.atSetpoint() || ignoreRotation);
     }
 
-    public PID getDrivePID(){
+    public PID getXPID(){
         return xPID;
+    }
+
+    public PID getYPID(){
+        return yPID;
     }
 
     public PID getRotationPID(){

@@ -77,7 +77,8 @@ public interface Constants {
     public interface AUTO {
         frc.robot.utils.PID DEFUALT_DRIVE_PID = new frc.robot.utils.PID(1,0,0);
         frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0.015,0.001,0);
-        DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(1,0,0)};
+        DesiredPosition[] AUTO_TEST_XY_POSITIONS = {new DesiredPosition(1,2), new DesiredPosition(2,2), new DesiredPosition(2,1), new DesiredPosition(2,2), new DesiredPosition(3,2), new DesiredPosition(2,2), new DesiredPosition(2,3), new DesiredPosition(2,2),};
+        DesiredPosition[] AUTO_TEST_ROTATION_POSITIONS = {new DesiredPosition(90), new DesiredPosition(0), new DesiredPosition(-90), new DesiredPosition(0), new DesiredPosition(180), new DesiredPosition(0), new DesiredPosition(-180), new DesiredPosition(0),};
     }
 
     public interface ELEVATOR {
