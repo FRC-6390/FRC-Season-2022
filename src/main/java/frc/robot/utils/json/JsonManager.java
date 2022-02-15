@@ -15,19 +15,17 @@ import edu.wpi.first.wpilibj.Filesystem;
 
 public class JsonManager {
 
-    @SerializedName("pos")
-    private List<JsonPosData> pos = null;
+    @SerializedName("desiredpositions")
+    private List<JsonPosData> desiredpositions = null;
 
     public List<JsonPosData> getPositions() {
-        return pos;
+        return desiredpositions;
     }
-    public void setPositions(List<JsonPosData> pos) {
-        this.pos = pos;
+    public void setPositions(List<JsonPosData> desiredpositions) {
+        this.desiredpositions = desiredpositions;
     }
 
-
-    public static String readFileAsString(String file)throws Exception
-    {
+    public static String readFileAsString(String file)throws Exception{
         return new String(Files.readAllBytes(Paths.get(file)));
     }
 
@@ -36,6 +34,7 @@ public class JsonManager {
     public static List<Double> xList;
     public static List<Double> yList;
     public static List<Double> thetaList;
+    public static List<Boolean> customPIDList;
     public static List<List<Double>> driveLists;
     public static List<List<Double>> rotationLists;
 
@@ -44,12 +43,9 @@ public class JsonManager {
     public void readJson(String autoName) throws Exception {
 
         //for testing purposes
-        // String file = "C:\\Users\\<YOUNAMEIGUESS>\\Doc>uments\\GitHub\\FRC-Season-2021\\src\\main\\java\\frc\\robot\\files\\utils\\autos\\" + autoName + ".json";
-        
-        //needs to be tested
-        String file = Filesystem.getDeployDirectory()+"/autos/"+ autoName;
-        System.out.println(file);
-        
+        // String file = "C:\\Users\\Mohammad\\Documents\\GitHub\\FRC-Season-2022\\src\\main\\java\\frc\\robot\\utils\\json\\autos\\testAuto.json";
+       
+        String file = Filesystem.getDeployDirectory()+"/autos/"+ autoName + ".json";
         String json = readFileAsString(file);
         System.out.println(json);
 
@@ -59,6 +55,7 @@ public class JsonManager {
         xList = new ArrayList<>();
         yList = new ArrayList<>();
         thetaList = new ArrayList<>();
+        customPIDList = new ArrayList<>();
         driveLists = new ArrayList<List<Double>>();
         rotationLists = new ArrayList<List<Double>>();
         
@@ -67,37 +64,43 @@ public class JsonManager {
             yList.add(pos.getY());
             thetaList.add(pos.getTheta());
 
-            
-            for(JsonPidData pid : pos.getDrive()){
+            if(pos.getCustomPID() == true){
+
+                for(JsonPidData pid : pos.getDrive()){
+                    List<Double> drivePID = new ArrayList<>();
+                    drivePID.add(pid.getP());
+                    drivePID.add(pid.getI());
+                    drivePID.add(pid.getD());
+                    drivePID.add(pid.getILimit());
+                    drivePID.add(pid.getThreshold());
+                    driveLists.add(drivePID);
+                    break;
+                }
+    
+                for(JsonPidData pid : pos.getRotation()){
+                    List<Double> rotationPID = new ArrayList<>();
+                    rotationPID.add(pid.getP());
+                    rotationPID.add(pid.getI());
+                    rotationPID.add(pid.getD());
+                    rotationPID.add(pid.getILimit());
+                    rotationPID.add(pid.getThreshold());
+                    rotationLists.add(rotationPID);
+                    break;
+                }
+            } else{
                 List<Double> drivePID = new ArrayList<>();
-                drivePID.add(pid.getP());
-                drivePID.add(pid.getI());
-                drivePID.add(pid.getD());
-                drivePID.add(pid.getILimit());
-                drivePID.add(pid.getThreshold());
                 driveLists.add(drivePID);
-                break;
-            }
 
-            for(JsonPidData pid : pos.getRotation()){
                 List<Double> rotationPID = new ArrayList<>();
-                rotationPID.add(pid.getP());
-                rotationPID.add(pid.getI());
-                rotationPID.add(pid.getD());
-                rotationPID.add(pid.getILimit());
-                rotationPID.add(pid.getThreshold());
                 rotationLists.add(rotationPID);
-                break;
             }
-
         }
 
-        System.out.println(posList.size());
+        System.out.println("Total Positions: " + posList.size());
         System.out.println(xList);
         System.out.println(yList);
         System.out.println(thetaList);
         System.out.println(driveLists);
         System.out.println(rotationLists);
     }
-    
 }

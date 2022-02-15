@@ -15,7 +15,7 @@ public class JsonPidData {
     @SerializedName("d")
     private double d;
 
-    @SerializedName("iLimit")
+    @SerializedName("ilimit")
     private double iLimit;
 
     @SerializedName("threshold")
