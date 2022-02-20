@@ -1,6 +1,8 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -15,9 +17,9 @@ public class Robot extends TimedRobot {
   RobotContainer container;
   @Override
   public void robotInit() {
-    container = new RobotContainer();
+   container = new RobotContainer();
     
-    // RobotContainer.driveTrain.getGyro().calibrate();//
+    //RobotContainer.driveTrain.getGyro();//
     System.out.println("Gyro Calibrated");
     Robot.suppressExitWarning(true);
   }
@@ -47,7 +49,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    CommandScheduler.getInstance().schedule(container.getAutoCommand());
+    //CommandScheduler.getInstance().schedule(container.getAutoCommand());
   }
 
   @Override
@@ -59,7 +61,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    //CommandScheduler.getInstance().schedule(container.getDriveCommand());
+    CommandScheduler.getInstance().schedule(container.getDriveCommand());
+    
   }
 
   @Override
@@ -69,9 +72,23 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     CommandScheduler.getInstance().cancelAll();
+    Orchestra midi = new Orchestra();
+    midi.loadMusic("/home/lvuser/deploy/all star.chrp");
+    midi.addInstrument(new TalonFX(0));
+    midi.addInstrument(new TalonFX(1));
+    midi.addInstrument(new TalonFX(2));
+    midi.addInstrument(new TalonFX(3));
+    midi.addInstrument(new TalonFX(4));
+    midi.addInstrument(new TalonFX(5));
+    midi.addInstrument(new TalonFX(6));
+    midi.addInstrument(new TalonFX(7));
+
+    midi.play();
   }
 
   @Override
   public void testPeriodic() {
+    
   }
+    
 }
