@@ -67,11 +67,11 @@ public class DriveTrain extends SubsystemBase {
   }
   
   public double x(){
-    return pose.getX()*2.5;
+    return pose.getX();
   }
 
   public double y(){
-    return pose.getY()*2.5;
+    return pose.getY();
   }
 
   public Rotation2d rotation(){
@@ -88,7 +88,7 @@ public class DriveTrain extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SWERVE.MAX_VELCOCITY);
     pose = odometry.update(rotation(), states);
     for (int i = 0; i < states.length; i++) swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
-   }
+  }
 
 }
 
