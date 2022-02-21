@@ -14,7 +14,7 @@ public interface Constants {
 
     public interface SWERVE {
         double MAX_VOLTAGE = 12.0;
-        double MAX_VELCOCITY = 6380.0/ 60* SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() * SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter();
+        double MAX_VELCOCITY = 6380.0/ 60* SdsModuleConfigurations.MK4_L1.getDriveReduction() * SdsModuleConfigurations.MK4_L1.getWheelDiameter();
         double MAX_ANGULAR = MAX_VELCOCITY / Math.hypot(ROBOT.TRACKWIDTH/2, ROBOT.WHEELBASE/2);
         Translation2d[] SWERVE_LOCATIONS = {ROBOT.FRONT_LEFT, ROBOT.FRONT_RIGHT, ROBOT.BACK_LEFT, ROBOT.BACK_RIGHT};
         int FRONT_LEFT_DRIVE = 0;
@@ -33,10 +33,10 @@ public interface Constants {
         int BACK_RIGHT_ROTATION = 7;
         int BACK_RIGHT_ENCODER = 11;
 
-        double FRONT_LEFT_OFFSET = -Math.toRadians(14.1448974609375+180);//309.814453125); //79.44488525390625 //309.375 //312
-        double FRONT_RIGHT_OFFSET = -Math.toRadians(242.04254150390622+180);//16.16363525390625); //211.102294921875 //15.0238037109375 //15 //373.963623046875
-        double BACK_LEFT_OFFSET = -Math.toRadians(97.283935546875);//80.0628662109375);//335.56365966796875 //78.56597900390625 //79 //79.00543212890625
-        double BACK_RIGHT_OFFSET = -Math.toRadians(251.0101318359375+180);//348.22265625);//155.126953125 //348.046875 //350
+        double FRONT_LEFT_OFFSET = -Math.toRadians(195.46051025390625);//309.814453125); //79.44488525390625 //309.375 //312
+        double FRONT_RIGHT_OFFSET = -Math.toRadians(62.84179687500001);//242.04254150390622+180);//16.16363525390625); //211.102294921875 //15.0238037109375 //15 //373.963623046875
+        double BACK_LEFT_OFFSET = -Math.toRadians(96.94061279296875);//80.0628662109375);//335.56365966796875 //78.56597900390625 //79 //79.00543212890625
+        double BACK_RIGHT_OFFSET = -Math.toRadians(70.13397216796875);//251.0101318359375+180);//348.22265625);//155.126953125 //348.046875 //350
     }
 
     public interface CONTROLLER {
@@ -76,13 +76,16 @@ public interface Constants {
 
     public interface AUTO {
         frc.robot.utils.PID DEFUALT_DRIVE_PID = new frc.robot.utils.PID(1,0,0);
-        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0.015,0.001,0);
-        DesiredPosition[] AUTO_TEST_XY_POSITIONS = {new DesiredPosition(1,2), new DesiredPosition(2,2), new DesiredPosition(2,1), new DesiredPosition(2,2), new DesiredPosition(3,2), new DesiredPosition(2,2), new DesiredPosition(2,3), new DesiredPosition(2,2),};
-        DesiredPosition[] AUTO_TEST_ROTATION_POSITIONS = {new DesiredPosition(90), new DesiredPosition(0), new DesiredPosition(-90), new DesiredPosition(0), new DesiredPosition(180), new DesiredPosition(0), new DesiredPosition(-180), new DesiredPosition(0),};
+        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0.021,0.00,0);
+        DesiredPosition[] AUTO_TEST_XY_POSITIONS = {new DesiredPosition(1,2,0), new DesiredPosition(2,2,0), new DesiredPosition(2,1,0), new DesiredPosition(2,2,0), new DesiredPosition(3,2,0), new DesiredPosition(2,2,0), new DesiredPosition(2,3,0), new DesiredPosition(2,2,0),};
+        DesiredPosition[] AUTO_TEST_ROTATION_POSITIONS = {new DesiredPosition(90)};
     }
 
     public interface ELEVATOR {
-        
+        int LEFT = 15;
+        int RIGHT = 16;
+        double UP_VELOCITY = 0.2;
+        double DOWN_VELOCITY = 0.2;
     }
 
     public interface INTAKE {
@@ -91,7 +94,8 @@ public interface Constants {
     }
 
     public interface FEEDER {
-        
+        int FEEDER_MOTOR = 17;
+        double VELOCITY = 0.7;
     }
 
     public interface SHOOTER {

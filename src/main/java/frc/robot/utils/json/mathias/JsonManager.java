@@ -1,4 +1,4 @@
-public class JsonManager {
+// public class JsonManager {
 
     // public static <T> T convertToModel(String json, Class<T> model){
     //     return new Gson().fromJson(json, model);
@@ -18,7 +18,7 @@ public class JsonManager {
     //     return json;
     // }
 
-    public static void main(String[] args) {
+//     public static void main(String[] args) {
         
-    }
-}
+//     }
+// }

@@ -10,6 +10,7 @@ import frc.robot.Constants.CONTROLLER;
 import frc.robot.Constants.SWERVE;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.FeederCommand;
 // import frc.robot.commands.LimeLightTurretCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.DebouncedButton;
@@ -55,6 +56,9 @@ public class RobotContainer {
 
     // a.whenHeld(new LimeLightTurretCommand(true));
     // a.whenReleased(new LimeLightTurretCommand(false));
+
+    leftBumber.whileHeld(new FeederCommand());
+    // leftBumber.whenReleased(new FeederCommand(true));
   }
 
   private static double deadband(double value, double deadband) {
