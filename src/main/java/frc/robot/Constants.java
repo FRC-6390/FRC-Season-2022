@@ -5,10 +5,12 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.subsystems.DesiredPosition;
+import frc.robot.utils.Module;
 
 public interface Constants {
 
@@ -33,10 +35,15 @@ public interface Constants {
         int BACK_RIGHT_ROTATION = 7;
         int BACK_RIGHT_ENCODER = 11;
 
-        double FRONT_LEFT_OFFSET = -Math.toRadians(195.46051025390625);//309.814453125); //79.44488525390625 //309.375 //312
-        double FRONT_RIGHT_OFFSET = -Math.toRadians(62.84179687500001);//242.04254150390622+180);//16.16363525390625); //211.102294921875 //15.0238037109375 //15 //373.963623046875
-        double BACK_LEFT_OFFSET = -Math.toRadians(96.94061279296875);//80.0628662109375);//335.56365966796875 //78.56597900390625 //79 //79.00543212890625
-        double BACK_RIGHT_OFFSET = -Math.toRadians(70.13397216796875);//251.0101318359375+180);//348.22265625);//155.126953125 //348.046875 //350
+        double FRONT_LEFT_OFFSET = -Math.toRadians(197.3968505859375);//309.814453125); //79.44488525390625 //309.375 //312
+        double FRONT_RIGHT_OFFSET = -Math.toRadians(62.68524169921874);//242.04254150390622+180);//16.16363525390625); //211.102294921875 //15.0238037109375 //15 //373.963623046875
+        double BACK_LEFT_OFFSET = -Math.toRadians(99.02801513671875);//80.0628662109375);//335.56365966796875 //78.56597900390625 //79 //79.00543212890625
+        double BACK_RIGHT_OFFSET = -Math.toRadians(72.8668212890625);//251.0101318359375+180);//348.22265625);//155.126953125 //348.046875 //350
+   
+        // Module FRONT_LEFT_MODULE = new Module(FRONT_LEFT_DRIVE, FRONT_LEFT_ROTATION, FRONT_LEFT_ENCODER, FRONT_LEFT_OFFSET);
+        // Module FRONT_RIGHT_MODULE = new Module(FRONT_RIGHT_DRIVE, FRONT_RIGHT_ROTATION, FRONT_RIGHT_ENCODER, FRONT_RIGHT_OFFSET);
+        // Module BACK_LEFT_MODULE = new Module(BACK_LEFT_DRIVE, BACK_LEFT_ROTATION, BACK_LEFT_ENCODER, BACK_LEFT_OFFSET);
+        // Module BACK_RIGHT_MODULE = new Module(BACK_RIGHT_DRIVE, BACK_RIGHT_ROTATION, BACK_RIGHT_ENCODER, BACK_RIGHT_OFFSET);
     }
 
     public interface CONTROLLER {

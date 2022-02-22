@@ -10,7 +10,7 @@ import frc.robot.Constants.CONTROLLER;
 import frc.robot.Constants.SWERVE;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.FeederCommand;
+//import frc.robot.commands.FeederCommand;
 // import frc.robot.commands.LimeLightTurretCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.DebouncedButton;
@@ -22,8 +22,6 @@ public class RobotContainer {
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
   b = new JoystickButton(controller, CONTROLLER.B),
-  x = new JoystickButton(controller, CONTROLLER.X),
-  y = new JoystickButton(controller, CONTROLLER.Y),
   leftBumber = new JoystickButton(controller, CONTROLLER.LEFT_BUMPER),
   rightBumber = new JoystickButton(controller, CONTROLLER.RIGHT_BUMPER),
   leftStick = new JoystickButton(controller, CONTROLLER.LEFT_JOYSTICK),
@@ -39,7 +37,10 @@ public class RobotContainer {
   left = new JoystickButton(controller, CONTROLLER.LEFT);
 
   public static DebouncedButton back = new DebouncedButton(controller, CONTROLLER.BACK, CONTROLLER.DEBOUNCE_PERIOD),
-  start = new DebouncedButton(controller, CONTROLLER.START, CONTROLLER.DEBOUNCE_PERIOD);
+  start = new DebouncedButton(controller, CONTROLLER.START, CONTROLLER.DEBOUNCE_PERIOD),
+  x = new DebouncedButton(controller, CONTROLLER.X),
+  y = new DebouncedButton(controller, CONTROLLER.Y);
+
   
   public RobotContainer() {
     driveTrain.reset(true);
@@ -57,7 +58,7 @@ public class RobotContainer {
     // a.whenHeld(new LimeLightTurretCommand(true));
     // a.whenReleased(new LimeLightTurretCommand(false));
 
-    leftBumber.whileHeld(new FeederCommand());
+    //leftBumber.whileHeld(new FeederCommand());
     // leftBumber.whenReleased(new FeederCommand(true));
   }
 
