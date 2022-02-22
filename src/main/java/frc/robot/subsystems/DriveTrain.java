@@ -85,27 +85,24 @@ public class DriveTrain extends SubsystemBase {
     chassisSpeeds = speeds;
   }
 
-  @Override
-  public void periodic() {
-    if(Math.abs(chassisSpeeds.omegaRadiansPerSecond) > 0 ){ //add velocity to fix mushy feeling
-      desiredHeading = pose.getRotation().getDegrees();
-    }else{      
-      chassisSpeeds.omegaRadiansPerSecond += driftCorrectionPID.calculate(pose.getRotation().getDegrees(), desiredHeading);
-    }
-    SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
-    SwerveDriveKinematics.desaturateWheelSpeeds(states, SWERVE.MAX_VELCOCITY);
-    for (int i = 0; i < states.length; i++) swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
-    pose = odometry.update(rotation(), states);    
+  public void driftCorrection(ChassisSpeeds speeds){
+    double[] acceleration = new double[3];
+    gyro.getAccelerometerAngles(acceleration);
+    if(Math.abs(speeds.omegaRadiansPerSecond) > 0 && acceleration[2] > 1) desiredHeading = pose.getRotation().getDegrees();
+    else speeds.omegaRadiansPerSecond += driftCorrectionPID.calculate(pose.getRotation().getDegrees(), desiredHeading);
   }
 
-  // public void updateOffsets(int a,int b,int c, int d){
-  //   swerveModules[0] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.FRONT_LEFT_DRIVE, SWERVE.FRONT_LEFT_ROTATION, SWERVE.FRONT_LEFT_ENCODER, a);
-  //   swerveModules[1] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.FRONT_RIGHT_DRIVE, SWERVE.FRONT_RIGHT_ROTATION, SWERVE.FRONT_RIGHT_ENCODER, b);
-  //   swerveModules[2] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.BACK_LEFT_DRIVE, SWERVE.BACK_LEFT_ROTATION, SWERVE.BACK_LEFT_ENCODER, c);
-  //   swerveModules[3] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.BACK_RIGHT_DRIVE, SWERVE.BACK_RIGHT_ROTATION, SWERVE.BACK_RIGHT_ENCODER, d);
-  // }
-
-
+  @Override
+  public void periodic() {
+    driftCorrection(chassisSpeeds);
+    SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, SWERVE.MAX_VELCOCITY);
+    for (int i = 0; i < states.length; i++){ 
+      swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
+      states[i].speedMetersPerSecond = Math.abs(swerveModules[i].getDriveVelocity());
+    }
+    pose = odometry.update(rotation(), states);    
+  }
 }
 
 
