@@ -17,11 +17,11 @@ public class Intake extends SubsystemBase {
   public Intake() {
     left = new CANSparkMax(INTAKE.LEFT, MotorType.kBrushless);
     right = new CANSparkMax(INTAKE.RIGHT, MotorType.kBrushless);
-    right.follow(left, true);
   }
 
   public void set(double speed){
     left.set(speed);
+    right.set(-speed);
   }
 
   @Override

@@ -4,11 +4,18 @@ import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -19,13 +26,15 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ROBOT;
 import frc.robot.Constants.SWERVE;;
 
 public class DriveTrain extends SubsystemBase {
 
-  private SwerveDriveKinematics kinematics;
+  private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(SWERVE.SWERVE_LOCATIONS);;
   private SwerveDriveOdometry odometry;
   private SwerveModule[] swerveModules = new SwerveModule[4];
   private PigeonIMU gyro;
@@ -44,7 +53,7 @@ public class DriveTrain extends SubsystemBase {
     swerveModules[2] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.BACK_LEFT_DRIVE, SWERVE.BACK_LEFT_ROTATION, SWERVE.BACK_LEFT_ENCODER, SWERVE.BACK_LEFT_OFFSET);
     swerveModules[3] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.BACK_RIGHT_DRIVE, SWERVE.BACK_RIGHT_ROTATION, SWERVE.BACK_RIGHT_ENCODER, SWERVE.BACK_RIGHT_OFFSET);
     
-    kinematics = new SwerveDriveKinematics(SWERVE.SWERVE_LOCATIONS);
+    
     odometry = new SwerveDriveOdometry(kinematics, rotation());
     pose = new Pose2d(startingX,startingY, rotation());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot X", ()->x());
