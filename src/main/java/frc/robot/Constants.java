@@ -7,6 +7,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.subsystems.DesiredPosition;
@@ -86,6 +87,7 @@ public interface Constants {
         frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0.021,0.00,0);
         DesiredPosition[] AUTO_TEST_XY_POSITIONS = {new DesiredPosition(1,2,0), new DesiredPosition(2,2,0), new DesiredPosition(2,1,0), new DesiredPosition(2,2,0), new DesiredPosition(3,2,0), new DesiredPosition(2,2,0), new DesiredPosition(2,3,0), new DesiredPosition(2,2,0),};
         DesiredPosition[] AUTO_TEST_ROTATION_POSITIONS = {new DesiredPosition(90)};
+        DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(1,0,0)};
     }
 
     public interface ELEVATOR {
@@ -93,6 +95,8 @@ public interface Constants {
         int RIGHT = 16;
         double UP_VELOCITY = 0.2;
         double DOWN_VELOCITY = 0.2;
+        int TOP_LIMIT_SWITCH = 0;
+        int BOTTOM_LIMIT_SWITCH = 1;
     }
 
     public interface INTAKE {

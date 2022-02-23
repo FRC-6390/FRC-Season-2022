@@ -2,14 +2,16 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class FeederCommand extends CommandBase {
 
-  private boolean end;
+  private double intakeVelocity, feederVelocity;
 
-  public FeederCommand() {
-    
+  public FeederCommand(double intakeSpeed, double feederSpeed) {
+    intakeVelocity = intakeSpeed;
+    feederVelocity = feederSpeed;
   }
 
   @Override
@@ -17,7 +19,8 @@ public class FeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-    Feeder.setMotorSpeed(0.5);
+    Intake.setMotorSpeed(intakeVelocity);
+    Feeder.setMotorSpeed(feederVelocity);
   }
 
   @Override

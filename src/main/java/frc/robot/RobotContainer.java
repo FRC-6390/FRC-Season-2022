@@ -10,6 +10,7 @@ import frc.robot.Constants.CONTROLLER;
 import frc.robot.Constants.SWERVE;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.FeederCommand;
 //import frc.robot.commands.FeederCommand;
 // import frc.robot.commands.LimeLightTurretCommand;
@@ -18,7 +19,7 @@ import frc.robot.utils.DebouncedButton;
 
 public class RobotContainer {
 
-  public static DriveTrain driveTrain = new DriveTrain(2, 2);
+  public static DriveTrain driveTrain = new DriveTrain(0, 0);
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -56,13 +57,17 @@ public class RobotContainer {
       }
     });
 
-    b.whileHeld(new FeederCommand());
+    
 
     // a.whenHeld(new LimeLightTurretCommand(true));
     // a.whenReleased(new LimeLightTurretCommand(false));
+    // a.whenPressed(new ElevatorDownCommand(-0.2));
 
-    //leftBumber.whileHeld(new FeederCommand());
-    // leftBumber.whenReleased(new FeederCommand(true));
+    y.whileHeld(new ElevatorCommand(0.5));
+    a.whileHeld(new ElevatorCommand(-0.5));
+    leftBumber.whileHeld(new FeederCommand(0.8, 0.5));
+    rightBumber.whileHeld(new FeederCommand(-0.5, 0.0));
+
   }
 
   private static double deadband(double value, double deadband) {
@@ -92,7 +97,8 @@ public class RobotContainer {
   }
 
   public Command getAutoCommand(){
-    return new DesiredPositionCommand(driveTrain, Constants.AUTO.AUTO_TEST_ROTATION_POSITIONS);
+    return new DesiredPositionCommand(driveTrain, Constants.AUTO.AUTO_1_POSITIONS);
+    // return new FollowPathCommand(driveTrain);
   }
 
 }

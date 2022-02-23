@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import com.ctre.phoenix.sensors.PigeonIMU;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -18,7 +21,7 @@ import frc.robot.Constants.SWERVE;
 
 public class DriveTrain extends SubsystemBase {
 
-  private SwerveDriveKinematics kinematics;
+  private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(SWERVE.SWERVE_LOCATIONS);;
   private SwerveDriveOdometry odometry;
   private SwerveModule[] swerveModules = new SwerveModule[4];
   private PigeonIMU gyro;
@@ -28,6 +31,7 @@ public class DriveTrain extends SubsystemBase {
   private frc.robot.utils.PID driftCorrectionPID = new frc.robot.utils.PID(0.07, 0.00, 0.004);
   private double desiredHeading;
   private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+
 
   public DriveTrain(double startingX, double startingY) {
     this.startingX = startingX;
