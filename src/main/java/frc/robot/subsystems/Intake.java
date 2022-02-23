@@ -12,14 +12,15 @@ import frc.robot.Constants.SHOOTER;;
 
 public class Intake extends SubsystemBase {
 
-  private CANSparkMax left, right;
+  private static CANSparkMax left;
+  private static CANSparkMax right;
 
   public Intake() {
     left = new CANSparkMax(INTAKE.LEFT, MotorType.kBrushless);
     right = new CANSparkMax(INTAKE.RIGHT, MotorType.kBrushless);
   }
 
-  public void set(double speed){
+  public static void setMotorSpeed(double speed){
     left.set(speed);
     right.set(-speed);
   }

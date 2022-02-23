@@ -6,16 +6,18 @@ import frc.robot.subsystems.Feeder;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ElevatorCommand extends CommandBase {
+public class ElevatorDownCommand extends CommandBase {
 
   private boolean end;
   private double velocity;
 
-  public ElevatorCommand(double speed) {
+  public ElevatorDownCommand(double speed) {
     velocity = speed;
   }
+
 
   @Override
   public void initialize() {}
@@ -23,7 +25,10 @@ public class ElevatorCommand extends CommandBase {
   @Override
   public void execute() {
     Elevator.setMotorsIdleMode(IdleMode.kBrake);
-    Elevator.setMotorSpeed(velocity);
+    
+    if(Elevator.getTopSwitch() == false && Elevator.getBottomSwitch()){
+      Elevator.setMotorSpeed(velocity);
+    }   
   }
 
   @Override

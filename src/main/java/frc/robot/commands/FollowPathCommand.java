@@ -33,14 +33,14 @@ public class FollowPathCommand extends CommandBase{
   public void execute() {
         //test
         // This will load the file "Example Path.path" and generate it with a max velocity of 8 m/s and a max acceleration of 5 m/s^2
-        PathPlannerTrajectory examplePath = PathPlanner.loadPath("New Path", 8, 2);
+        PathPlannerTrajectory examplePath = PathPlanner.loadPath("/home/lvuser/deploy/pathplanner/New Path", 8, 1);
 
         // Sample the state of the path at 1.2 seconds
         // To access PathPlanner specific information, such as holonomic rotation, the state must be cast to a PathPlannerState
         PathPlannerState exampleState = (PathPlannerState) examplePath.sample(1.2);
 
         // Print the holonomic rotation at the sampled time
-    System.out.println(exampleState.holonomicRotation.getDegrees());
+        System.out.println(exampleState.holonomicRotation.getDegrees());
   }
 
   @Override

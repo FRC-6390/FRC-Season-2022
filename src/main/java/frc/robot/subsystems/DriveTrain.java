@@ -43,6 +43,7 @@ public class DriveTrain extends SubsystemBase {
   private Pose2d pose;
   private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
+
   public DriveTrain(double startingX, double startingY) {
     this.startingX = startingX;
     this.startingY = startingY;
@@ -91,12 +92,18 @@ public class DriveTrain extends SubsystemBase {
     chassisSpeeds = speeds;
   }
 
+  public void setModuleStates(SwerveModuleState[] desiredStates){
+    
+  }
+
   @Override
   public void periodic() {
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SWERVE.MAX_VELCOCITY);
     pose = odometry.update(rotation(), states);
-    for (int i = 0; i < states.length; i++) swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
+    for (int i = 0; i < states.length; i++){
+      swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
+    }
   }
 
 }
