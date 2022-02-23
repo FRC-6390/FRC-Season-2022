@@ -62,6 +62,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     CommandScheduler.getInstance().schedule(container.getDriveCommand());
+
+    // if(RobotContainer.x.debounced()){
+    //   RobotContainer.driveTrain.updateOffsets();
+    // }
+
+    // if(RobotContainer.y.debounced()){
+    //   RobotContainer.driveTrain.updateOffsets(0,0,0,0);
+    // }
     
   }
 

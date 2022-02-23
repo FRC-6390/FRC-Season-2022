@@ -4,14 +4,9 @@ import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
-
+import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -25,12 +20,10 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.PID;
 import frc.robot.Constants.ROBOT;
-import frc.robot.Constants.SWERVE;;
+import frc.robot.Constants.SWERVE;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -41,6 +34,8 @@ public class DriveTrain extends SubsystemBase {
   private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0,0,0);
   private double startingX, startingY;
   private Pose2d pose;
+  private frc.robot.utils.PID driftCorrectionPID = new frc.robot.utils.PID(0.02, 0.00, 0.0);
+  private double desiredHeading;
   private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
 
@@ -52,14 +47,15 @@ public class DriveTrain extends SubsystemBase {
     swerveModules[0] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.FRONT_LEFT_DRIVE, SWERVE.FRONT_LEFT_ROTATION, SWERVE.FRONT_LEFT_ENCODER, SWERVE.FRONT_LEFT_OFFSET);
     swerveModules[1] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.FRONT_RIGHT_DRIVE, SWERVE.FRONT_RIGHT_ROTATION, SWERVE.FRONT_RIGHT_ENCODER, SWERVE.FRONT_RIGHT_OFFSET);
     swerveModules[2] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.BACK_LEFT_DRIVE, SWERVE.BACK_LEFT_ROTATION, SWERVE.BACK_LEFT_ENCODER, SWERVE.BACK_LEFT_OFFSET);
-    swerveModules[3] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.BACK_RIGHT_DRIVE, SWERVE.BACK_RIGHT_ROTATION, SWERVE.BACK_RIGHT_ENCODER, SWERVE.BACK_RIGHT_OFFSET);
-    
-    
+    swerveModules[3] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.BACK_RIGHT_DRIVE, SWERVE.BACK_RIGHT_ROTATION, SWERVE.BACK_RIGHT_ENCODER, SWERVE.BACK_RIGHT_OFFSET  );
+
+    kinematics = new SwerveDriveKinematics(SWERVE.SWERVE_LOCATIONS);
     odometry = new SwerveDriveOdometry(kinematics, rotation());
     pose = new Pose2d(startingX,startingY, rotation());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot X", ()->x());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Y", ()->y());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Rotation",()->rotation().getDegrees());
+    desiredHeading = pose.getRotation().getDegrees();
   }
 
   public void reset(boolean zeroGyro){
@@ -70,6 +66,7 @@ public class DriveTrain extends SubsystemBase {
 
   public void zero(){
     gyro.setFusedHeading(0.0);
+    desiredHeading = 0;
   }
 
   public PigeonIMU getGyro(){
@@ -92,20 +89,24 @@ public class DriveTrain extends SubsystemBase {
     chassisSpeeds = speeds;
   }
 
-  public void setModuleStates(SwerveModuleState[] desiredStates){
-    
+  public void driftCorrection(ChassisSpeeds speeds){
+    double[] acceleration = new double[3];
+    gyro.getAccelerometerAngles(acceleration);
+    if(Math.abs(speeds.omegaRadiansPerSecond) > 0 && acceleration[2] > 1) desiredHeading = pose.getRotation().getDegrees();
+    else speeds.omegaRadiansPerSecond += driftCorrectionPID.calculate(pose.getRotation().getDegrees(), desiredHeading);
   }
 
   @Override
   public void periodic() {
+    driftCorrection(chassisSpeeds);
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SWERVE.MAX_VELCOCITY);
-    pose = odometry.update(rotation(), states);
-    for (int i = 0; i < states.length; i++){
+    for (int i = 0; i < states.length; i++){ 
       swerveModules[i].set(states[i].speedMetersPerSecond/SWERVE.MAX_VELCOCITY*SWERVE.MAX_VOLTAGE, states[i].angle.getRadians());
+      states[i].speedMetersPerSecond = Math.abs(swerveModules[i].getDriveVelocity());
     }
+    pose = odometry.update(rotation(), states);    
   }
-
 }
 
 
