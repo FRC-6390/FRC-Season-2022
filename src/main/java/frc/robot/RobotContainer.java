@@ -10,6 +10,7 @@ import frc.robot.Constants.CONTROLLER;
 import frc.robot.Constants.SWERVE;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.FeederCommand;
 //import frc.robot.commands.FeederCommand;
 // import frc.robot.commands.LimeLightTurretCommand;
 import frc.robot.subsystems.DriveTrain;
@@ -54,6 +55,8 @@ public class RobotContainer {
           if(start.get())driveTrain.reset(leftStick.get());
       }
     });
+
+    b.whileHeld(new FeederCommand());
 
     // a.whenHeld(new LimeLightTurretCommand(true));
     // a.whenReleased(new LimeLightTurretCommand(false));

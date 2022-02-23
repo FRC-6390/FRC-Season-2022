@@ -17,7 +17,7 @@ public class FeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-    Feeder.setMotorSpeed(0.8);
+    Feeder.setMotorSpeed(0.5);
   }
 
   @Override

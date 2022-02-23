@@ -9,21 +9,31 @@ import frc.robot.Constants;
 
 public class Feeder extends SubsystemBase {
     private static CANSparkMax feederMotor;
+    private static CANSparkMax left;
+    private static CANSparkMax right;
+
 
     static {
         feederMotor = new CANSparkMax(Constants.FEEDER.FEEDER_MOTOR, MotorType.kBrushless);
+        left = new CANSparkMax(15, MotorType.kBrushless);
+        right = new CANSparkMax(16, MotorType.kBrushless);
+
     }
 
     public Feeder(){
-        setMotorsIdleMode(IdleMode.kCoast);
+        setMotorsIdleMode(IdleMode.kBrake);
+        
     }
 
     public static void setMotorSpeed(double velocity){
-        feederMotor.set(velocity);
+        left.set(velocity);
+        right.set(velocity);
     }
 
     public static void setMotorsIdleMode(IdleMode mode){
-        feederMotor.setIdleMode(mode);
+        left.setIdleMode(mode);
+        right.setIdleMode(mode);
+
     }
 
     @Override

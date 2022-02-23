@@ -57,7 +57,7 @@ public interface Constants {
         int X = 3;
         int Y = 4;
         int LEFT_BUMPER = 5;
-        int RIGHT_BUMPER = 5;
+        int RIGHT_BUMPER = 6;
         int BACK = 7;
         int START = 8;
         int LEFT_JOYSTICK = 9;

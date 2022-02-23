@@ -1,12 +1,7 @@
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
-import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -18,7 +13,6 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.PID;
 import frc.robot.Constants.ROBOT;
 import frc.robot.Constants.SWERVE;
 
@@ -31,7 +25,7 @@ public class DriveTrain extends SubsystemBase {
   private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0,0,0);
   private double startingX, startingY;
   private Pose2d pose;
-  private frc.robot.utils.PID driftCorrectionPID = new frc.robot.utils.PID(0.02, 0.00, 0.0);
+  private frc.robot.utils.PID driftCorrectionPID = new frc.robot.utils.PID(0.07, 0.00, 0.004);
   private double desiredHeading;
   private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
@@ -85,11 +79,12 @@ public class DriveTrain extends SubsystemBase {
     chassisSpeeds = speeds;
   }
 
+  double pXY = 0;
   public void driftCorrection(ChassisSpeeds speeds){
-    double[] acceleration = new double[3];
-    gyro.getAccelerometerAngles(acceleration);
-    if(Math.abs(speeds.omegaRadiansPerSecond) > 0 && acceleration[2] > 1) desiredHeading = pose.getRotation().getDegrees();
-    else speeds.omegaRadiansPerSecond += driftCorrectionPID.calculate(pose.getRotation().getDegrees(), desiredHeading);
+    double xy = Math.abs(speeds.vxMetersPerSecond) + Math.abs(speeds.vyMetersPerSecond);
+    if(Math.abs(speeds.omegaRadiansPerSecond) > 0.0 || pXY <= 0) desiredHeading = pose.getRotation().getDegrees();
+    else if(xy > 0) speeds.omegaRadiansPerSecond += driftCorrectionPID.calculate(pose.getRotation().getDegrees(), desiredHeading);
+    pXY = xy;
   }
 
   @Override
