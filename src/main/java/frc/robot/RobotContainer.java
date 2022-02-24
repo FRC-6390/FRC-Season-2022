@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AUTO;
 import frc.robot.Constants.CONTROLLER;
 import frc.robot.Constants.SWERVE;
+import frc.robot.commands.ClimbArmsCommand;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorCommand;
@@ -65,6 +66,7 @@ public class RobotContainer {
 
     y.whileHeld(new ElevatorCommand(0.5));
     a.whileHeld(new ElevatorCommand(-0.5));
+    // x.whenPressed(new ClimbArmsCommand(140));
     leftBumber.whileHeld(new FeederCommand(0.8, 0.5));
     rightBumber.whileHeld(new FeederCommand(-0.5, 0.0));
 

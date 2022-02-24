@@ -16,7 +16,7 @@ import frc.robot.utils.Module;
 public interface Constants {
 
     public interface SWERVE {
-        double MAX_VOLTAGE = 12.0;
+        double MAX_VOLTAGE = 10.0;
         double MAX_VELCOCITY = 6380.0/ 60* SdsModuleConfigurations.MK4_L1.getDriveReduction() * SdsModuleConfigurations.MK4_L1.getWheelDiameter();
         double MAX_ANGULAR = MAX_VELCOCITY / Math.hypot(ROBOT.TRACKWIDTH/2, ROBOT.WHEELBASE/2);
         Translation2d[] SWERVE_LOCATIONS = {ROBOT.FRONT_LEFT, ROBOT.FRONT_RIGHT, ROBOT.BACK_LEFT, ROBOT.BACK_RIGHT};
@@ -84,10 +84,10 @@ public interface Constants {
 
     public interface AUTO {
         frc.robot.utils.PID DEFUALT_DRIVE_PID = new frc.robot.utils.PID(1,0,0);
-        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0.021,0.00,0);
+        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0.028,0.02,0);
         DesiredPosition[] AUTO_TEST_XY_POSITIONS = {new DesiredPosition(1,2,0), new DesiredPosition(2,2,0), new DesiredPosition(2,1,0), new DesiredPosition(2,2,0), new DesiredPosition(3,2,0), new DesiredPosition(2,2,0), new DesiredPosition(2,3,0), new DesiredPosition(2,2,0),};
         DesiredPosition[] AUTO_TEST_ROTATION_POSITIONS = {new DesiredPosition(90)};
-        DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(1,0,0)};
+        DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(-0.9, -0.2), new DesiredPosition(0, -3.2, -45), new DesiredPosition(0, -4, 135)};
     }
 
     public interface ELEVATOR {
@@ -148,6 +148,6 @@ public interface Constants {
 
     public interface PID {
         double DEFUALT_LIMIT = 0.05;
-        double DEFUALT_THRESHOLD = 0.05;
+        double DEFUALT_THRESHOLD = 0.1;
     }
 } 

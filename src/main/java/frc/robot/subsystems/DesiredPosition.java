@@ -32,14 +32,14 @@ public class DesiredPosition {
     }
 
     public DesiredPosition(Pose2d pos, PID drive ,PID rotation) {
-        this.x = pos.getX();
-        this.y = pos.getY();
+        this.x = pos.getX()* 1.25;
+        this.y = -pos.getY();
         this.t = pos.getRotation().getDegrees();
-        xPID = new PID(pos.getX(), drive.getP(), drive.getI(), drive.getD());
-        yPID = new PID(pos.getY(), drive.getP(), drive.getI(), drive.getD());
+        xPID = new PID(pos.getX()* 1.25, drive.getP(), drive.getI(), drive.getD());
+        yPID = new PID(-pos.getY(), drive.getP(), drive.getI(), drive.getD());
         rPID = rotation;
-        xPID.setSetpoint(pos.getX());
-        yPID.setSetpoint(pos.getY());
+        xPID.setSetpoint(pos.getX() * 1.25);
+        yPID.setSetpoint(-pos.getY());
         rPID.setSetpoint(pos.getRotation().getDegrees());
         
 
@@ -49,7 +49,6 @@ public class DesiredPosition {
         double x = ignoreDrive ? 0 : xPID.calculate(currentPos.x());
         double y = ignoreDrive ? 0 : yPID.calculate(currentPos.y());
         double t = ignoreRotation ? 0 : rPID.calculate(currentPos.rotation().getDegrees());
-        System.out.println(t);
         return ChassisSpeeds.fromFieldRelativeSpeeds(x, y, t, currentPos.rotation());
     }
 
