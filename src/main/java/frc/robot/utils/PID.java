@@ -5,29 +5,19 @@ import frc.robot.Constants;
 
 public class PID {
 
-    double p,i,d,limit,error, prevError,setpoint, errorSum,threshold, current;
+    double p,i,d,limit, error, prevError, errorSum,threashhold;
     double previousTime = Timer.getFPGATimestamp();
-
-    public PID(double p, double i, double d){
-        this(0.0, p,i,d);
-    }
     
-    public PID(double setpoint, double p, double i, double d){
-        this(setpoint, p,i,d, Constants.PID.DEFUALT_LIMIT,Constants.PID.DEFUALT_THRESHOLD);
-    }
-
-    public PID(double setpoint, double p, double i, double d, double limit, double threshold){
+    public PID(double p, double i, double d, double limit, double threashhold){
         this.p = p;
         this.i = i;
         this.d = d;
         this.limit = limit;
-        this.setpoint = setpoint;
-        this.threshold = threshold;
+        this.threashhold = threashhold;
     }
 
-    public double calculate(double current){
-        this.current = current;
-        error = setpoint - current;
+    public double calc(double error){
+        this.error = error;
         double dt = Timer.getFPGATimestamp() - previousTime;
         if(Math.abs(error) < limit) errorSum += error * i;
         double errorRate = (error - prevError) / dt;
@@ -36,33 +26,12 @@ public class PID {
         return p*error + i *errorSum + d * errorRate;
     }
 
-    public double calculate(double current, double setpoint){
-        setSetpoint(setpoint);
-        return calculate(current);
+    public double calc(double current, double setpoint){
+        return calc(setpoint - current);
     }
 
-    public double getP() {
-        return p;
-    }
-
-    public double getI() {
-        return i;
-    }
-
-    public double getD() {
-        return d;
-    }
-
-    public double getSetpoint() {
-        return setpoint;
-    }
-
-    public void setSetpoint(double setpoint) {
-        this.setpoint = setpoint;
-    }
-
-    public boolean atSetpoint(){
-        return !Double.isNaN(current) ? (Math.abs((setpoint-current)) < threshold) : false;
+    public boolean threshhold(double error){
+        return Math.abs(error) < threashhold;
     }
 
     public double getError(){

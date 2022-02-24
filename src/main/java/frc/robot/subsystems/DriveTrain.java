@@ -12,6 +12,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -28,16 +30,16 @@ public class DriveTrain extends SubsystemBase {
   private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0,0,0);
   private double startingX, startingY;
   private Pose2d pose;
-  private frc.robot.utils.PID driftCorrectionPID = new frc.robot.utils.PID(0.07, 0.00, 0.004);
+  private frc.robot.utils.PID driftCorrectionPID = new frc.robot.utils.PID(0.07, 0.00, 0.004,0,0);
   private double desiredHeading;
   private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-
+  private PowerDistribution pdp;
 
   public DriveTrain(double startingX, double startingY) {
     this.startingX = startingX;
     this.startingY = startingY;
     gyro = new PigeonIMU(ROBOT.GYRO_PORT); 
-
+    pdp = new PowerDistribution(14, ModuleType.kRev);
     swerveModules[0] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.FRONT_LEFT_DRIVE, SWERVE.FRONT_LEFT_ROTATION, SWERVE.FRONT_LEFT_ENCODER, SWERVE.FRONT_LEFT_OFFSET);
     swerveModules[1] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.FRONT_RIGHT_DRIVE, SWERVE.FRONT_RIGHT_ROTATION, SWERVE.FRONT_RIGHT_ENCODER, SWERVE.FRONT_RIGHT_OFFSET);
     swerveModules[2] = Mk4SwerveModuleHelper.createFalcon500(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0),Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.BACK_LEFT_DRIVE, SWERVE.BACK_LEFT_ROTATION, SWERVE.BACK_LEFT_ENCODER, SWERVE.BACK_LEFT_OFFSET);
@@ -50,6 +52,7 @@ public class DriveTrain extends SubsystemBase {
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Y", ()->y());
     tab.getLayout("Odometry", BuiltInLayouts.kList).addNumber("Robot Rotation",()->rotation().getDegrees());
     desiredHeading = pose.getRotation().getDegrees();
+    pdp.clearStickyFaults();
   }
 
   public void reset(boolean zeroGyro){
@@ -79,6 +82,10 @@ public class DriveTrain extends SubsystemBase {
     return Rotation2d.fromDegrees(gyro.getFusedHeading());
   }
 
+  public Pose2d getPos(){
+    return pose;
+  }
+
   public void drive(ChassisSpeeds speeds){
     chassisSpeeds = speeds;
   }
@@ -87,7 +94,7 @@ public class DriveTrain extends SubsystemBase {
   public void driftCorrection(ChassisSpeeds speeds){
     double xy = Math.abs(speeds.vxMetersPerSecond) + Math.abs(speeds.vyMetersPerSecond);
     if(Math.abs(speeds.omegaRadiansPerSecond) > 0.0 || pXY <= 0) desiredHeading = pose.getRotation().getDegrees();
-    else if(xy > 0) speeds.omegaRadiansPerSecond += driftCorrectionPID.calculate(pose.getRotation().getDegrees(), desiredHeading);
+    else if(xy > 0) speeds.omegaRadiansPerSecond += driftCorrectionPID.calc(pose.getRotation().getDegrees(), desiredHeading);
     pXY = xy;
   }
 
