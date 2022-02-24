@@ -19,7 +19,7 @@ import frc.robot.utils.DebouncedButton;
 
 public class RobotContainer {
 
-  public static DriveTrain driveTrain = new DriveTrain(0, 0);
+  public static DriveTrain driveTrain = new DriveTrain(2, 2);
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -97,7 +97,7 @@ public class RobotContainer {
   }
 
   public Command getAutoCommand(){
-    return new DesiredPositionCommand(driveTrain, Constants.AUTO.AUTO_1_POSITIONS);
+    return new DesiredPositionCommand(driveTrain, Constants.AUTO.AUTO_TEST_X);
     // return new FollowPathCommand(driveTrain);
   }
 

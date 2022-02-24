@@ -3,58 +3,37 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.AUTO;
 import frc.robot.utils.PID;
 
 public class DesiredPosition {
 
-    private PID xPID, yPID, rPID;
-    public boolean ignoreRotation = false, ignoreDrive = false;
-    public double x, y, t, currentX, currentY, CurrentT;
-
-    public DesiredPosition(double t) {
-        this(new Pose2d(0,0,Rotation2d.fromDegrees(t)));
-        ignoreDrive = true;
+    public Pose2d desiredPos;
+    public PID xPID, yPID, rPID;
+    public Transform2d error;
+    //pid
+    public DesiredPosition(Pose2d desiredPos) {
+        this(desiredPos, AUTO.DEFUALT_X_PID, AUTO.DEFUALT_Y_PID, AUTO.DEFUALT_ROTATION_PID);
     }
 
-    public DesiredPosition(double x, double y) {
-        this(new Pose2d(x,y,Rotation2d.fromDegrees(0)));
-        ignoreRotation = true;
+    public DesiredPosition(Pose2d desiredPos, PID xPID, PID yPID, PID rPID) {
+        this.desiredPos = desiredPos;
+        this.xPID = xPID;
+        this.yPID = yPID;
+        this. rPID = rPID;
     }
 
-    public DesiredPosition(double x, double y, double t) {
-        this(new Pose2d(x,y,Rotation2d.fromDegrees(t)));
-    }
-
-    public DesiredPosition(Pose2d pos) {
-        this(pos, AUTO.DEFUALT_DRIVE_PID, AUTO.DEFUALT_ROTATION_PID);
-    }
-
-    public DesiredPosition(Pose2d pos, PID drive ,PID rotation) {
-        this.x = pos.getX();
-        this.y = pos.getY();
-        this.t = pos.getRotation().getDegrees();
-        xPID = new PID(pos.getX(), drive.getP(), drive.getI(), drive.getD());
-        yPID = new PID(pos.getY(), drive.getP(), drive.getI(), drive.getD());
-        rPID = rotation;
-        xPID.setSetpoint(pos.getX());
-        yPID.setSetpoint(pos.getY());
-        rPID.setSetpoint(pos.getRotation().getDegrees());
+    public ChassisSpeeds getChassisSpeeds(Pose2d odometry){
+        error = desiredPos.minus(odometry);
         
-
-    }
-    
-    public ChassisSpeeds getChassisSpeeds(DriveTrain currentPos){
-        double x = ignoreDrive ? 0 : xPID.calculate(currentPos.x());
-        double y = ignoreDrive ? 0 : yPID.calculate(currentPos.y());
-        double t = ignoreRotation ? 0 : rPID.calculate(currentPos.rotation().getDegrees());
-        System.out.println(t);
-        return ChassisSpeeds.fromFieldRelativeSpeeds(x, y, t, currentPos.rotation());
+        return ChassisSpeeds.fromFieldRelativeSpeeds(xPID.calc(error.getX()),yPID.calc(error.getY()),rPID.calc(error.getRotation().getDegrees()), odometry.getRotation());
     }
 
     public boolean threashhold(){
-        return ((xPID.atSetpoint() && yPID.atSetpoint()) || ignoreDrive) && (rPID.atSetpoint() || ignoreRotation);
+        return error != null ? xPID.threshhold(error.getX()) && yPID.threshhold(error.getY()) && rPID.threshhold(error.getRotation().getDegrees()) : false;
     }
 
     public PID getXPID(){
@@ -69,16 +48,9 @@ public class DesiredPosition {
         return rPID;
     }
 
-    public double x(){
-        return x;
+    public Pose2d getPos(){
+        return desiredPos;
     }
 
-    public double y(){
-        return y;
-    }
-
-    public double theta(){
-        return t;
-    }
 
 }

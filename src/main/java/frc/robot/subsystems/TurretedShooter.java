@@ -27,8 +27,8 @@ public class TurretedShooter extends SubsystemBase {
 
   //Will rotate the turret back and forth
   private void seek(){
-    turret.set(SHOOTER.TURRET_PID.calculate(turret.getEncoder().getPosition(), seekingTo));
-    if(SHOOTER.TURRET_PID.atSetpoint()) SHOOTER.TURRET_PID.setSetpoint(seekingTo == SHOOTER.TURRET_MAX ? SHOOTER.TURRET_MIN : SHOOTER.TURRET_MAX);
+    turret.set(SHOOTER.TURRET_PID.calc(turret.getEncoder().getPosition(), seekingTo));
+   // if(SHOOTER.TURRET_PID.atSetpoint()) SHOOTER.TURRET_PID.setSetpoint(seekingTo == SHOOTER.TURRET_MAX ? SHOOTER.TURRET_MIN : SHOOTER.TURRET_MAX);
   }
 
   //Will check if limelight has found the goal and is currently looking at it
@@ -39,10 +39,10 @@ public class TurretedShooter extends SubsystemBase {
   //Will rev shooter to the velocity then shoot the ball, if the shooter doesnt reach the velocity in the given time it will fire anyways
   public void shoot(){
     angleHood();
-    shooterLeft.set(SHOOTER.SHOOTER_PID.calculate(shooterLeft.getEncoder().getVelocity(), SHOOTER.HIGH_VELOCITY));
-    if(SHOOTER.SHOOTER_PID.atSetpoint() || shooterStart < Timer.getFPGATimestamp()-SHOOTER.TIMEOUT ){
-      preShooter.set(1);
-    }
+    shooterLeft.set(SHOOTER.SHOOTER_PID.calc(shooterLeft.getEncoder().getVelocity(), SHOOTER.HIGH_VELOCITY));
+    // if(SHOOTER.SHOOTER_PID.atSetpoint() || shooterStart < Timer.getFPGATimestamp()-SHOOTER.TIMEOUT ){
+    //   preShooter.set(1);
+    // }
   }
 
   //Will angle hood for shot

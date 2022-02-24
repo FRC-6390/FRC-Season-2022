@@ -38,22 +38,13 @@ public class PointToPoint extends CommandBase {
 
 
   private void setupShuffleboard(){
-    waypointLayout.addNumber("X", () -> desiredPosition.x());
-    waypointLayout.addNumber("Y", () -> desiredPosition.y());
-    waypointLayout.addNumber("Theta", () -> desiredPosition.theta());
+    waypointLayout.addNumber("X", () -> desiredPosition.getPos().getX());
+    waypointLayout.addNumber("Y", () -> desiredPosition.getPos().getY());
+    waypointLayout.addNumber("Theta", () -> desiredPosition.getPos().getX());
     waypointLayout.addBoolean("At Threshold", () -> desiredPosition.threashhold());
-    drivelayout.addNumber("P", () -> desiredPosition.getXPID().getP());
-    drivelayout.addNumber("I", () -> desiredPosition.getXPID().getI());
-    drivelayout.addNumber("D", () -> desiredPosition.getXPID().getD());
     drivelayout.addNumber("X Error", () -> desiredPosition.getXPID().getError());
     drivelayout.addNumber("Y Error", () -> desiredPosition.getYPID().getError());
-    drivelayout.addNumber("X Setpoint", () -> desiredPosition.getXPID().getSetpoint());
-    drivelayout.addNumber("Y Setpoint", () -> desiredPosition.getYPID().getSetpoint());   
-    rotationlayout.addNumber("P", () -> desiredPosition.getRotationPID().getP());
-    rotationlayout.addNumber("I", () -> desiredPosition.getRotationPID().getI());
-    rotationlayout.addNumber("D", () -> desiredPosition.getRotationPID().getD());
-    rotationlayout.addNumber("Error", () -> desiredPosition.getRotationPID().getError());
-    rotationlayout.addNumber("Setpoint", () -> desiredPosition.getRotationPID().getSetpoint());
+    rotationlayout.addNumber("R Error", () -> desiredPosition.getRotationPID().getError());
     //shuffleboard = false;
   }
 
@@ -79,7 +70,7 @@ public class PointToPoint extends CommandBase {
       
       // desiredList.add(new DesiredPosition (jsonManager.xList.get(z), jsonManager.yList.get(z), jsonManager.thetaList.get(z)));
 
-      desiredList.add(new DesiredPosition (new Pose2d(jsonManager.xList.get(z), jsonManager.yList.get(z), Rotation2d.fromDegrees(jsonManager.thetaList.get(z)))));
+      // desiredList.add(new DesiredPosition (new Pose2d(jsonManager.xList.get(z), jsonManager.yList.get(z), Rotation2d.fromDegrees(jsonManager.thetaList.get(z)))));
       
     }
     System.out.println(desiredList);
@@ -92,7 +83,7 @@ public class PointToPoint extends CommandBase {
   @Override
   public void execute() {
     if(!desiredPosition.threashhold()){
-      drivetrain.drive(desiredPosition.getChassisSpeeds(drivetrain));
+      drivetrain.drive(desiredPosition.getChassisSpeeds(drivetrain.getPos()));
     }else{
       if (!desiredIterator.hasNext()) done = true;
       else desiredPosition = desiredIterator.next();

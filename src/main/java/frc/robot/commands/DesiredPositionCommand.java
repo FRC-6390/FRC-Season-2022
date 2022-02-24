@@ -28,22 +28,13 @@ public class DesiredPositionCommand extends CommandBase {
     }
 
     private void setupShuffleboard(){
-      waypointLayout.addNumber("X", () -> currentCord.x());
-      waypointLayout.addNumber("Y", () -> currentCord.y());
-      waypointLayout.addNumber("Theta", () -> currentCord.theta());
+      waypointLayout.addNumber("X", () -> currentCord.getPos().getX());
+      waypointLayout.addNumber("Y", () -> currentCord.getPos().getY());
+      waypointLayout.addNumber("Theta", () -> currentCord.getPos().getX());
       waypointLayout.addBoolean("At Threshold", () -> currentCord.threashhold());
-      drivelayout.addNumber("P", () -> currentCord.getXPID().getP());
-      drivelayout.addNumber("I", () -> currentCord.getXPID().getI());
-      drivelayout.addNumber("D", () -> currentCord.getXPID().getD());
       drivelayout.addNumber("X Error", () -> currentCord.getXPID().getError());
       drivelayout.addNumber("Y Error", () -> currentCord.getYPID().getError());
-      drivelayout.addNumber("X Setpoint", () -> currentCord.getXPID().getSetpoint());
-      drivelayout.addNumber("Y Setpoint", () -> currentCord.getYPID().getSetpoint());   
-      rotationlayout.addNumber("P", () -> currentCord.getRotationPID().getP());
-      rotationlayout.addNumber("I", () -> currentCord.getRotationPID().getI());
-      rotationlayout.addNumber("D", () -> currentCord.getRotationPID().getD());
-      rotationlayout.addNumber("Error", () -> currentCord.getRotationPID().getError());
-      rotationlayout.addNumber("Setpoint", () -> currentCord.getRotationPID().getSetpoint());
+      rotationlayout.addNumber("R Error", () -> currentCord.getRotationPID().getError());
       shuffleboard = false;
     }
   
@@ -57,7 +48,7 @@ public class DesiredPositionCommand extends CommandBase {
     @Override
     public void execute() {  
         if(!currentCord.threashhold()){
-          driveTrain.drive(currentCord.getChassisSpeeds(driveTrain));
+          driveTrain.drive(currentCord.getChassisSpeeds(driveTrain.getPos()));
         }else{
           if (!cords.hasNext()) done = true;
           else currentCord = cords.next();
