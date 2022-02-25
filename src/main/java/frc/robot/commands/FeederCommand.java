@@ -9,7 +9,7 @@ public class FeederCommand extends CommandBase {
 
   private double intakeVelocity, feederVelocity;
 
-  //test commit for github one more time
+  //test commit for github for a second time
   public FeederCommand(double intakeSpeed, double feederSpeed) {
     intakeVelocity = intakeSpeed;
     feederVelocity = feederSpeed;
