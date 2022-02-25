@@ -1,11 +1,10 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.AUTO;
 import frc.robot.utils.PID;
 
@@ -14,6 +13,8 @@ public class DesiredPosition {
     public Pose2d desiredPos;
     public PID xPID, yPID, rPID;
     public Transform2d error;
+    public DesiredCommand command;
+    public boolean waitToFinish;
     //pid
     public DesiredPosition(Pose2d desiredPos) {
         this(desiredPos, AUTO.DEFUALT_X_PID, AUTO.DEFUALT_Y_PID, AUTO.DEFUALT_ROTATION_PID);
@@ -28,12 +29,16 @@ public class DesiredPosition {
 
     public ChassisSpeeds getChassisSpeeds(Pose2d odometry){
         error = desiredPos.minus(odometry);
-        
+        if(command != null)command.run(); 
         return ChassisSpeeds.fromFieldRelativeSpeeds(xPID.calc(error.getX()),yPID.calc(error.getY()),rPID.calc(error.getRotation().getDegrees()), odometry.getRotation());
     }
 
     public boolean threashhold(){
-        return error != null ? xPID.threshhold(error.getX()) && yPID.threshhold(error.getY()) && rPID.threshhold(error.getRotation().getDegrees()) : false;
+        if(error == null) return false;
+        boolean result = xPID.threshhold(error.getX()) && yPID.threshhold(error.getY()) && rPID.threshhold(error.getRotation().getDegrees());
+        if (!result) return false;
+        if(waitToFinish) return command.isDone();
+        return true;
     }
 
     public PID getXPID(){
@@ -72,5 +77,14 @@ public class DesiredPosition {
         this.xPID = xPID;
         this.yPID = yPID;
         this.rPID = rPID;
+    }
+
+    public void setCommand(DesiredCommand command, boolean waitToFinish){
+        this.command = command;
+        this.waitToFinish = waitToFinish;
+    }
+
+    public DesiredCommand getCommand(){
+        return command;
     }
 }

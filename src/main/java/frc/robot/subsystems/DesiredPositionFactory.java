@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AUTO;
 import frc.robot.utils.PID;
 
@@ -24,7 +25,7 @@ public class DesiredPositionFactory {
     }
 
     public DesiredPositionFactory relative(double x, double y){
-        return relative(x,y,cords.get(cords.size()-1).desiredPos.getRotation());  
+        return relative(x,y,previous().desiredPos.getRotation());  
     }
 
     public DesiredPositionFactory relative(double x, double y, double theta){
@@ -36,7 +37,7 @@ public class DesiredPositionFactory {
     }
 
     public DesiredPositionFactory relative(Pose2d pos){
-        cords.add(new DesiredPosition(cords.get(cords.size()-1).getPos().relativeTo(pos)));
+        cords.add(new DesiredPosition(previous().getPos().relativeTo(pos)));
         return this;
     }
 
@@ -49,11 +50,24 @@ public class DesiredPositionFactory {
     }
 
     public DesiredPositionFactory to(double x, double y){
-        return to(x,y,cords.get(cords.size()-1).desiredPos.getRotation());
+        return to(x,y,previous().desiredPos.getRotation());
     }
 
     public DesiredPositionFactory to(Pose2d pos){
         cords.add(new DesiredPosition(pos));
+        return this;
+    }
+
+    public DesiredPositionFactory withCommand(Command command){
+        return withCommand(new DesiredCommand(command));
+    }
+
+    public DesiredPositionFactory withCommand(DesiredCommand command){
+        return withCommand(command, false);
+    }
+
+    public DesiredPositionFactory withCommand(DesiredCommand command, boolean waitToFinish){
+        previous().setCommand(command, waitToFinish);
         return this;
     }
 
@@ -66,7 +80,7 @@ public class DesiredPositionFactory {
     }
 
     public DesiredPositionFactory withPID(PID xPID, PID yPID,PID rPID){
-        cords.get(cords.size()-1).setPID(xPID, yPID, rPID);
+        previous().setPID(xPID, yPID, rPID);
         return this;
     }
 
@@ -75,7 +89,7 @@ public class DesiredPositionFactory {
     }
 
     public DesiredPositionFactory rotate(Rotation2d theta){
-        cords.add(new DesiredPosition(new Pose2d( cords.get(cords.size()-1).getPos().getTranslation(), theta)));
+        cords.add(new DesiredPosition(new Pose2d(previous().getPos().getTranslation(), theta)));
         return this;
     }
 
@@ -86,5 +100,9 @@ public class DesiredPositionFactory {
 
     public Iterator<DesiredPosition> build(){
         return cords.iterator();
+    }
+
+    private DesiredPosition previous(){
+        return cords.get(cords.size()-1);
     }
 }
