@@ -12,15 +12,12 @@ public class Elevator extends SubsystemBase {
     private static CANSparkMax left, right;
     private static DigitalInput topSwitch, bottomSwitch;
 
-    static {
+    public Elevator(){
         left = new CANSparkMax(Constants.ELEVATOR.LEFT, MotorType.kBrushless);
         right = new CANSparkMax(Constants.ELEVATOR.RIGHT, MotorType.kBrushless);
         topSwitch = new DigitalInput(Constants.ELEVATOR.TOP_LIMIT_SWITCH);
         bottomSwitch = new DigitalInput(Constants.ELEVATOR.BOTTOM_LIMIT_SWITCH);
-    }
-
-    public Elevator(){
-        setMotorsIdleMode(IdleMode.kCoast);
+        setMotorsIdleMode(IdleMode.kBrake);
     }
 
     public static void setMotorSpeed(double velocity){

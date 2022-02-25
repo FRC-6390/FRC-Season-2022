@@ -2,19 +2,13 @@ package frc.robot;
 
 import java.util.Iterator;
 
-import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.subsystems.DesiredPosition;
 import frc.robot.subsystems.DesiredPositionFactory;
-import frc.robot.utils.Module;
 
 public interface Constants {
 
@@ -102,6 +96,8 @@ public interface Constants {
     public interface ELEVATOR {
         int LEFT = 15;
         int RIGHT = 16;
+        int LEFT_SERVO = 0;
+        int RIGHT_SERVO = 1;
         double UP_VELOCITY = 0.2;
         double DOWN_VELOCITY = 0.2;
         int TOP_LIMIT_SWITCH = 0;

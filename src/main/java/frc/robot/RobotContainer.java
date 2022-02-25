@@ -12,15 +12,16 @@ import frc.robot.commands.ClimbArmsCommand;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorCommand;
-import frc.robot.commands.FeederCommand;
-//import frc.robot.commands.FeederCommand;
-// import frc.robot.commands.LimeLightTurretCommand;
+import frc.robot.commands.IntakeAndFeederCommand;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.DebouncedButton;
 
 public class RobotContainer {
 
   public static DriveTrain driveTrain = new DriveTrain(2, 2);
+  public Timer time = new Timer();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -29,6 +30,7 @@ public class RobotContainer {
   rightBumber = new JoystickButton(controller, CONTROLLER.RIGHT_BUMPER),
   leftStick = new JoystickButton(controller, CONTROLLER.LEFT_JOYSTICK),
   rightStick = new JoystickButton(controller, CONTROLLER.RIGHT_JOYSTICK),
+
   // POV
   top = new JoystickButton(controller, CONTROLLER.TOP),
   topRight = new JoystickButton(controller, CONTROLLER.TOP_RIGHT),
@@ -54,7 +56,19 @@ public class RobotContainer {
   private void configureButtonBindings() {
     start.whenPressed(new Runnable() {
       public void run() {
-          if(start.get())driveTrain.reset(leftStick.get());
+          if(start.get()){
+            driveTrain.reset(start.get());
+            
+            //controller rumbles when start is pressed to notify the driver that the robot has reset its odometry
+            if(!time.hasElapsed(1)){
+              RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
+              RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 1);
+            }
+            else{
+              RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
+              RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
+            }  
+          }
       }
     });
 
@@ -62,13 +76,15 @@ public class RobotContainer {
 
     // a.whenHeld(new LimeLightTurretCommand(true));
     // a.whenReleased(new LimeLightTurretCommand(false));
-    // a.whenPressed(new ElevatorDownCommand(-0.2));
 
     y.whileHeld(new ElevatorCommand(0.5));
     a.whileHeld(new ElevatorCommand(-0.5));
-    // x.whenPressed(new ClimbArmsCommand(140));
-    leftBumber.whileHeld(new FeederCommand(0.8, 0.5));
-    rightBumber.whileHeld(new FeederCommand(-0.5, 0.0));
+    // x.whenPressed(new ClimbArmsCommand(140)); //servos for climb
+
+    
+    // leftBumber.whileHeld(new IntakeAndFeederCommand(0.5, 0.0, false));      //intake only
+    leftBumber.whileHeld(new IntakeAndFeederCommand(0.0, 1, true));      //intake and feeder
+    rightBumber.whileHeld(new IntakeAndFeederCommand(0.0, 0.0, false)); //reverse the intake (set intake speed when its ready)
 
   }
 
@@ -98,9 +114,9 @@ public class RobotContainer {
     return driveTrain.getDefaultCommand();
   }
 
+  //sets the auto command
   public Command getAutoCommand(){
     return new DesiredPositionCommand(driveTrain, Constants.AUTO.AUTO_TEST_X);
-    // return new FollowPathCommand(driveTrain);
   }
 
 }

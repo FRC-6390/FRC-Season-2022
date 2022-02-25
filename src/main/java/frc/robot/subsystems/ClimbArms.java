@@ -1,29 +1,23 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ELEVATOR;
 
 public class ClimbArms extends SubsystemBase {
-    static Servo left, right;
-
-    static {
-        left = new Servo(0);
-        right = new Servo(1);
-    }
+    private static Servo left, right;
 
     public ClimbArms(){
-        // left.set(180);
+        left = new Servo(ELEVATOR.LEFT_SERVO);
+        right = new Servo(ELEVATOR.RIGHT_SERVO);
+
+        //sets the servos resting position
+        left.set(180);
         right.set(-180);
     }
 
     public static void setAngle(double angle){
-        // left.setAngle(angle);
+        left.setAngle(angle);
         right.setAngle(-angle);
     }
 
