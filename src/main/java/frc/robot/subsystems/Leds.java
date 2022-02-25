@@ -1,9 +1,6 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Leds extends SubsystemBase {
@@ -11,12 +8,16 @@ public class Leds extends SubsystemBase {
   double current;
   boolean override = false;
 
+  static {
+    Blinkin = new Spark(2);
+  }
+
   public Leds() {
-      Blinkin = new Spark(2);
+
   }
 
   public void setCustom(double value) {
-      Blinkin.set(value);
+    Blinkin.set(value);
   }
 
   public void setBlue() {
@@ -44,7 +45,6 @@ public class Leds extends SubsystemBase {
   }
   
   public void LimeLightTracking(){
-    this.override = override;
     if(override == true){
         Blinkin.set(0.69);
     }

@@ -27,6 +27,7 @@ public class DesiredPositionCommand extends CommandBase {
       
     }
 
+    //outputs all data un FRC Shuffleboard
     private void setupShuffleboard(){
       waypointLayout.addNumber("X", () -> currentCord.getPos().getX());
       waypointLayout.addNumber("Y", () -> currentCord.getPos().getY());
@@ -46,7 +47,8 @@ public class DesiredPositionCommand extends CommandBase {
     }
   
     @Override
-    public void execute() {  
+    public void execute() { 
+        //moves onto the next position when it has reached the minimum threshold of the current waypoint 
         if(!currentCord.threashhold()){
           driveTrain.drive(currentCord.getChassisSpeeds(driveTrain.getPos()));
         }else{
