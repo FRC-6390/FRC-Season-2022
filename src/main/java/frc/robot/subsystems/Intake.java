@@ -15,9 +15,12 @@ public class Intake extends SubsystemBase {
   private static CANSparkMax left;
   private static CANSparkMax right;
 
-  public Intake() {
+  static {
     left = new CANSparkMax(INTAKE.LEFT, MotorType.kBrushless);
     right = new CANSparkMax(INTAKE.RIGHT, MotorType.kBrushless);
+  }
+
+  public Intake() {
   }
 
   public static void setMotorSpeed(double speed){
