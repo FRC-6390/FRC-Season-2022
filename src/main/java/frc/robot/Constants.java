@@ -1,11 +1,14 @@
 package frc.robot;
 
+import java.util.Iterator;
+
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.subsystems.DesiredPosition;
+import frc.robot.subsystems.DesiredPositionFactory;
 
 public interface Constants {
 
@@ -83,6 +86,9 @@ public interface Constants {
         DesiredPosition[] AUTO_TEST_XY_POSITIONS = {new DesiredPosition(new Pose2d(1,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,1,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(3,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,3,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0)))};
         DesiredPosition[] AUTO_TEST_X = {new DesiredPosition(new Pose2d(3*1.25,2,Rotation2d.fromDegrees(0)))}; 
         DesiredPosition[] AUTO_TEST_ROTATION_POSITIONS = {new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(90)))};
+        Iterator<DesiredPosition> AUTO_FACTORY_XY_POSITION = new DesiredPositionFactory(2,2,0).to(2, 3).to(2,2).to(2, 1).to(2, 2).to(1, 2).to(2, 2).to(3, 2).to(2, 2).build();
+        Iterator<DesiredPosition> AUTO_FACTORY_RELATIVE_XY_POSITION = new DesiredPositionFactory(2,2,0).relative(1, 0).relative(-1,0).relative(-1, 0).relative(1, 0).relative(0, 1).relative(0, -1).relative(0, 1).relative(0, -1).build();
+        Iterator<DesiredPosition> AUTO_FACTORY_MIXED_XY_POSITION = new DesiredPositionFactory(2,2,0).relative(1, 0).origin().to(1, 2).origin().relative(0, 1).origin().to(2, 1).origin().build();
         // DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(1,0,0)};
     }
 

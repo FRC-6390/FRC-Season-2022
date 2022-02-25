@@ -49,5 +49,25 @@ public class DesiredPosition {
         return desiredPos;
     }
 
+    public void setXPID(PID xPID){
+        setDrivePID(xPID, yPID);
+    }
+    
+    public void setYPID(PID yPID){
+        setDrivePID(xPID, yPID);
+    }
 
+    public void setRotationPID(PID rPID){
+        setPID(xPID, yPID, rPID);
+    }
+
+    public void setDrivePID(PID xPID,PID yPID){
+        setPID(xPID, yPID, rPID);
+    }
+    
+    public void setPID(PID xPID,PID yPID,PID rPID){
+        this.xPID = xPID;
+        this.yPID = yPID;
+        this.rPID = rPID;
+    }
 }

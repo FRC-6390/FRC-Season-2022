@@ -22,9 +22,12 @@ public class DesiredPositionCommand extends CommandBase {
     private Iterator<DesiredPosition> cords;
 
     public DesiredPositionCommand(DriveTrain subsystem, DesiredPosition... cords) {
+      this(subsystem,Arrays.asList(cords).iterator());
+    }
+
+    public DesiredPositionCommand(DriveTrain subsystem, Iterator<DesiredPosition> cords) {
       driveTrain = subsystem;
-      this.cords = Arrays.asList(cords).iterator();
-      
+      this.cords = cords;
     }
 
     //outputs all data un FRC Shuffleboard
