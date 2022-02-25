@@ -60,11 +60,11 @@ public interface Constants {
         int START = 8;
         int LEFT_JOYSTICK = 9;
         int RIGHT_JOYSTICK = 10;
-        int RIGHT_TRIGGER = 11;
-        int LEFT_TRIGGER = 12;
     
         int LEFT_X = 0;
         int LEFT_Y = 1;
+        int LEFT_TRIGGER = 2;
+        int RIGHT_TRIGGER = 3;
         int RIGHT_X = 4;
         int RIGHT_Y = 5;
     

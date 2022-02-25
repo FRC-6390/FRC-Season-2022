@@ -20,10 +20,7 @@ public class ElevatorDownCommand extends CommandBase {
   public void execute() {
     Elevator.setMotorsIdleMode(IdleMode.kBrake);
     
-    //moves the elevator down until it is fully retracted
-    if(Elevator.getTopSwitch() == false && Elevator.getBottomSwitch() == false){
-      Elevator.setMotorSpeed(velocity);
-    }   
+
   }
 
   @Override

@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ElevatorCommand extends CommandBase {
 
   private double velocity;
+  private boolean automateElevator;
 
-  public ElevatorCommand(double speed) {
+  public ElevatorCommand(double speed, boolean automateAction) {
     velocity = speed;
+    automateElevator = automateAction;
   }
 
   @Override
@@ -17,8 +19,18 @@ public class ElevatorCommand extends CommandBase {
 
   @Override
   public void execute() {
+    
     Elevator.setMotorsIdleMode(IdleMode.kBrake);
-    Elevator.setMotorSpeed(velocity);
+
+    if(automateElevator == true){
+      //moves the elevator down until it is fully retracted
+      if(Elevator.getTopSwitch() == false && Elevator.getBottomSwitch() == false){
+        Elevator.setMotorSpeed(velocity);
+      } else Elevator.setMotorSpeed(0.0);
+    }
+    else{
+      Elevator.setMotorSpeed(velocity);
+    }
   }
 
   @Override

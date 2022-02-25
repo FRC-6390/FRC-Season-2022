@@ -39,7 +39,11 @@ public class RobotContainer {
   bottomRight = new JoystickButton(controller, CONTROLLER.BOTTOM_RIGHT),
   bottomLeft = new JoystickButton(controller, CONTROLLER.BOTTOM_LEFT),
   right = new JoystickButton(controller, CONTROLLER.BOTTOM_RIGHT),
-  left = new JoystickButton(controller, CONTROLLER.LEFT);
+  left = new JoystickButton(controller, CONTROLLER.LEFT),
+
+  //triggers
+  leftTrigger = new JoystickButton(controller, CONTROLLER.LEFT_TRIGGER),
+  rightTrigger = new JoystickButton(controller, CONTROLLER.RIGHT_TRIGGER);
 
   public static DebouncedButton back = new DebouncedButton(controller, CONTROLLER.BACK, CONTROLLER.DEBOUNCE_PERIOD),
   start = new DebouncedButton(controller, CONTROLLER.START, CONTROLLER.DEBOUNCE_PERIOD),
@@ -77,14 +81,15 @@ public class RobotContainer {
     // a.whenHeld(new LimeLightTurretCommand(true));
     // a.whenReleased(new LimeLightTurretCommand(false));
 
-    y.whileHeld(new ElevatorCommand(0.5));
-    a.whileHeld(new ElevatorCommand(-0.5));
+    y.whileHeld(new ElevatorCommand(0.5, false));
+    a.whileHeld(new ElevatorCommand(-0.5, false));
+    b.whenPressed(new ElevatorCommand(-0.3, true)); // automatic elevator command
     // x.whenPressed(new ClimbArmsCommand(140)); //servos for climb
 
     
-    // leftBumber.whileHeld(new IntakeAndFeederCommand(0.5, 0.0, false));      //intake only
-    leftBumber.whileHeld(new IntakeAndFeederCommand(0.0, 1, true));      //intake and feeder
-    rightBumber.whileHeld(new IntakeAndFeederCommand(0.0, 0.0, false)); //reverse the intake (set intake speed when its ready)
+    // leftTrigger.whileHeld(new IntakeAndFeederCommand(0.5, 0.0));      //intake only
+    leftBumber.whileHeld(new IntakeAndFeederCommand(0.4, 1));      //intake and feeder 
+    rightBumber.whileHeld(new IntakeAndFeederCommand(-0.4, 0.0)); //reverse the intake
 
   }
 
