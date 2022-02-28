@@ -13,6 +13,7 @@ import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeAndFeederCommand;
+import frc.robot.commands.LimeLightTurretCommand;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.DriveTrain;
@@ -75,11 +76,10 @@ public class RobotContainer {
           }
       }
     });
-
     
 
-    // a.whenHeld(new LimeLightTurretCommand(true));
-    // a.whenReleased(new LimeLightTurretCommand(false));
+    rightTrigger.whenHeld(new LimeLightTurretCommand(true));
+    rightTrigger.whenReleased(new LimeLightTurretCommand(false));
 
     y.whileHeld(new ElevatorCommand(0.5, false));
     a.whileHeld(new ElevatorCommand(-0.5, false));
