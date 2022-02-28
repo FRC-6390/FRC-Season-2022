@@ -102,6 +102,7 @@ public interface Constants {
         double DOWN_VELOCITY = 0.2;
         int TOP_LIMIT_SWITCH = 0;
         int BOTTOM_LIMIT_SWITCH = 1;
+        int ENCODER = 0;
     }
 
     public interface INTAKE {
