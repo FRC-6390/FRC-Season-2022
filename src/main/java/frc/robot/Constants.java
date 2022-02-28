@@ -102,11 +102,13 @@ public interface Constants {
         double DOWN_VELOCITY = 0.2;
         int TOP_LIMIT_SWITCH = 0;
         int BOTTOM_LIMIT_SWITCH = 1;
+        int SERVO_MIN = 40;
+        int SERVO_MAX = 100;
     }
 
     public interface INTAKE {
-        int LEFT = 0;
-        int RIGHT = 0;
+        int LEFT = 3;
+        int RIGHT = 4;
     }
 
     public interface FEEDER {
@@ -115,10 +117,15 @@ public interface Constants {
     }
 
     public interface SHOOTER {
-        int LEFT = 0;
-        int RIGHT = 0;
-        int TURRET = 0;
-        int PRE = 0;
+        int LEFT = 21;
+        int RIGHT = 23;
+        int TURRET = 19;
+        int PRE_RIGHT = 24;
+        int PRE_LEFT = 20;
+        int HOOD_ADJUST = 22;
+        int LEFT_LIMIT_SWITCH = 2;
+        int RIGHT_LIMIT_SWITCH = 3;
+
         double TURRET_MAX = 0;
         double TURRET_MIN = 0;
         double HIGH_VELOCITY = 0;

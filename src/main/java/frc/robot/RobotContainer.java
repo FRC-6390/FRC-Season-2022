@@ -7,20 +7,26 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AUTO;
 import frc.robot.Constants.CONTROLLER;
+import frc.robot.Constants.ELEVATOR;
 import frc.robot.Constants.SWERVE;
 import frc.robot.commands.ClimbArmsCommand;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeAndFeederCommand;
+import frc.robot.commands.LimeLightTurretCommand;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.subsystems.ClimbArms;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.LimeLightTurretSubsystem;
+import frc.robot.subsystems.TurretedShooter;
 import frc.robot.utils.DebouncedButton;
 
 public class RobotContainer {
 
   public static DriveTrain driveTrain = new DriveTrain(2, 2);
+  public static TurretedShooter turretedShooter = new TurretedShooter();
   public Timer time = new Timer();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
@@ -50,25 +56,21 @@ public class RobotContainer {
   public RobotContainer() {
     driveTrain.reset(true);
     driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->-modifyAxis(controller.getLeftY()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftX())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
+    
     configureButtonBindings();
   }
  
   private void configureButtonBindings() {
     start.whenPressed(new Runnable() {
       public void run() {
-          if(start.get()){
-            driveTrain.reset(start.get());
-            
-            //controller rumbles when start is pressed to notify the driver that the robot has reset its odometry
-            if(!time.hasElapsed(1)){
-              RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
-              RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 1);
-            }
-            else{
-              RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
-              RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
-            }  
-          }
+        // double startTime = System.currentTimeMillis();
+        driveTrain.reset(start.get());
+        
+        // RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
+        // RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 1);
+        // RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
+        // RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
+      
       }
     });
 
@@ -77,14 +79,15 @@ public class RobotContainer {
     // a.whenHeld(new LimeLightTurretCommand(true));
     // a.whenReleased(new LimeLightTurretCommand(false));
 
-    y.whileHeld(new ElevatorCommand(0.5));
-    a.whileHeld(new ElevatorCommand(-0.5));
-    // x.whenPressed(new ClimbArmsCommand(140)); //servos for climb
+    y.whileHeld(new ElevatorCommand(0.2));
+    a.whileHeld(new ElevatorCommand(-0.8));
+    b.whenActive(() -> turretedShooter.shoot());
+    // x.whenPressed(() -> LimeLightTurretSubsystem.setMotorSpeed(0.1)); //servos for climb
+    // b.whenPressed(() ->  LimeLightTurretSubsystem.setMotorSpeed(-0.1)); //servos for climb
 
     
-    // leftBumber.whileHeld(new IntakeAndFeederCommand(0.5, 0.0, false));      //intake only
-    leftBumber.whileHeld(new IntakeAndFeederCommand(0.0, 1, true));      //intake and feeder
-    rightBumber.whileHeld(new IntakeAndFeederCommand(0.0, 0.0, false)); //reverse the intake (set intake speed when its ready)
+    leftBumber.whileHeld(new IntakeAndFeederCommand(0.0, 1));      //intake and feeder
+    rightBumber.whileHeld(new IntakeAndFeederCommand(0.0, 0.0)); //reverse the intake (set intake speed when its ready)
 
   }
 

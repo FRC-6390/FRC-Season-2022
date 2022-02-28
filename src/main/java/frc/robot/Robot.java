@@ -2,9 +2,16 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.music.Orchestra;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.hal.CANAPIJNI;
+import edu.wpi.first.hal.simulation.DriverStationDataJNI;
+import edu.wpi.first.wpilibj.CAN;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.ClimbArms;
 
 public class Robot extends TimedRobot {
 
@@ -14,6 +21,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     container = new RobotContainer();
     Robot.suppressExitWarning(true);
+  
   }
 
   @Override
@@ -34,6 +42,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     //starts auto routine
+    // ClimbArms.close();
     CommandScheduler.getInstance().schedule(container.getAutoCommand());
   }
 
@@ -44,6 +53,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    // ClimbArms.close();
     CommandScheduler.getInstance().schedule(container.getDriveCommand());
   }
 
@@ -53,11 +63,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    
     CommandScheduler.getInstance().cancelAll();
 
     //makes robot sing a song
     Orchestra midi = new Orchestra();
-    midi.loadMusic("/home/lvuser/deploy/all star.chrp");
+    midi.loadMusic("/home/lvuser/deploy/champ.chrp");
     midi.addInstrument(new TalonFX(0));
     midi.addInstrument(new TalonFX(1));
     midi.addInstrument(new TalonFX(2));

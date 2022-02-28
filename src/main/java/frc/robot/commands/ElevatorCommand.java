@@ -13,11 +13,12 @@ public class ElevatorCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    Elevator.setMotorsIdleMode(IdleMode.kBrake);
+  }
 
   @Override
   public void execute() {
-    Elevator.setMotorsIdleMode(IdleMode.kBrake);
     Elevator.setMotorSpeed(velocity);
   }
 

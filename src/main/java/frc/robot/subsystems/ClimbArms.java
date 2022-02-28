@@ -7,21 +7,23 @@ import frc.robot.Constants.ELEVATOR;
 public class ClimbArms extends SubsystemBase {
     private static Servo left, right;
 
-    public ClimbArms(){
+    static {
         left = new Servo(ELEVATOR.LEFT_SERVO);
         right = new Servo(ELEVATOR.RIGHT_SERVO);
-
-        //sets the servos resting position
-        left.set(180);
-        right.set(-180);
     }
 
-    public static void setAngle(double angle){
-        left.setAngle(angle);
-        right.setAngle(-angle);
+    public static void open(){
+        left.setAngle(ELEVATOR.SERVO_MIN);
+        right.setAngle(ELEVATOR.SERVO_MAX);
+    }
+
+    public static void close(){
+        right.setAngle(ELEVATOR.SERVO_MIN);
+        left.setAngle(ELEVATOR.SERVO_MAX);
     }
 
     @Override
     public void periodic() {
+        
     }
 }

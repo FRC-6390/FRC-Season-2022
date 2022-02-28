@@ -53,7 +53,7 @@ public class LimeLightTurretSubsystem extends SubsystemBase{
     public void ChangePipeline(int Pipeline){
       pipeline.setDouble(Pipeline);
     }
-  
+
     @Override
     public void periodic() {
       

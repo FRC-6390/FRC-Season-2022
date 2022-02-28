@@ -8,12 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakeAndFeederCommand extends CommandBase {
 
   private double intakeVelocity, feederVelocity;
-  private boolean intakeAction;
 
-  public IntakeAndFeederCommand(double intakeSpeed, double feederSpeed, boolean action) {
+  public IntakeAndFeederCommand(double intakeSpeed, double feederSpeed) {
     intakeVelocity = intakeSpeed;
     feederVelocity = feederSpeed;
-    intakeAction = action;
   }
 
   @Override
@@ -21,17 +19,8 @@ public class IntakeAndFeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-
-    //if its true both the intake and feeder run
-    if(intakeAction == true){
       Intake.setMotorSpeed(intakeVelocity);
       Feeder.setMotorSpeed(feederVelocity);
-    }
-
-    //intake will only run
-    else{
-      Intake.setMotorSpeed(intakeVelocity);
-    }
   }
 
   @Override

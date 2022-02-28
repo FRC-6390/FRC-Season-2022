@@ -12,7 +12,7 @@ public class Elevator extends SubsystemBase {
     private static CANSparkMax left, right;
     private static DigitalInput topSwitch, bottomSwitch;
 
-    public Elevator(){
+    static{
         left = new CANSparkMax(Constants.ELEVATOR.LEFT, MotorType.kBrushless);
         right = new CANSparkMax(Constants.ELEVATOR.RIGHT, MotorType.kBrushless);
         topSwitch = new DigitalInput(Constants.ELEVATOR.TOP_LIMIT_SWITCH);

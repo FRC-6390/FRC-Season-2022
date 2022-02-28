@@ -17,7 +17,7 @@ public class ClimbArmsCommand extends CommandBase {
   @Override
   public void execute() {
     //releases the servos allowing the arms to extend
-    ClimbArms.setAngle(angle);
+    //ClimbArms.setAngle(angle);
   }
 
   @Override
@@ -26,6 +26,6 @@ public class ClimbArmsCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
