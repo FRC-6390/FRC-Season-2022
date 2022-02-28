@@ -20,12 +20,10 @@ public class IntakeAndFeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-
     //setting intake and feeder speeds
     Intake.setMotorSpeed(intakeVelocity);
     Feeder.setMotorSpeed(feederVelocity);
     led.setBlue();
- 
   }
 
   @Override

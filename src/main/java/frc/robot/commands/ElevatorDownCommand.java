@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ElevatorDownCommand extends CommandBase {
 
   private double velocity;
+  private boolean done;
 
-  public ElevatorDownCommand(double speed) {
+  public ElevatorDownCommand(double speed, boolean isDone) {
     velocity = speed;
+    done = isDone;
   }
 
 
@@ -18,9 +20,15 @@ public class ElevatorDownCommand extends CommandBase {
 
   @Override
   public void execute() {
-    Elevator.setMotorsIdleMode(IdleMode.kBrake);
-    
+    //check the limit switch
+    if(Elevator.getBottomSwitch() == true){
+      Elevator.setMotorSpeed(velocity);
+    } else Elevator.setMotorSpeed(0.0);
 
+    //change to desired encoder position
+    if(Elevator.getEncoder() <= 0){
+      new ClimbArmsCommand(0);
+    }
   }
 
   @Override
@@ -30,6 +38,6 @@ public class ElevatorDownCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return done;
   }
 }

@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -11,12 +12,14 @@ import frc.robot.Constants;
 public class Elevator extends SubsystemBase {
     private static CANSparkMax left, right;
     private static DigitalInput topSwitch, bottomSwitch;
+    private static CANCoder encoder;
 
     public Elevator(){
         left = new CANSparkMax(Constants.ELEVATOR.LEFT, MotorType.kBrushless);
         right = new CANSparkMax(Constants.ELEVATOR.RIGHT, MotorType.kBrushless);
         topSwitch = new DigitalInput(Constants.ELEVATOR.TOP_LIMIT_SWITCH);
         bottomSwitch = new DigitalInput(Constants.ELEVATOR.BOTTOM_LIMIT_SWITCH);
+
         setMotorsIdleMode(IdleMode.kBrake);
     }
 
@@ -36,6 +39,10 @@ public class Elevator extends SubsystemBase {
     
     public static boolean getBottomSwitch(){
         return bottomSwitch.get();
+    }
+
+    public static double getEncoder(){
+        return encoder.getPosition();
     }
 
     @Override
