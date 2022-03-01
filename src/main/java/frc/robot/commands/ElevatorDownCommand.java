@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.subsystems.ClimbArms;
 import frc.robot.subsystems.Elevator;
 import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -27,7 +28,7 @@ public class ElevatorDownCommand extends CommandBase {
 
     //change to desired encoder position
     if(Elevator.getEncoder() <= 0){
-      new ClimbArmsCommand(0);
+      ClimbArms.open();
     }
   }
 
