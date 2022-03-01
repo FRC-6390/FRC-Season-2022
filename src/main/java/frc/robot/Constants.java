@@ -118,12 +118,11 @@ public interface Constants {
     }
 
     public interface SHOOTER {
-        int LEFT = 21;
-        int RIGHT = 23;
-        int TURRET = 19;
-        int PRE_RIGHT = 24;
-        int PRE_LEFT = 20;
-        int HOOD_ADJUST = 22;
+        int LEFT = 20;
+        int RIGHT = 21;
+        int TURRET = 18;
+        int PRE_RIGHT = 22;
+        int PRE_LEFT = 19;
         int LEFT_LIMIT_SWITCH = 2;
         int RIGHT_LIMIT_SWITCH = 3;
 

@@ -27,7 +27,7 @@ import frc.robot.utils.DebouncedButton;
 public class RobotContainer {
 
   public static DriveTrain driveTrain = new DriveTrain(2, 2);
-  public static TurretedShooter turretedShooter = new TurretedShooter();
+//  public static TurretedShooter turretedShooter = new TurretedShooter();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -92,8 +92,8 @@ public class RobotContainer {
 
     y.whileHeld(new ElevatorCommand(0.2));
     a.whileHeld(new ElevatorCommand(-0.8));
-    b.whenActive(() -> turretedShooter.shoot());
-    right.whenPressed(() -> turretedShooter.home());
+    // b.whenActive(() -> turretedShooter.shoot());
+    // right.whenPressed(() -> turretedShooter.home());
 
     
     leftBumber.whileHeld(new IntakeAndFeederCommand(0.1, 0.7));   //intake and feeder

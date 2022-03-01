@@ -25,7 +25,7 @@ public class Elevator extends SubsystemBase {
         topSwitch = new DigitalInput(Constants.ELEVATOR.TOP_LIMIT_SWITCH);
         bottomSwitch = new DigitalInput(Constants.ELEVATOR.BOTTOM_LIMIT_SWITCH);
 
-        encoder = new CANCoder(Constants.ELEVATOR.ENCODER);
+        encoder = new CANCoder(Constants.ELEVATOR.ENCODER, "Swerve CANivore");
         setMotorsIdleMode(IdleMode.kBrake);
 
         //Shuffleboard outputs

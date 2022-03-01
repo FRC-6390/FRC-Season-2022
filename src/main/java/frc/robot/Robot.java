@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    container = new RobotContainer();
+   container = new RobotContainer();
     Robot.suppressExitWarning(true);
   
   }
@@ -69,14 +69,14 @@ public class Robot extends TimedRobot {
     //makes robot sing a song
     Orchestra midi = new Orchestra();
     midi.loadMusic("/home/lvuser/deploy/champ.chrp");
-    midi.addInstrument(new TalonFX(0));
-    midi.addInstrument(new TalonFX(1));
-    midi.addInstrument(new TalonFX(2));
-    midi.addInstrument(new TalonFX(3));
-    midi.addInstrument(new TalonFX(4));
-    midi.addInstrument(new TalonFX(5));
-    midi.addInstrument(new TalonFX(6));
-    midi.addInstrument(new TalonFX(7));
+    midi.addInstrument(new TalonFX(0, "Swerve CANivore"));
+    // midi.addInstrument(new TalonFX(1, "Swerve CANivore"));
+    // midi.addInstrument(new TalonFX(2, "Swerve CANivore"));
+    // midi.addInstrument(new TalonFX(3, "Swerve CANivore"));
+    midi.addInstrument(new TalonFX(4, "Swerve CANivore"));
+    // midi.addInstrument(new TalonFX(5, "Swerve CANivore"));
+    // midi.addInstrument(new TalonFX(6, "Swerve CANivore"));
+    // midi.addInstrument(new TalonFX(7, "Swerve CANivore"));
 
     midi.play();
   }
