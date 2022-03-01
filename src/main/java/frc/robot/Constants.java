@@ -60,8 +60,8 @@ public interface Constants {
         int START = 8;
         int LEFT_JOYSTICK = 9;
         int RIGHT_JOYSTICK = 10;
-        int RIGHT_TRIGGER = 11;
-        int LEFT_TRIGGER = 12;
+        int RIGHT_TRIGGER = 3;
+        int LEFT_TRIGGER = 2;
     
         int LEFT_X = 0;
         int LEFT_Y = 1;
@@ -104,6 +104,7 @@ public interface Constants {
         int BOTTOM_LIMIT_SWITCH = 1;
         int SERVO_MIN = 40;
         int SERVO_MAX = 100;
+        int ENCODER = 0;
     }
 
     public interface INTAKE {
@@ -117,12 +118,11 @@ public interface Constants {
     }
 
     public interface SHOOTER {
-        int LEFT = 21;
-        int RIGHT = 23;
-        int TURRET = 19;
-        int PRE_RIGHT = 24;
-        int PRE_LEFT = 20;
-        int HOOD_ADJUST = 22;
+        int LEFT = 20;
+        int RIGHT = 21;
+        int TURRET = 18;
+        int PRE_RIGHT = 22;
+        int PRE_LEFT = 19;
         int LEFT_LIMIT_SWITCH = 2;
         int RIGHT_LIMIT_SWITCH = 3;
 

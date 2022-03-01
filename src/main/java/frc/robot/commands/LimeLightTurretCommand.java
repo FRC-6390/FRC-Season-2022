@@ -34,21 +34,12 @@ public class LimeLightTurretCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    // if (held == true){
       // pAim = 0.002;
       // rotation_adjust = 0.0;
       // desiredArea = 2.0;
       // tx = txvalue.getDouble(0.0);
       // ty = tyvalue.getDouble(0.0);
       // ta = tavalue.getDouble(0.0);
-      // camMode.setDouble(0.0);
-      
-      // done = false;
-    // }
-    // else if(held == false){
-    //   camMode.setDouble(1.0);
-    //   done = true;
-    // }
   }
 
   @Override
@@ -58,14 +49,6 @@ public class LimeLightTurretCommand extends CommandBase {
     // tv = tvvalue.getDouble(0.0);
     // ta = tavalue.getDouble(0.0);
 
-
-    // // to find distance from target d = height / tanAngle of camera
-    // height = 2.6416 - 0.22/*Limelight height from ground*/; 
-    // angle = Math.toRadians(60 + ty);
-    // distance = height / Math.tan(angle); //change the hood based off distance and network table
-    // System.out.print("DISTANCE___________: " + distance);
-    // done = true;
-    LimeLightTurretSubsystem.setMotorSpeed(0.1);
   }
 
   @Override
