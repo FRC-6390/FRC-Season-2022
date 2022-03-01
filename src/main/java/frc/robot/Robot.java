@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     container = new RobotContainer();
     Robot.suppressExitWarning(true);
-  
+    ClimbArms.close();
   }
 
   @Override

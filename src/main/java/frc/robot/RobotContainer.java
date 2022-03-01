@@ -37,7 +37,7 @@ public class RobotContainer {
   PWMSparkMax pwm3, pwm4, pwm3_4[];
 
   public static DriveTrain driveTrain;// = new DriveTrain(2, 2);
-  public static TurretedShooter turretedShooter = new TurretedShooter();
+  // public static TurretedShooter turretedShooter = new TurretedShooter();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -111,9 +111,10 @@ public class RobotContainer {
           System.out.println("Starting Auto Climb");
         }
 
-        if(left.get()){
+        if(start.get()){
           // new ElevatorDownCommand(0.0, true);
           System.out.println("Abort Auto Climb");
+          new ElevatorDownCommand(-0.1, 50);
         }
       }
     });
@@ -123,7 +124,6 @@ public class RobotContainer {
 
     y.whileHeld(new ElevatorCommand(0.2));
     a.whileHeld(new ElevatorCommand(-0.2));
-    // b.whenActive(() -> turretedShooter.shoot());
     // right.whenPressed(() -> turretedShooter.home());
 
     

@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -53,6 +54,10 @@ public class Elevator extends SubsystemBase {
 
     public static double getEncoder(){
         return encoder.getPosition();
+    }
+
+    public static ErrorCode resetEncoder(){
+        return encoder.setPosition(0);
     }
 
     @Override

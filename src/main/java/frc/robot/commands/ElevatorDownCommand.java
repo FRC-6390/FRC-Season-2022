@@ -8,27 +8,36 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ElevatorDownCommand extends CommandBase {
 
   private double velocity;
-  private boolean done;
+  private boolean done = false;
+  private int revolutions = 4250;
+  private int climbPercent;
 
-  public ElevatorDownCommand(double speed, boolean isDone) {
+  public ElevatorDownCommand(double speed, int perecent) {
     velocity = speed;
-    done = isDone;
+    climbPercent = perecent / 100;
   }
 
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    Elevator.setMotorsIdleMode(IdleMode.kBrake);
+    Elevator.resetEncoder();
+  }
 
   @Override
   public void execute() {
     //check the limit switch
+    System.out.println(Elevator.getBottomSwitch());
     if(Elevator.getBottomSwitch() == true){
-      Elevator.setMotorSpeed(-0.1);
-    } else Elevator.setMotorSpeed(0.0);
+        Elevator.setMotorSpeed(-0.1);
 
-    //change to desired encoder position
-    if(Elevator.getEncoder() >=  -2300){
-      ClimbArms.open();
+        //change to desired encoder position
+        if(Elevator.getEncoder() >=  revolutions * climbPercent){
+          System.out.println("Servos Released");
+          ClimbArms.open();
+        }
+    } else {
+        done = true;
     }
   }
 
