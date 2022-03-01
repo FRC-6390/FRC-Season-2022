@@ -12,7 +12,7 @@ public class Feeder extends SubsystemBase {
 
 
     static {
-      //  feederMotor = new CANSparkMax(Constants.FEEDER.FEEDER_MOTOR, MotorType.kBrushless);
+      feederMotor = new CANSparkMax(Constants.FEEDER.FEEDER_MOTOR, MotorType.kBrushless);
     }
 
     public Feeder(){

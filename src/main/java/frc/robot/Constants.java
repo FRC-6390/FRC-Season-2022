@@ -128,11 +128,10 @@ public interface Constants {
 
         double TURRET_MAX = 0;
         double TURRET_MIN = 0;
-        double HIGH_VELOCITY = 0;
-        double LOW_VELOCITY = 0;
+        double VELOCITY = 30000;
         double TIMEOUT = 3;
         frc.robot.utils.PID TURRET_PID = new frc.robot.utils.PID(0,0,0,0,0);
-        frc.robot.utils.PID SHOOTER_PID = new frc.robot.utils.PID(0,0,0,0,0);
+        frc.robot.utils.PID SHOOTER_PID = new frc.robot.utils.PID(0.001,0,0,0,100);
     }
 
     public interface ODOMETERY {

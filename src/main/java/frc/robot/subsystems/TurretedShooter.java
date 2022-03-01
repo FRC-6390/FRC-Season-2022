@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import java.util.ArrayList;
 import java.util.function.BooleanSupplier;
 
+import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -22,6 +23,7 @@ public class TurretedShooter extends SubsystemBase {
 
   private CANSparkMax turret, shooterLeft, shooterRight, preLeftShooter,preRightShooter;
   private DigitalInput rightLimit, leftLimit;
+  private CANCoder shooterEncoder;
   private boolean auto = true;
   private double seekingTo = SHOOTER.TURRET_MAX;
   private double shooterStart = Timer.getFPGATimestamp();
@@ -30,31 +32,30 @@ public class TurretedShooter extends SubsystemBase {
 
 
   public TurretedShooter() {
-    // turret = new CANSparkMax(SHOOTER.TURRET, MotorType.kBrushless);
-    // shooterLeft = new CANSparkMax(SHOOTER.LEFT, MotorType.kBrushless);
-    // shooterRight = new CANSparkMax(SHOOTER.RIGHT, MotorType.kBrushless);
-    // preLeftShooter = new CANSparkMax(SHOOTER.PRE_LEFT, MotorType.kBrushless);
-    // preRightShooter = new CANSparkMax(SHOOTER.PRE_RIGHT, MotorType.kBrushless);
-    // rightLimit = new DigitalInput(SHOOTER.RIGHT_LIMIT_SWITCH);
-    // leftLimit = new DigitalInput(SHOOTER.LEFT_LIMIT_SWITCH);
-    // preRightShooter.follow(preLeftShooter, true);
-    //shooterRight.follow(shooterLeft, true);
+    turret = new CANSparkMax(SHOOTER.TURRET, MotorType.kBrushless);
+    shooterLeft = new CANSparkMax(SHOOTER.LEFT, MotorType.kBrushless);
+    shooterRight = new CANSparkMax(SHOOTER.RIGHT, MotorType.kBrushless);
+    preLeftShooter = new CANSparkMax(SHOOTER.PRE_LEFT, MotorType.kBrushless);
+    preRightShooter = new CANSparkMax(SHOOTER.PRE_RIGHT, MotorType.kBrushless);
+    rightLimit = new DigitalInput(SHOOTER.RIGHT_LIMIT_SWITCH);
+    leftLimit = new DigitalInput(SHOOTER.LEFT_LIMIT_SWITCH);
+    shooterEncoder = new CANCoder(14);
+    preRightShooter.follow(preLeftShooter, true);
+    shooterLeft.follow(shooterRight, true);
     tab.getLayout("Shooter", BuiltInLayouts.kList).addBoolean("right limit", () -> rightLimit.get());
     tab.getLayout("Shooter", BuiltInLayouts.kList).addBoolean("left limit", () -> leftLimit.get());
   }
 
   //Will rotate the turret back and forth
   private boolean seek(){
-    return true;
     // if(!lock()){
     //   turret.set(0.1);
-    //   return false;
+    //   if(leftLimit.get() || rightLimit.get()) turret.setInverted(!turret.getInverted()); 
     // }else{
     //   turret.set(0.0);
     //   return true;
     // }
-    //SHOOTER.TURRET_PID.calc(turret.getEncoder().getPosition(), seekingTo));
-     //if(SHOOTER.TURRET_PID.threshhold()) SHOOTER.TURRET_PID.setSetpoint(seekingTo == SHOOTER.TURRET_MAX ? SHOOTER.TURRET_MIN : SHOOTER.TURRET_MAX);
+    return true;
   }
 
   //Will check if limelight has found the goal and is currently looking at it
@@ -64,12 +65,14 @@ public class TurretedShooter extends SubsystemBase {
 
   //Will rev shooter to the velocity then shoot the ball, if the shooter doesnt reach the velocity in the given time it will fire anyways
   public void shoot(){
-    preLeftShooter.set(0.8);
-    preRightShooter.set(-0.8);
-    //shooterLeft.set(SHOOTER.SHOOTER_PID.calc(shooterLeft.getEncoder().getVelocity(), SHOOTER.HIGH_VELOCITY));
-    // if(SHOOTER.SHOOTER_PID.atSetpoint() || shooterStart < Timer.getFPGATimestamp()-SHOOTER.TIMEOUT ){
-    //   preShooter.set(1);
-    // }
+    // preLeftShooter.set(0.8);
+    double speed = SHOOTER.SHOOTER_PID.calc(shooterEncoder.getVelocity(), -SHOOTER.VELOCITY)+0.1;
+    speed = speed > 0 ? 0.1 : speed;
+    shooterRight.set(speed);
+    System.out.println(shooterEncoder.getVelocity() +" "+speed);
+    if(SHOOTER.SHOOTER_PID.threshhold() || shooterStart < Timer.getFPGATimestamp()-SHOOTER.TIMEOUT ){
+      preLeftShooter.set(1);
+    }
   }
 
   public boolean isHome(){
@@ -95,6 +98,6 @@ public class TurretedShooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // if(auto) auto();
+    if(auto) auto();
   }
 }
