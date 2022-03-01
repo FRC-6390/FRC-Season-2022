@@ -20,9 +20,6 @@ import frc.robot.subsystems.ClimbArms;
 public class Robot extends TimedRobot {
 
   RobotContainer container;
-  TalonFX m0, m1, m2, m3, m4, m5, m6, m7, m0_7[];
-  CANSparkMax m15, m16, m17, m18, m19, m20, m21, m22, m15_22[];
-  PWMSparkMax pwm3, pwm4, pwm3_4[];
   
   @Override
   public void robotInit() {
@@ -88,7 +85,6 @@ public class Robot extends TimedRobot {
   //  pwm3_4 = new PWMSparkMax[] {pwm3, pwm4};
   }
 
-  double speed = 0.5;
 
   @Override
   public void teleopPeriodic() {
@@ -114,27 +110,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    
-    // CommandScheduler.getInstance().schedule(new SystemsTest());
-
     //makes robot sing a song
-    // Orchestra midi = new Orchestra();
-    // midi.loadMusic("/home/lvuser/deploy/champ.chrp");
-    // midi.addInstrument(new TalonFX(0, "Swerve CANivore"));
-    // midi.addInstrument(new TalonFX(1, "Swerve CANivore"));
-    // midi.addInstrument(new TalonFX(2, "Swerve CANivore"));
-    // midi.addInstrument(new TalonFX(3, "Swerve CANivore"));
-    // midi.addInstrument(new TalonFX(4, "Swerve CANivore"));
-    // midi.addInstrument(new TalonFX(5, "Swerve CANivore"));
-    // midi.addInstrument(new TalonFX(6, "Swerve CANivore"));
-    // midi.addInstrument(new TalonFX(7, "Swerve CANivore"));
+    Orchestra midi = new Orchestra();
+    midi.loadMusic("/home/lvuser/deploy/champ.chrp");
+    midi.addInstrument(new TalonFX(0, "Swerve CANivore"));
+    midi.addInstrument(new TalonFX(1, "Swerve CANivore"));
+    midi.addInstrument(new TalonFX(2, "Swerve CANivore"));
+    midi.addInstrument(new TalonFX(3, "Swerve CANivore"));
+    midi.addInstrument(new TalonFX(4, "Swerve CANivore"));
+    midi.addInstrument(new TalonFX(5, "Swerve CANivore"));
+    midi.addInstrument(new TalonFX(6, "Swerve CANivore"));
+    midi.addInstrument(new TalonFX(7, "Swerve CANivore"));
 
-    // midi.play();
+    midi.play();
   }
-
+  
   @Override
   public void testPeriodic() {
-    
-  }
-    
+
+  } 
 }

@@ -37,7 +37,7 @@ public class RobotContainer {
   PWMSparkMax pwm3, pwm4, pwm3_4[];
 
   public static DriveTrain driveTrain;// = new DriveTrain(2, 2);
-//  public static TurretedShooter turretedShooter = new TurretedShooter();
+  public static TurretedShooter turretedShooter = new TurretedShooter();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),

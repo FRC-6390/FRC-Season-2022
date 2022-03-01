@@ -33,6 +33,10 @@ public class PID {
         return Math.abs(error) < threashhold;
     }
 
+    public boolean threshhold(){
+        return Math.abs(error) < threashhold;
+    }
+
     public double getError(){
         return error;
     }
