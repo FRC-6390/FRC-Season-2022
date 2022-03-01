@@ -60,8 +60,8 @@ public interface Constants {
         int START = 8;
         int LEFT_JOYSTICK = 9;
         int RIGHT_JOYSTICK = 10;
-        int RIGHT_TRIGGER = 11;
-        int LEFT_TRIGGER = 12;
+        int RIGHT_TRIGGER = 3;
+        int LEFT_TRIGGER = 2;
     
         int LEFT_X = 0;
         int LEFT_Y = 1;
@@ -104,6 +104,7 @@ public interface Constants {
         int BOTTOM_LIMIT_SWITCH = 1;
         int SERVO_MIN = 40;
         int SERVO_MAX = 100;
+        int ENCODER = 0;
     }
 
     public interface INTAKE {
