@@ -5,7 +5,6 @@ import java.util.function.BooleanSupplier;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
 
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.AnalogEncoder;
@@ -23,7 +22,6 @@ public class TurretedShooter extends SubsystemBase {
 
   private CANSparkMax turret, shooterLeft, shooterRight, preLeftShooter,preRightShooter;
   private DigitalInput rightLimit, leftLimit;
-  private AbsoluteEncoder encoder;
   private boolean auto = true;
   private double seekingTo = SHOOTER.TURRET_MAX;
   private double shooterStart = Timer.getFPGATimestamp();
@@ -32,13 +30,13 @@ public class TurretedShooter extends SubsystemBase {
 
 
   public TurretedShooter() {
-    turret = new CANSparkMax(SHOOTER.TURRET, MotorType.kBrushless);
-    shooterLeft = new CANSparkMax(SHOOTER.LEFT, MotorType.kBrushless);
-    shooterRight = new CANSparkMax(SHOOTER.RIGHT, MotorType.kBrushless);
-    preLeftShooter = new CANSparkMax(SHOOTER.PRE_LEFT, MotorType.kBrushless);
-    preRightShooter = new CANSparkMax(SHOOTER.PRE_RIGHT, MotorType.kBrushless);
-    rightLimit = new DigitalInput(SHOOTER.RIGHT_LIMIT_SWITCH);
-    leftLimit = new DigitalInput(SHOOTER.LEFT_LIMIT_SWITCH);
+    // turret = new CANSparkMax(SHOOTER.TURRET, MotorType.kBrushless);
+    // shooterLeft = new CANSparkMax(SHOOTER.LEFT, MotorType.kBrushless);
+    // shooterRight = new CANSparkMax(SHOOTER.RIGHT, MotorType.kBrushless);
+    // preLeftShooter = new CANSparkMax(SHOOTER.PRE_LEFT, MotorType.kBrushless);
+    // preRightShooter = new CANSparkMax(SHOOTER.PRE_RIGHT, MotorType.kBrushless);
+    // rightLimit = new DigitalInput(SHOOTER.RIGHT_LIMIT_SWITCH);
+    // leftLimit = new DigitalInput(SHOOTER.LEFT_LIMIT_SWITCH);
     // preRightShooter.follow(preLeftShooter, true);
     //shooterRight.follow(shooterLeft, true);
     tab.getLayout("Shooter", BuiltInLayouts.kList).addBoolean("right limit", () -> rightLimit.get());

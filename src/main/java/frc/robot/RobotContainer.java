@@ -2,7 +2,13 @@ package frc.robot;
 
 import java.awt.Button;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AUTO;
@@ -16,6 +22,7 @@ import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.IntakeAndFeederCommand;
 import frc.robot.commands.LimeLightTurretCommand;
+import frc.robot.commands.SystemsTest;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.ClimbArms;
@@ -25,8 +32,11 @@ import frc.robot.subsystems.TurretedShooter;
 import frc.robot.utils.DebouncedButton;
 
 public class RobotContainer {
+  TalonFX m0, m1, m2, m3, m4, m5, m6, m7, m0_7[];
+  CANSparkMax m15, m16, m17, m18, m19, m20, m21, m22, m15_22[];
+  PWMSparkMax pwm3, pwm4, pwm3_4[];
 
-  public static DriveTrain driveTrain = new DriveTrain(2, 2);
+  public static DriveTrain driveTrain;// = new DriveTrain(2, 2);
 //  public static TurretedShooter turretedShooter = new TurretedShooter();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
@@ -54,13 +64,35 @@ public class RobotContainer {
 
   
   public RobotContainer() {
-    driveTrain.reset(true);
-    driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->-modifyAxis(controller.getLeftY()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftX())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
+    // driveTrain.reset(true);
+    // driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->-modifyAxis(controller.getLeftY()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftX())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
     
     configureButtonBindings();
   }
  
   private void configureButtonBindings() {
+
+    //m0 = new TalonFX(0, "Swerve CANivore");
+    // m1 = new TalonFX(1, "Swerve CANivore");
+    // m2 = new TalonFX(2, "Swerve CANivore");
+    // m3 = new TalonFX(3, "Swerve CANivore");
+    // m4 = new TalonFX(4, "Swerve CANivore");
+    // m5 = new TalonFX(5, "Swerve CANivore");
+    // m6 = new TalonFX(6, "Swerve CANivore");
+    // m7 = new TalonFX(7, "Swerve CANivore");
+
+    // m15 = new CANSparkMax(15, MotorType.kBrushless);
+    // m16 = new CANSparkMax(16, MotorType.kBrushless);
+    // m17 = new CANSparkMax(17, MotorType.kBrushless);
+    // m18 = new CANSparkMax(18, MotorType.kBrushless);
+    // m19 = new CANSparkMax(19, MotorType.kBrushless);
+    // m20 = new CANSparkMax(20, MotorType.kBrushless);
+    // m21 = new CANSparkMax(21, MotorType.kBrushless);
+    // m22 = new CANSparkMax(22, MotorType.kBrushless);
+
+    // pwm3 = new PWMSparkMax(3);
+    // pwm4 = new PWMSparkMax(4);
+
     x.whenPressed(new Runnable() {
       public void run() {
         driveTrain.reset(x.get());
@@ -86,17 +118,16 @@ public class RobotContainer {
       }
     });
     
-
     // a.whenHeld(new LimeLightTurretCommand(true));
     // a.whenReleased(new LimeLightTurretCommand(false));
 
-    y.whileHeld(new ElevatorCommand(0.2));
-    a.whileHeld(new ElevatorCommand(-0.8));
+    // y.whileHeld(new ElevatorCommand(0.2));
+    a.whenPressed(new SystemsTest());
     // b.whenActive(() -> turretedShooter.shoot());
     // right.whenPressed(() -> turretedShooter.home());
 
     
-    leftBumber.whileHeld(new IntakeAndFeederCommand(0.1, 0.7));   //intake and feeder
+    //leftBumber.whileHeld(new IntakeAndFeederCommand(0.1, 0.7));   //intake and feeder
     //.whileHeld(new IntakeAndFeederCommand(-0.1, 0.0)); //reverse the intake
 
   }

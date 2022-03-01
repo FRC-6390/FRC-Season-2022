@@ -1,7 +1,6 @@
 package frc.robot.utils.swervelib;
 
 import frc.robot.utils.swervelib.ctre.*;
-import frc.robot.utils.swervelib.ctre.Falcon500DriveControllerFactoryBuilder.ControllerImplementation;
 import frc.robot.utils.swervelib.rev.NeoDriveControllerFactoryBuilder;
 import frc.robot.utils.swervelib.rev.NeoSteerConfiguration;
 import frc.robot.utils.swervelib.rev.NeoSteerControllerFactoryBuilder;

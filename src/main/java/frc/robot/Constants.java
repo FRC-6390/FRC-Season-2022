@@ -2,7 +2,7 @@ package frc.robot;
 
 import java.util.Iterator;
 
-import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+import frc.robot.utils.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -13,7 +13,7 @@ import frc.robot.subsystems.DesiredPositionFactory;
 public interface Constants {
 
     public interface SWERVE {
-        double MAX_VOLTAGE = 10.0;
+        double MAX_VOLTAGE = 12.0;
         double MAX_VELCOCITY = 6380.0/ 60* SdsModuleConfigurations.MK4_L1.getDriveReduction() * SdsModuleConfigurations.MK4_L1.getWheelDiameter();
         double MAX_ANGULAR = MAX_VELCOCITY / Math.hypot(ROBOT.TRACKWIDTH/2, ROBOT.WHEELBASE/2);
         Translation2d[] SWERVE_LOCATIONS = {ROBOT.FRONT_LEFT, ROBOT.FRONT_RIGHT, ROBOT.BACK_LEFT, ROBOT.BACK_RIGHT};

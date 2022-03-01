@@ -13,9 +13,9 @@ public class Intake extends SubsystemBase {
   private static PWMSparkMax right;
 
   static {
-    left = new PWMSparkMax(INTAKE.LEFT);
-    right = new PWMSparkMax(INTAKE.RIGHT);
-    right.setInverted(true);
+    // left = new PWMSparkMax(INTAKE.LEFT);
+    // right = new PWMSparkMax(INTAKE.RIGHT);
+    // right.setInverted(true);
   }
 
   public Intake() {

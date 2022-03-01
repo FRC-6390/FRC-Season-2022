@@ -20,13 +20,13 @@ public class Elevator extends SubsystemBase {
 
     
     static {
-        left = new CANSparkMax(Constants.ELEVATOR.LEFT, MotorType.kBrushless);
-        right = new CANSparkMax(Constants.ELEVATOR.RIGHT, MotorType.kBrushless);
+        // left = new CANSparkMax(Constants.ELEVATOR.LEFT, MotorType.kBrushless);
+        // right = new CANSparkMax(Constants.ELEVATOR.RIGHT, MotorType.kBrushless);
         topSwitch = new DigitalInput(Constants.ELEVATOR.TOP_LIMIT_SWITCH);
         bottomSwitch = new DigitalInput(Constants.ELEVATOR.BOTTOM_LIMIT_SWITCH);
 
         encoder = new CANCoder(Constants.ELEVATOR.ENCODER, "Swerve CANivore");
-        setMotorsIdleMode(IdleMode.kBrake);
+        //setMotorsIdleMode(IdleMode.kBrake);
 
         //Shuffleboard outputs
         tab.getLayout("Climb", BuiltInLayouts.kList).addBoolean("Elevator Switch", () -> getBottomSwitch());
