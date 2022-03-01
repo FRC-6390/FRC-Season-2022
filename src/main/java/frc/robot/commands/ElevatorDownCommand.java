@@ -23,11 +23,11 @@ public class ElevatorDownCommand extends CommandBase {
   public void execute() {
     //check the limit switch
     if(Elevator.getBottomSwitch() == true){
-      Elevator.setMotorSpeed(velocity);
+      Elevator.setMotorSpeed(-0.1);
     } else Elevator.setMotorSpeed(0.0);
 
     //change to desired encoder position
-    if(Elevator.getEncoder() <= 0){
+    if(Elevator.getEncoder() >=  -2300){
       ClimbArms.open();
     }
   }

@@ -13,12 +13,9 @@ public class Intake extends SubsystemBase {
   private static PWMSparkMax right;
 
   static {
-    // left = new PWMSparkMax(INTAKE.LEFT);
-    // right = new PWMSparkMax(INTAKE.RIGHT);
-    // right.setInverted(true);
-  }
-
-  public Intake() {
+    left = new PWMSparkMax(INTAKE.LEFT);
+    right = new PWMSparkMax(INTAKE.RIGHT);
+    left.setInverted(true);
   }
 
   public static void setMotorSpeed(double speed){
