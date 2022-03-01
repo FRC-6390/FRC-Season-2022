@@ -13,6 +13,7 @@ import frc.robot.commands.ClimbArmsCommand;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorCommand;
+import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.IntakeAndFeederCommand;
 import frc.robot.commands.LimeLightTurretCommand;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -27,7 +28,6 @@ public class RobotContainer {
 
   public static DriveTrain driveTrain = new DriveTrain(2, 2);
   public static TurretedShooter turretedShooter = new TurretedShooter();
-  public Timer time = new Timer();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -61,19 +61,30 @@ public class RobotContainer {
   }
  
   private void configureButtonBindings() {
-    start.whenPressed(new Runnable() {
+    x.whenPressed(new Runnable() {
       public void run() {
-        // double startTime = System.currentTimeMillis();
-        driveTrain.reset(start.get());
-        
-        // RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
-        // RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 1);
-        // RobotContainer.controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
-        // RobotContainer.controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
-      
+        driveTrain.reset(x.get());
       }
     });
 
+    back.whenPressed(new Runnable() {
+      public void run() {
+        if(top.get()){
+          // ClimbArms.open();
+          System.out.println("Manually Releasing Arms");
+        }
+
+        if(bottom.get()){
+          // new ElevatorDownCommand(0.1, false);
+          System.out.println("Starting Auto Climb");
+        }
+
+        if(left.get()){
+          // new ElevatorDownCommand(0.0, true);
+          System.out.println("Abort Auto Climb");
+        }
+      }
+    });
     
 
     // a.whenHeld(new LimeLightTurretCommand(true));
@@ -82,12 +93,11 @@ public class RobotContainer {
     y.whileHeld(new ElevatorCommand(0.2));
     a.whileHeld(new ElevatorCommand(-0.8));
     b.whenActive(() -> turretedShooter.shoot());
-    // x.whenPressed(() -> LimeLightTurretSubsystem.setMotorSpeed(0.1)); //servos for climb
-    // b.whenPressed(() ->  LimeLightTurretSubsystem.setMotorSpeed(-0.1)); //servos for climb
+    right.whenPressed(() -> turretedShooter.home());
 
     
-    leftBumber.whileHeld(new IntakeAndFeederCommand(0.0, 1));      //intake and feeder
-    rightBumber.whileHeld(new IntakeAndFeederCommand(0.0, 0.0)); //reverse the intake (set intake speed when its ready)
+    leftBumber.whileHeld(new IntakeAndFeederCommand(0.1, 0.7));   //intake and feeder
+    //.whileHeld(new IntakeAndFeederCommand(-0.1, 0.0)); //reverse the intake
 
   }
 
