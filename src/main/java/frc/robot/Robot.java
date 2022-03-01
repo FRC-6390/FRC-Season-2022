@@ -15,11 +15,11 @@ import frc.robot.subsystems.ClimbArms;
 
 public class Robot extends TimedRobot {
 
-  RobotContainer container;
+  //RobotContainer container;
 
   @Override
   public void robotInit() {
-    container = new RobotContainer();
+  //  container = new RobotContainer();
     Robot.suppressExitWarning(true);
   
   }
@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //starts auto routine
     // ClimbArms.close();
-    CommandScheduler.getInstance().schedule(container.getAutoCommand());
+   // CommandScheduler.getInstance().schedule(container.getAutoCommand());
   }
 
   @Override
@@ -54,7 +54,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // ClimbArms.close();
-    CommandScheduler.getInstance().schedule(container.getDriveCommand());
+  //  CommandScheduler.getInstance().schedule(container.getDriveCommand());
+    
   }
 
   @Override
@@ -68,15 +69,15 @@ public class Robot extends TimedRobot {
 
     //makes robot sing a song
     Orchestra midi = new Orchestra();
-    midi.loadMusic("/home/lvuser/deploy/champ.chrp");
-    midi.addInstrument(new TalonFX(0));
-    midi.addInstrument(new TalonFX(1));
-    midi.addInstrument(new TalonFX(2));
-    midi.addInstrument(new TalonFX(3));
-    midi.addInstrument(new TalonFX(4));
-    midi.addInstrument(new TalonFX(5));
-    midi.addInstrument(new TalonFX(6));
-    midi.addInstrument(new TalonFX(7));
+    midi.loadMusic("/home/lvuser/deploy/all star.chrp");
+    midi.addInstrument(new TalonFX(0, "Swerve CANivore"));
+    // midi.addInstrument(new TalonFX(1));
+    // midi.addInstrument(new TalonFX(2));
+    // midi.addInstrument(new TalonFX(3));
+    midi.addInstrument(new TalonFX(4, "Swerve CANivore"));
+    // midi.addInstrument(new TalonFX(5));
+    // midi.addInstrument(new TalonFX(6));
+    // midi.addInstrument(new TalonFX(7));
 
     midi.play();
   }

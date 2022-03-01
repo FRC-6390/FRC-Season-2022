@@ -26,9 +26,9 @@ public class ElevatorDownCommand extends CommandBase {
     } else Elevator.setMotorSpeed(0.0);
 
     //change to desired encoder position
-    if(Elevator.getEncoder() <= 0){
-      new ClimbArmsCommand(0);
-    }
+    // if(Elevator.getEncoder() <= 0){
+    //   new ClimbArmsCommand(0);
+    // }
   }
 
   @Override
