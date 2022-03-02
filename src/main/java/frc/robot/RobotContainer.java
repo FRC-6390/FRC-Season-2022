@@ -88,7 +88,7 @@ public class RobotContainer {
     // x.whenPressed(new ElevatorUpCommand(-0.1, 50));
     x.whenPressed(new ReleaseArms(0.5));
     // right.whenPressed(() -> turretedShooter.home());
-
+    controller.getLeftTriggerAxis();
     
     leftBumper.whileHeld(new IntakeAndFeederCommand(0.4, 0.4));   //intake and feeder
     rightBumper.whileHeld(new IntakeAndFeederCommand(-0.4, 0.0)); //reverse the intake

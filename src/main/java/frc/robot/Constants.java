@@ -126,7 +126,7 @@ public interface Constants {
         double TURRET_MIN = 0;
         double VELOCITY = 30000;
         double TIMEOUT = 3;
-        frc.robot.utils.PID TURRET_PID = new frc.robot.utils.PID(0,0,0,0,0);
+        frc.robot.utils.PID TURRET_PID = new frc.robot.utils.PID(0.02,0,0,0,0.1);
         frc.robot.utils.PID SHOOTER_PID = new frc.robot.utils.PID(0.000368,0,0,0,4000);
     }
 
