@@ -82,6 +82,10 @@ public class TurretedShooter extends SubsystemBase {
     }
   }
 
+  public static boolean getHomePosition(){
+    return leftLimit.get();
+  }
+
   //Will cause the robot to look and auto shoot balls
   public void auto(){
     if(seek()) shoot();

@@ -52,7 +52,7 @@ public class Elevator extends SubsystemBase {
         return bottomSwitch.get();
     }
 
-    public static double getEncoder(){
+    public static double  getEncoder(){
         return encoder.getPosition();
     }
 
