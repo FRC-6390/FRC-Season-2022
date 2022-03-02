@@ -127,8 +127,8 @@ public class RobotContainer {
     // right.whenPressed(() -> turretedShooter.home());
 
     
-    leftBumper.whileHeld(new IntakeAndFeederCommand(0.4, 0.0));   //intake and feeder
-    rightBumper.whileHeld(new IntakeAndFeederCommand(-0.4, 0.0)); //reverse the intake
+    leftBumper.whileHeld(new IntakeAndFeederCommand(1, 1));   //intake and feeder
+    rightBumper.whileHeld(new IntakeAndFeederCommand(-1, -0.2)); //reverse the intake
 
   }
 

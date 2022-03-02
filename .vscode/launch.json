@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch Test",
+      "request": "launch",
+      "mainClass": "frc.robot.Test",
+      "projectName": "FRC-Season-2022"
+    },
+    {
+      "type": "java",
       "name": "Launch JsonManager",
       "request": "launch",
       "mainClass": "frc.robot.utils.json.JsonManager",
