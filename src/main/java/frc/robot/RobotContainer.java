@@ -37,7 +37,7 @@ public class RobotContainer {
   PWMSparkMax pwm3, pwm4, pwm3_4[];
 
   public static DriveTrain driveTrain;// = new DriveTrain(2, 2);
-  public static TurretedShooter turretedShooter = new TurretedShooter();
+  public static TurretedShooter turretedShooter;// = new TurretedShooter();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -67,7 +67,7 @@ public class RobotContainer {
     // driveTrain.reset(true);
     // driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->-modifyAxis(controller.getLeftY()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftX())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
     
-    configureButtonBindings();
+    //configureButtonBindings();
   }
  
   private void configureButtonBindings() {

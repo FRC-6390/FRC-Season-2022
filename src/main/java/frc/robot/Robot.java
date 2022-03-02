@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.SystemsTest;
 import frc.robot.subsystems.ClimbArms;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TurretedShooter;
 
 public class Robot extends TimedRobot {
 
@@ -23,7 +25,7 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
-    container = new RobotContainer();
+    //container = new RobotContainer();
     Robot.suppressExitWarning(true);
   
   }
@@ -58,8 +60,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // ClimbArms.close();
-   // CommandScheduler.getInstance().schedule(container.getDriveCommand());
-  
+    CommandScheduler.getInstance().schedule(new SystemsTest());
+    // CommandScheduler.getInstance().schedule(container.getDriveCommand());
   }
 
 

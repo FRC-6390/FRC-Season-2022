@@ -66,12 +66,11 @@ public class TurretedShooter extends SubsystemBase {
   //Will rev shooter to the velocity then shoot the ball, if the shooter doesnt reach the velocity in the given time it will fire anyways
   public void shoot(){
     // preLeftShooter.set(0.8);
-    double speed = SHOOTER.SHOOTER_PID.calc(shooterEncoder.getVelocity(), -SHOOTER.VELOCITY)+0.1;
-    speed = speed > 0 ? 0.1 : speed;
-    shooterRight.set(speed);
+    double speed = SHOOTER.SHOOTER_PID.calc(-shooterEncoder.getVelocity(), SHOOTER.VELOCITY);
+  //  shooterRight.set(speed);
+    preLeftShooter.set(1);
     System.out.println(shooterEncoder.getVelocity() +" "+speed);
     if(SHOOTER.SHOOTER_PID.threshhold() || shooterStart < Timer.getFPGATimestamp()-SHOOTER.TIMEOUT ){
-      preLeftShooter.set(1);
     }
   }
 

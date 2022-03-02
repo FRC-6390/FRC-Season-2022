@@ -29,26 +29,28 @@ public class SystemsTest extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("init");
-    // m0 = new TalonFX(0, "Swerve CANivore");
-    // m1 = new TalonFX(1, "Swerve CANivore");
-    // m2 = new TalonFX(2, "Swerve CANivore");
-    // m3 = new TalonFX(3, "Swerve CANivore");
-    // m4 = new TalonFX(4, "Swerve CANivore");
-    // m5 = new TalonFX(5, "Swerve CANivore");
-    // m6 = new TalonFX(6, "Swerve CANivore");
-    // m7 = new TalonFX(7, "Swerve CANivore");
+    m0 = new TalonFX(0, "Swerve CANivore");
+    m1 = new TalonFX(1, "Swerve CANivore");
+    m2 = new TalonFX(2, "Swerve CANivore");
+    m3 = new TalonFX(3, "Swerve CANivore");
+    m4 = new TalonFX(4, "Swerve CANivore");
+    m5 = new TalonFX(5, "Swerve CANivore");
+    m6 = new TalonFX(6, "Swerve CANivore");
+    m7 = new TalonFX(7, "Swerve CANivore");
 
-    // m15 = new CANSparkMax(15, MotorType.kBrushless);
-    // m16 = new CANSparkMax(16, MotorType.kBrushless);
-    // m17 = new CANSparkMax(17, MotorType.kBrushless);
-    // m18 = new CANSparkMax(18, MotorType.kBrushless);
-    // m19 = new CANSparkMax(19, MotorType.kBrushless);
-    // m20 = new CANSparkMax(20, MotorType.kBrushless);
-    // m21 = new CANSparkMax(21, MotorType.kBrushless);
-    // m22 = new CANSparkMax(22, MotorType.kBrushless);
+    m15 = new CANSparkMax(15, MotorType.kBrushless);
+    m16 = new CANSparkMax(16, MotorType.kBrushless);
+    m17 = new CANSparkMax(17, MotorType.kBrushless);
+    m18 = new CANSparkMax(18, MotorType.kBrushless);
+    m19 = new CANSparkMax(19, MotorType.kBrushless);
+    m20 = new CANSparkMax(20, MotorType.kBrushless);
+    m21 = new CANSparkMax(21, MotorType.kBrushless);
+    m22 = new CANSparkMax(22, MotorType.kBrushless);
 
-    // pwm3 = new PWMSparkMax(3);
-    // pwm4 = new PWMSparkMax(4);
+    pwm3 = new PWMSparkMax(3);
+    pwm4 = new PWMSparkMax(4);
+
+    m16.setInverted(true);
 
     m0_7 = new TalonFX[]{m0,m1,m2,m3,m4,m5,m6,m7};
     m15_22 = new CANSparkMax[]{m15,m16,m17,m18,m19,m20,m21,m22};
