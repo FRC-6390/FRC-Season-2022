@@ -9,10 +9,7 @@ import frc.robot.Constants.INTAKE;
 
 public class Intake extends SubsystemBase {
 
-  private static PWMSparkMax left;
-  private static PWMSparkMax right;
-
-  
+  public static PWMSparkMax left, right;
 
   static {
     left = new PWMSparkMax(INTAKE.LEFT);

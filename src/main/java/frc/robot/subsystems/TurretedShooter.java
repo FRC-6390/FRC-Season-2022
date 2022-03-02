@@ -21,17 +21,14 @@ import frc.robot.Constants.SHOOTER;;
 
 public class TurretedShooter extends SubsystemBase {
 
-  private CANSparkMax turret, shooterLeft, shooterRight, preLeftShooter,preRightShooter;
-  private DigitalInput rightLimit, leftLimit;
-  private CANCoder shooterEncoder;
-  private boolean auto = true;
-  private double seekingTo = SHOOTER.TURRET_MAX;
-  private double shooterStart = Timer.getFPGATimestamp();
-  private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
+  public static CANSparkMax turret, shooterLeft, shooterRight, preLeftShooter,preRightShooter;
+  private static DigitalInput rightLimit, leftLimit;
+  private static CANCoder shooterEncoder;
+  private static boolean auto = true;
+  private static double shooterStart = Timer.getFPGATimestamp();
+  private static ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
   
-
-
-  public TurretedShooter() {
+  static {
     turret = new CANSparkMax(SHOOTER.TURRET, MotorType.kBrushless);
     shooterLeft = new CANSparkMax(SHOOTER.LEFT, MotorType.kBrushless);
     shooterRight = new CANSparkMax(SHOOTER.RIGHT, MotorType.kBrushless);
@@ -45,6 +42,10 @@ public class TurretedShooter extends SubsystemBase {
     tab.getLayout("Shooter", BuiltInLayouts.kList).addBoolean("right limit", () -> rightLimit.get());
     tab.getLayout("Shooter", BuiltInLayouts.kList).addBoolean("left limit", () -> leftLimit.get());
   }
+
+  public TurretedShooter() {
+  }
+  
 
   //Will rotate the turret back and forth
   private boolean seek(){
@@ -65,12 +66,9 @@ public class TurretedShooter extends SubsystemBase {
 
   //Will rev shooter to the velocity then shoot the ball, if the shooter doesnt reach the velocity in the given time it will fire anyways
   public void shoot(){
-    // preLeftShooter.set(0.8);
-    double speed = SHOOTER.SHOOTER_PID.calc(-shooterEncoder.getVelocity(), SHOOTER.VELOCITY);
-  //  shooterRight.set(speed);
-    preLeftShooter.set(1);
-    System.out.println(shooterEncoder.getVelocity() +" "+speed);
+    shooterRight.set(SHOOTER.SHOOTER_PID.calc(-shooterEncoder.getVelocity(), SHOOTER.VELOCITY));
     if(SHOOTER.SHOOTER_PID.threshhold() || shooterStart < Timer.getFPGATimestamp()-SHOOTER.TIMEOUT ){
+      preLeftShooter.set(1);
     }
   }
 
@@ -80,7 +78,7 @@ public class TurretedShooter extends SubsystemBase {
 
   public void home(){
     if(!isHome()){
-      //10 bit analog 2.6khz
+        seek();
     }
   }
 
