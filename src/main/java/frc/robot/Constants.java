@@ -38,10 +38,6 @@ public interface Constants {
         double BACK_LEFT_OFFSET = -Math.toRadians(99.02801513671875);//80.0628662109375);//335.56365966796875 //78.56597900390625 //79 //79.00543212890625
         double BACK_RIGHT_OFFSET = -Math.toRadians(72.8668212890625);//251.0101318359375+180);//348.22265625);//155.126953125 //348.046875 //350
    
-        // Module FRONT_LEFT_MODULE = new Module(FRONT_LEFT_DRIVE, FRONT_LEFT_ROTATION, FRONT_LEFT_ENCODER, FRONT_LEFT_OFFSET);
-        // Module FRONT_RIGHT_MODULE = new Module(FRONT_RIGHT_DRIVE, FRONT_RIGHT_ROTATION, FRONT_RIGHT_ENCODER, FRONT_RIGHT_OFFSET);
-        // Module BACK_LEFT_MODULE = new Module(BACK_LEFT_DRIVE, BACK_LEFT_ROTATION, BACK_LEFT_ENCODER, BACK_LEFT_OFFSET);
-        // Module BACK_RIGHT_MODULE = new Module(BACK_RIGHT_DRIVE, BACK_RIGHT_ROTATION, BACK_RIGHT_ENCODER, BACK_RIGHT_OFFSET);
     }
 
     public interface CONTROLLER {
@@ -131,7 +127,7 @@ public interface Constants {
         double VELOCITY = 30000;
         double TIMEOUT = 3;
         frc.robot.utils.PID TURRET_PID = new frc.robot.utils.PID(0,0,0,0,0);
-        frc.robot.utils.PID SHOOTER_PID = new frc.robot.utils.PID(0.001,0,0,0,100);
+        frc.robot.utils.PID SHOOTER_PID = new frc.robot.utils.PID(0.000368,0,0,0,4000);
     }
 
     public interface ODOMETERY {

@@ -3,6 +3,7 @@ package frc.robot.commands;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Leds;
+import frc.robot.subsystems.Leds.LED_COLOURS;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class IntakeAndFeederCommand extends CommandBase {
@@ -21,6 +22,7 @@ public class IntakeAndFeederCommand extends CommandBase {
   public void execute() {
       Intake.setMotorSpeed(intakeVelocity);
       Feeder.setMotorSpeed(feederVelocity);
+      Leds.set(LED_COLOURS.Blue);
   }
 
   @Override
