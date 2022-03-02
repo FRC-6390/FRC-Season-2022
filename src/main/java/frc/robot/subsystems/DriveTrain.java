@@ -103,7 +103,7 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    driftCorrection(chassisSpeeds);
+    //driftCorrection(chassisSpeeds);
 
     //updates our swerve modules and limits the volts and speed of them
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);

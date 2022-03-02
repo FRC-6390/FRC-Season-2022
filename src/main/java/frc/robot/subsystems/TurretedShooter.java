@@ -7,6 +7,8 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -23,11 +25,13 @@ public class TurretedShooter extends SubsystemBase {
 
   public static CANSparkMax turret, shooterLeft, shooterRight, preLeftShooter,preRightShooter;
   private static DigitalInput rightLimit, leftLimit;
+  private static NetworkTable limelight;
   private static CANCoder shooterEncoder;
   private static boolean auto = true;
   private static double shooterStart = Timer.getFPGATimestamp();
   private static ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
   
+
   static {
     turret = new CANSparkMax(SHOOTER.TURRET, MotorType.kBrushless);
     shooterLeft = new CANSparkMax(SHOOTER.LEFT, MotorType.kBrushless);
@@ -37,10 +41,12 @@ public class TurretedShooter extends SubsystemBase {
     rightLimit = new DigitalInput(SHOOTER.RIGHT_LIMIT_SWITCH);
     leftLimit = new DigitalInput(SHOOTER.LEFT_LIMIT_SWITCH);
     shooterEncoder = new CANCoder(14);
+    limelight = NetworkTableInstance.getDefault().getTable("limelight");
     preRightShooter.follow(preLeftShooter, true);
     shooterLeft.follow(shooterRight, true);
     tab.getLayout("Shooter", BuiltInLayouts.kList).addBoolean("right limit", () -> rightLimit.get());
     tab.getLayout("Shooter", BuiltInLayouts.kList).addBoolean("left limit", () -> leftLimit.get());
+    
   }
 
   public TurretedShooter() {
@@ -48,27 +54,48 @@ public class TurretedShooter extends SubsystemBase {
   
 
   //Will rotate the turret back and forth
+  private double timeout = System.currentTimeMillis();
+  private double seconds = 2 * 1000;
   private boolean seek(){
-    // if(!lock()){
-    //   turret.set(0.1);
-    //   if(leftLimit.get() || rightLimit.get()) turret.setInverted(!turret.getInverted()); 
-    // }else{
-    //   turret.set(0.0);
-    //   return true;
-    // }
-    return true;
+    if(!seeTarget()){
+      turret.set(0.1);
+      if((!leftLimit.get() || !rightLimit.get()) && timeout < System.currentTimeMillis()) {
+        turret.setInverted(!turret.getInverted()); 
+        timeout = System.currentTimeMillis() + seconds;
+      }
+    }else{
+      return lock();
+    }
+    return false;
   }
 
   //Will check if limelight has found the goal and is currently looking at it
   private boolean lock(){
-    return false;
+    double tv = limelight.getEntry("tv").getDouble(0.0);
+    double tx = limelight.getEntry("tx").getDouble(0.0);
+    if(tv == 0) return false;
+    
+    if((!leftLimit.get() || !rightLimit.get())){
+      turret.set(0.0);
+      return false;
+    }
+      turret.setInverted(false);
+      turret.set(SHOOTER.TURRET_PID.calc(tx, 0));
+    
+    return true;
   }
 
+  public boolean seeTarget(){
+    double tv = limelight.getEntry("tv").getDouble(0.0);
+    double tx = limelight.getEntry("tx").getDouble(0.0);
+    if(tv == 0) return false;
+    return SHOOTER.TURRET_PID.threshhold();
+  }
   //Will rev shooter to the velocity then shoot the ball, if the shooter doesnt reach the velocity in the given time it will fire anyways
   public void shoot(){
-    shooterRight.set(-SHOOTER.SHOOTER_PID.calc(-shooterEncoder.getVelocity(), SHOOTER.VELOCITY));
+    //shooterRight.set(-SHOOTER.SHOOTER_PID.calc(-shooterEncoder.getVelocity(), SHOOTER.VELOCITY));
     if(SHOOTER.SHOOTER_PID.threshhold() || shooterStart < Timer.getFPGATimestamp()-SHOOTER.TIMEOUT ){
-      preLeftShooter.set(1);
+      //preLeftShooter.set(1);
     }
   }
 
@@ -78,7 +105,13 @@ public class TurretedShooter extends SubsystemBase {
 
   public void home(){
     if(!isHome()){
-        seek();
+      turret.set(0.1);
+      if((!leftLimit.get() || !rightLimit.get()) && timeout < System.currentTimeMillis()) {
+        turret.setInverted(!turret.getInverted()); 
+        timeout = System.currentTimeMillis() + seconds;
+      }
+    }else{
+      turret.set(0.0);
     }
   }
 

@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     ClimbArms.close();
    // CommandScheduler.getInstance().schedule(new SystemsTest());
-    //CommandScheduler.getInstance().schedule(container.getDriveCommand());
+    CommandScheduler.getInstance().schedule(container.getDriveCommand());
   }
 
 

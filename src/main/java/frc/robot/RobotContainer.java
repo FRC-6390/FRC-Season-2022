@@ -43,7 +43,7 @@ public class RobotContainer {
 
   
   public RobotContainer() {
-    driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->-modifyAxis(controller.getLeftY()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftX())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
+    driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->modifyAxis(controller.getLeftX()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftY())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
     
     configureButtonBindings();
   }
