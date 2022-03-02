@@ -109,14 +109,14 @@ public interface Constants {
     }
 
     public interface FEEDER {
-        int FEEDER_MOTOR = 17;
+        int FEEDER_MOTOR = 18;
         double VELOCITY = 0.7;
     }
 
     public interface SHOOTER {
         int LEFT = 20;
         int RIGHT = 21;
-        int TURRET = 18;
+        int TURRET = 17;
         int PRE_RIGHT = 22;
         int PRE_LEFT = 19;
         int LEFT_LIMIT_SWITCH = 2;
