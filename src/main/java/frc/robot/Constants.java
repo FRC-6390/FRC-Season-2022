@@ -104,7 +104,7 @@ public interface Constants {
         int BOTTOM_LIMIT_SWITCH = 1;
         int SERVO_MIN = 40;
         int SERVO_MAX = 100;
-        int ENCODER = 0;
+        int ENCODER = 12;
     }
 
     public interface INTAKE {

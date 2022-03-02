@@ -26,6 +26,7 @@ public class IntakeAndFeederCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     Feeder.setMotorSpeed(0.0);
+    Intake.setMotorSpeed(0.0);
   }
 
   @Override

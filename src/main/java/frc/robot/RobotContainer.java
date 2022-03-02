@@ -42,8 +42,8 @@ public class RobotContainer {
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
   b = new JoystickButton(controller, CONTROLLER.B),
-  leftBumber = new JoystickButton(controller, CONTROLLER.LEFT_BUMPER),
-  rightBumber = new JoystickButton(controller, CONTROLLER.RIGHT_BUMPER),
+  leftBumper = new JoystickButton(controller, CONTROLLER.LEFT_BUMPER),
+  rightBumper = new JoystickButton(controller, CONTROLLER.RIGHT_BUMPER),
   leftStick = new JoystickButton(controller, CONTROLLER.LEFT_JOYSTICK),
   rightStick = new JoystickButton(controller, CONTROLLER.RIGHT_JOYSTICK),
 
@@ -111,9 +111,10 @@ public class RobotContainer {
           System.out.println("Starting Auto Climb");
         }
 
-        if(left.get()){
+        if(start.get()){
           // new ElevatorDownCommand(0.0, true);
           System.out.println("Abort Auto Climb");
+          new ElevatorDownCommand(-0.1, 50);
         }
       }
     });
@@ -121,14 +122,13 @@ public class RobotContainer {
     // a.whenHeld(new LimeLightTurretCommand(true));
     // a.whenReleased(new LimeLightTurretCommand(false));
 
-    // y.whileHeld(new ElevatorCommand(0.2));
-    a.whenPressed(new SystemsTest());
-    // b.whenActive(() -> turretedShooter.shoot());
+    y.whileHeld(new ElevatorCommand(0.2));
+    a.whileHeld(new ElevatorCommand(-0.2));
     // right.whenPressed(() -> turretedShooter.home());
 
     
-    //leftBumber.whileHeld(new IntakeAndFeederCommand(0.1, 0.7));   //intake and feeder
-    //.whileHeld(new IntakeAndFeederCommand(-0.1, 0.0)); //reverse the intake
+    leftBumper.whileHeld(new IntakeAndFeederCommand(0.4, 0.0));   //intake and feeder
+    rightBumper.whileHeld(new IntakeAndFeederCommand(-0.4, 0.0)); //reverse the intake
 
   }
 

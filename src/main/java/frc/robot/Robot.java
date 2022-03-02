@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //container = new RobotContainer();
     Robot.suppressExitWarning(true);
-  
+    ClimbArms.close();
   }
 
   @Override
@@ -67,11 +67,25 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-
-  }
-
-  CANSparkMax m15, m16, m17, m18, m19, m20, m21, m22, m15_22[];
-  PWMSparkMax pwm3, pwm4, pwm3_4[];
+    
+      // for (int i = 0; i < m0_7.length; i++) {
+      //   m0_7[i].set(ControlMode.PercentOutput, speed);
+      //   Timer.delay(1);
+      //       m0_7[i].set(ControlMode.PercentOutput, 0.0);
+      // }
+  
+      // for (int i = 0; i < m15_22.length; i++) {
+      //   m15_22[i].set(speed);
+      //   Timer.delay(1);
+      //     m15_22[i].set(0.0);
+      // }
+  
+      // for (int i = 0; i < pwm3_4.length; i++) {
+      //   pwm3_4[i].set(speed);
+      //   Timer.delay(1);
+      //     pwm3_4[i].set(0.0);
+      // }
+    }  
 
   @Override
   public void testInit() {
