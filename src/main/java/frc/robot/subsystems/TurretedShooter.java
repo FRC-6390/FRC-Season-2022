@@ -19,14 +19,15 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.SHOOTER;;
+import frc.robot.Constants.SHOOTER;
+import frc.robot.subsystems.Leds.LED_COLOURS;;
 
 public class TurretedShooter extends SubsystemBase {
 
   public static CANSparkMax turret, shooterLeft, shooterRight, preLeftShooter,preRightShooter;
   private static DigitalInput rightLimit, leftLimit;
   private static NetworkTable limelight;
-  private static CANCoder shooterEncoder;
+  public static CANCoder shooterEncoder;
   private static boolean auto = true;
   private static double shooterStart = Timer.getFPGATimestamp();
   private static ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
@@ -57,13 +58,15 @@ public class TurretedShooter extends SubsystemBase {
   private double timeout = System.currentTimeMillis();
   private double seconds = 2 * 1000;
   private boolean seek(){
-    if(!seeTarget()){
+    if(!seeTarget() || timeout > System.currentTimeMillis()){
       turret.set(0.1);
       if((!leftLimit.get() || !rightLimit.get()) && timeout < System.currentTimeMillis()) {
         turret.setInverted(!turret.getInverted()); 
         timeout = System.currentTimeMillis() + seconds;
       }
+      Leds.set(LED_COLOURS.Red);
     }else{
+      Leds.set(LED_COLOURS.Yellow);
       return lock();
     }
     return false;
@@ -77,26 +80,21 @@ public class TurretedShooter extends SubsystemBase {
     
     if((!leftLimit.get() || !rightLimit.get())){
       turret.set(0.0);
+      timeout = System.currentTimeMillis() + seconds;
       return false;
     }
       turret.setInverted(false);
       turret.set(SHOOTER.TURRET_PID.calc(tx, 0));
     
-    return true;
+    return SHOOTER.TURRET_PID.threshhold();
   }
 
   public boolean seeTarget(){
-    double tv = limelight.getEntry("tv").getDouble(0.0);
-    double tx = limelight.getEntry("tx").getDouble(0.0);
-    if(tv == 0) return false;
-    return SHOOTER.TURRET_PID.threshhold();
+    return limelight.getEntry("tv").getDouble(0.0) != 0;
   }
   //Will rev shooter to the velocity then shoot the ball, if the shooter doesnt reach the velocity in the given time it will fire anyways
   public void shoot(){
-    //shooterRight.set(-SHOOTER.SHOOTER_PID.calc(-shooterEncoder.getVelocity(), SHOOTER.VELOCITY));
-    if(SHOOTER.SHOOTER_PID.threshhold() || shooterStart < Timer.getFPGATimestamp()-SHOOTER.TIMEOUT ){
-      //preLeftShooter.set(1);
-    }
+   
   }
 
   public boolean isHome(){
@@ -115,19 +113,10 @@ public class TurretedShooter extends SubsystemBase {
     }
   }
 
-  //Will cause the robot to look and auto shoot balls
-  public void auto(){
-    if(seek()) shoot();
-  }
-
-  public void setAutoMode(boolean auto){
-    this.auto = auto;
-  }
-
-
-
   @Override
   public void periodic() {
-    if(auto) auto();
+    if(seek()) {
+      Leds.set(LED_COLOURS.Green);
+    }
   }
 }

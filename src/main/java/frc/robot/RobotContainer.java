@@ -43,7 +43,7 @@ public class RobotContainer {
 
   
   public RobotContainer() {
-    driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->modifyAxis(controller.getLeftX()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftY())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
+    driveTrain.setDefaultCommand(new DriveCommand(driveTrain, ()->-modifyAxis(controller.getLeftY()) * SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getLeftX())* SWERVE.MAX_VELCOCITY, ()->-modifyAxis(controller.getRightX())* SWERVE.MAX_ANGULAR));
     
     configureButtonBindings();
   }
@@ -82,7 +82,7 @@ public class RobotContainer {
     y.whileHeld(new ElevatorCommand(0.2));
     a.whileHeld(new ElevatorCommand(-0.2));
     // right.whenPressed(() -> turretedShooter.home());
-
+    controller.getLeftTriggerAxis();
     
     leftBumper.whileHeld(new IntakeAndFeederCommand(0.4, 0.4));   //intake and feeder
     rightBumper.whileHeld(new IntakeAndFeederCommand(-0.4, 0.0)); //reverse the intake

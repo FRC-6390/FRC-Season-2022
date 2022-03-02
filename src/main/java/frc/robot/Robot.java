@@ -5,8 +5,10 @@ import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.SystemsTest;
 import frc.robot.subsystems.ClimbArms;
+import frc.robot.subsystems.DriveTrain;
 
 public class Robot extends TimedRobot {
 
@@ -51,12 +53,13 @@ public class Robot extends TimedRobot {
     ClimbArms.close();
    // CommandScheduler.getInstance().schedule(new SystemsTest());
     CommandScheduler.getInstance().schedule(container.getDriveCommand());
+    RobotContainer.driveTrain.reset(true);
   }
 
 
   @Override
   public void teleopPeriodic() {
-    
+      if(RobotContainer.controller.getLeftTriggerAxis() >0.5) CommandScheduler.getInstance().schedule(new ShooterCommand());
   }  
 
   @Override
