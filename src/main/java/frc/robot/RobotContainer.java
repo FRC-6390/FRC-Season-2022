@@ -85,7 +85,7 @@ public class RobotContainer {
 
     
     leftBumper.whileHeld(new IntakeAndFeederCommand(0.4, 0.4));   //intake and feeder
-    rightBumper.whileHeld(new IntakeAndFeederCommand(-0.4, 0.4)); //reverse the intake
+    rightBumper.whileHeld(new IntakeAndFeederCommand(-0.4, 0.0)); //reverse the intake
 
   }
 
