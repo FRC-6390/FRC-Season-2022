@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import frc.robot.utils.swervelib.Mk4SwerveModuleHelper;
-import frc.robot.utils.swervelib.SwerveModule;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,6 +17,8 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ROBOT;
 import frc.robot.Constants.SWERVE;
+import frc.robot.subsystems.utils.swervelib.Mk4SwerveModuleHelper;
+import frc.robot.subsystems.utils.swervelib.SwerveModule;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -29,7 +29,7 @@ public class DriveTrain extends SubsystemBase {
   private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0,0,0);
   private double startingX, startingY;
   private Pose2d pose;
-  private frc.robot.utils.PID driftCorrectionPID = new frc.robot.utils.PID(0.07, 0.00, 0.004,0,0);
+  private frc.robot.subsystems.utils.PID driftCorrectionPID = new frc.robot.subsystems.utils.PID(0.07, 0.00, 0.004,0,0);
   private double desiredHeading;
   private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
   private PowerDistribution pdp;
@@ -103,7 +103,7 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //driftCorrection(chassisSpeeds);
+    driftCorrection(chassisSpeeds);
 
     //updates our swerve modules and limits the volts and speed of them
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);

@@ -1,10 +1,11 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Leds extends SubsystemBase {
-  private static Spark Blinkin;
+  private static Servo Blinkin;
   static double current;
   static boolean isOverride = false;
 
@@ -26,19 +27,17 @@ public class Leds extends SubsystemBase {
   }
 
   static {
-    Blinkin = new Spark(2);
-  }
-
-  public Leds() {
-
+    Blinkin = new Servo(2);
   }
 
   public static void setCustom(double value) {
     Blinkin.set(value);
+    current = value;
   }
 
   public static void set(LED_COLOURS colour) {
     Blinkin.set(colour.value());
+    current = colour.value();
   }
 
   // public static void setBlue() {
@@ -81,8 +80,6 @@ public class Leds extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // if(!isOverride){
-    //     Blinkin.set(current);
-    // }
+    Blinkin.set(current);
   }
 }

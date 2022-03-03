@@ -15,7 +15,7 @@ import frc.robot.commands.IntakeAndFeederCommand;
 import frc.robot.commands.ReleaseArms;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.TurretedShooter;
-import frc.robot.utils.DebouncedButton;
+import frc.robot.subsystems.utils.DebouncedButton;
 
 public class RobotContainer {
   public static DriveTrain driveTrain = new DriveTrain(2, 2);
@@ -56,6 +56,8 @@ public class RobotContainer {
     x.whenPressed(() -> driveTrain.reset(true));
 
   
+
+    x.whenPressed(() -> driveTrain.reset(true));
 
     back.whenPressed(new Runnable() {
       public void run() {
