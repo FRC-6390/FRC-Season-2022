@@ -85,6 +85,7 @@ public interface Constants {
         Iterator<DesiredPosition> AUTO_FACTORY_XY_POSITION = new DesiredPositionFactory(2,2,0).to(2, 3).to(2,2).to(2, 1).to(2, 2).to(1, 2).to(2, 2).to(3, 2).to(2, 2).build();
         Iterator<DesiredPosition> AUTO_FACTORY_RELATIVE_XY_POSITION = new DesiredPositionFactory(2,2,0).relative(1, 0).relative(-1,0).relative(-1, 0).relative(1, 0).relative(0, 1).relative(0, -1).relative(0, 1).relative(0, -1).build();
         Iterator<DesiredPosition> AUTO_FACTORY_MIXED_XY_POSITION = new DesiredPositionFactory(2,2,0).relative(1, 0).origin().to(1, 2).origin().relative(0, 1).origin().to(2, 1).origin().build();
+        Iterator<DesiredPosition> AUTO_1 = new DesiredPositionFactory(0,0,0).relative(1, 0).build();
         // DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(1,0,0)};
     }
 
