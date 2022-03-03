@@ -28,7 +28,7 @@ public class TurretedShooter extends SubsystemBase {
   private static DigitalInput rightLimit, leftLimit;
   private static NetworkTable limelight;
   public static CANCoder shooterEncoder;
-  private static boolean seeking = true;
+  public static boolean seeking = true;
   private static double shooterStart = Timer.getFPGATimestamp();
   private static ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
   
@@ -97,13 +97,10 @@ public class TurretedShooter extends SubsystemBase {
   }
 
   public static void home(){
-<<<<<<< HEAD
-=======
     seeking = false;
->>>>>>> e0580cfadc639a107801704493e4d3249a9c7a7c
     if(!isHome()){
       turret.set(0.1);
-      if((!leftLimit.get() || !rightLimit.get()) && timeout < System.currentTimeMillis()) {
+      if((!leftLimit.get()) && timeout < System.currentTimeMillis()) {
         turret.setInverted(!turret.getInverted()); 
         timeout = System.currentTimeMillis() + seconds;
       }

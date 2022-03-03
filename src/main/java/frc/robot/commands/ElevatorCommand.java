@@ -17,6 +17,7 @@ public class ElevatorCommand extends CommandBase {
   @Override
   public void initialize() {
     Elevator.setMotorsIdleMode(IdleMode.kBrake);
+    TurretedShooter.seeking = false;
   }
 
   @Override
@@ -35,6 +36,7 @@ public class ElevatorCommand extends CommandBase {
   public void end(boolean interrupted) {
     Elevator.setMotorSpeed(0.0);
     TurretedShooter.turret.set(0.0);
+    // TurretedShooter.seeking = true;
   }
 
   @Override
