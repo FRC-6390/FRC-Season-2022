@@ -109,6 +109,10 @@ public class TurretedShooter extends SubsystemBase {
     }
   }
 
+  public static boolean getHomePosition(){
+    return leftLimit.get();
+  }
+  
   @Override
   public void periodic() {
     if(seeking)if(seek()) Leds.set(LED_COLOURS.Green);

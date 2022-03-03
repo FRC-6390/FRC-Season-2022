@@ -9,14 +9,16 @@ import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.ElevatorDownCommand;
+import frc.robot.commands.ElevatorUpCommand;
 import frc.robot.commands.IntakeAndFeederCommand;
+import frc.robot.commands.ReleaseArms;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.TurretedShooter;
 import frc.robot.subsystems.utils.DebouncedButton;
 
 public class RobotContainer {
   public static DriveTrain driveTrain = new DriveTrain(2, 2);
-  public static TurretedShooter turretedShooter = new TurretedShooter();
+  // public static TurretedShooter turretedShooter = new TurretedShooter();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -60,6 +62,8 @@ public class RobotContainer {
 
     back.whenPressed(new Runnable() {
       public void run() {
+        
+        new ElevatorDownCommand(-0.1, 50);
         if(top.get()){
           // ClimbArms.open();
           System.out.println("Manually Releasing Arms");
@@ -73,7 +77,6 @@ public class RobotContainer {
         if(start.get()){
           // new ElevatorDownCommand(0.0, true);
           System.out.println("Abort Auto Climb");
-          new ElevatorDownCommand(-0.1, 50);
         }
       }
     });
@@ -83,6 +86,9 @@ public class RobotContainer {
 
     y.whileHeld(new ElevatorCommand(0.2));
     a.whileHeld(new ElevatorCommand(-0.2));
+    b.whenPressed(new ElevatorDownCommand(-0.1, 50));
+    // x.whenPressed(new ElevatorUpCommand(-0.1, 50));
+    x.whenPressed(new ReleaseArms(0.5));
     // right.whenPressed(() -> turretedShooter.home());
     controller.getLeftTriggerAxis();
     

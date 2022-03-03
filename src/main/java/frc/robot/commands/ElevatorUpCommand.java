@@ -7,15 +7,14 @@ import frc.robot.subsystems.TurretedShooter;
 import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ElevatorDownCommand extends CommandBase {
+public class ElevatorUpCommand extends CommandBase {
 
   private double velocity;
   private boolean done = false;
   private int revolutions = 4250;
   private int climbPercent;
-  private int releaseArms = revolutions * climbPercent;
 
-  public ElevatorDownCommand(double speed, int perecent) {
+  public ElevatorUpCommand(double speed, int perecent) {
     velocity = speed;
     climbPercent = perecent / 100;
   }
@@ -35,26 +34,20 @@ public class ElevatorDownCommand extends CommandBase {
       TurretedShooter.turret.set(-0.1);
     }
 
-    //if the turret is homed begin climb
+    //bring the climber up so it can release from the bar
     if(TurretedShooter.getHomePosition() == false){
+        System.out.println("Relese the CLIMBER: " + Elevator.getEncoder());
 
-      //check the limit switch
-      System.out.println(Elevator.getBottomSwitch());
-      if(Elevator.getBottomSwitch() == true){
-          Elevator.setMotorSpeed(-0.1);
-
-          //change to desired encoder position
-          if(Elevator.getEncoder() >= releaseArms){
-            System.out.println("Servos Released");
-            // ClimbArms.open();
-          }
-      } 
-      else{
-        done = true;
-      }
+        if(Elevator.getEncoder() >= -600){
+            Elevator.setMotorSpeed(0.1);
+        }
+        else{
+            Elevator.setMotorSpeed(0.0);
+            System.out.println("CLimbing Finished");
+            done = true;
+        }
     }
-
-
+    
   }
 
   @Override
@@ -67,3 +60,6 @@ public class ElevatorDownCommand extends CommandBase {
     return done;
   }
 }
+
+
+
