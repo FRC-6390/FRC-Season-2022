@@ -26,6 +26,7 @@ public class ElevatorDownCommand extends CommandBase {
   public void initialize() {
     Elevator.setMotorsIdleMode(IdleMode.kBrake);
     Elevator.resetEncoder();
+    TurretedShooter.seeking = false;
   }
 
   @Override
@@ -38,17 +39,11 @@ public class ElevatorDownCommand extends CommandBase {
 
     //if the turret is homed begin climb
     if(TurretedShooter.getHomePosition() == false){
+      TurretedShooter.turret.set(0.0);
 
       //check the limit switch
-      System.out.println(Elevator.getBottomSwitch());
       if(Elevator.getBottomSwitch() == true){
           Elevator.setMotorSpeed(-0.1);
-
-          //change to desired encoder position
-          if(Elevator.getEncoder() >= releaseArms){
-            System.out.println("Servos Released");
-            // new ReleaseArms()
-          }
       } 
       else{
         done = true;
@@ -61,6 +56,8 @@ public class ElevatorDownCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     Elevator.setMotorSpeed(0.0);
+    // TurretedShooter.seeking = true;
+    TurretedShooter.turret.set(0.0);
   }
 
   @Override

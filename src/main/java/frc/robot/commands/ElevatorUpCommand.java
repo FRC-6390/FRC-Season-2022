@@ -24,6 +24,7 @@ public class ElevatorUpCommand extends CommandBase {
   public void initialize() {
     Elevator.setMotorsIdleMode(IdleMode.kBrake);
     Elevator.resetEncoder();
+    TurretedShooter.seeking = false;
   }
 
   @Override
@@ -36,13 +37,12 @@ public class ElevatorUpCommand extends CommandBase {
 
     //bring the climber up so it can release from the bar
     if(TurretedShooter.getHomePosition() == false){
+        TurretedShooter.turret.set(0.0);
         System.out.println("Relese the CLIMBER: " + Elevator.getEncoder());
 
         if(Elevator.getEncoder() >= -600){
             Elevator.setMotorSpeed(0.1);
-        }
-        
-        if(Elevator.getEncoder() <= -600){
+        }else{
             Elevator.setMotorSpeed(0.0);
             System.out.println("CLimbing Finished");
             done = true;
@@ -54,6 +54,8 @@ public class ElevatorUpCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     Elevator.setMotorSpeed(0.0);
+    // TurretedShooter.seeking = true;
+    TurretedShooter.turret.set(0.0);
   }
 
   @Override

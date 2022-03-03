@@ -26,6 +26,7 @@ public class ReleaseArms extends CommandBase {
     Elevator.setMotorsIdleMode(IdleMode.kBrake);
     Elevator.resetEncoder();
     timeout = System.currentTimeMillis() + seconds;
+    TurretedShooter.seeking = false;
   }
 
   @Override
@@ -37,7 +38,7 @@ public class ReleaseArms extends CommandBase {
     if(timeout < System.currentTimeMillis()){
       TurretedShooter.turret.set(0.0);
       ClimbArms.open();
-      Timer.delay(1);
+      Timer.delay(1.5);
       done = true;
     }
     
@@ -46,6 +47,8 @@ public class ReleaseArms extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    TurretedShooter.turret.set(0.0);
+    // TurretedShooter.seeking = true;
     TurretedShooter.turret.set(0.0);
   }
 
