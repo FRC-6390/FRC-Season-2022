@@ -55,8 +55,8 @@ public class TurretedShooter extends SubsystemBase {
   
 
   //Will rotate the turret back and forth
-  private double timeout = System.currentTimeMillis();
-  private double seconds = 2 * 1000;
+  private static double timeout = System.currentTimeMillis();
+  private static double seconds = 2 * 1000;
   private boolean seek(){
     if(!seeTarget() || timeout > System.currentTimeMillis()){
       turret.set(0.1);
@@ -97,11 +97,11 @@ public class TurretedShooter extends SubsystemBase {
    
   }
 
-  public boolean isHome(){
-    return rightLimit.get();
+  public static boolean isHome(){
+    return !rightLimit.get();
   }
 
-  public void home(){
+  public static void home(){
     if(!isHome()){
       turret.set(0.1);
       if((!leftLimit.get() || !rightLimit.get()) && timeout < System.currentTimeMillis()) {
@@ -116,7 +116,7 @@ public class TurretedShooter extends SubsystemBase {
   public static boolean getHomePosition(){
     return leftLimit.get();
   }
-  
+
   @Override
   public void periodic() {
     if(seek()) {

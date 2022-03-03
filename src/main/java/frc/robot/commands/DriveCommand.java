@@ -33,7 +33,7 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     // takes the controller input and feeds it to the driving method
-    if(DriverStation.isTeleop())driveTrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(y.getAsDouble(),x.getAsDouble(), r.getAsDouble(),driveTrain.rotation()));
+    if(DriverStation.isTeleop())driveTrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(x.getAsDouble(),y.getAsDouble(), r.getAsDouble(),driveTrain.rotation()));
   }
 
   @Override

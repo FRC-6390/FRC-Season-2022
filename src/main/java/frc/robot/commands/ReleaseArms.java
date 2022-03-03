@@ -13,7 +13,8 @@ public class ReleaseArms extends CommandBase {
 
   private double velocity;
   private boolean done = false;
-  Timer timer = new Timer();
+  private double seconds = 1.8 * 1000;
+  private double timeout;
 
   public ReleaseArms(double speed) {
     velocity = speed;
@@ -24,29 +25,28 @@ public class ReleaseArms extends CommandBase {
   public void initialize() {
     Elevator.setMotorsIdleMode(IdleMode.kBrake);
     Elevator.resetEncoder();
+    timeout = System.currentTimeMillis() + seconds;
   }
 
   @Override
   public void execute() {
 
     //center the turret to release the arms
-    if(TurretedShooter.getHomePosition() == false){
-        timer.start();
-        if(!timer.hasElapsed(0.5)){
-            TurretedShooter.turret.set(0.1);
-        }
-        else {
-            TurretedShooter.turret.set(0.0);
-            ClimbArms.open();
-            done = true;
-        }
+    TurretedShooter.turret.set(0.1);
+
+    if(timeout < System.currentTimeMillis()){
+      TurretedShooter.turret.set(0.0);
+      ClimbArms.open();
+      Timer.delay(1);
+      done = true;
     }
+    
     
   }
 
   @Override
   public void end(boolean interrupted) {
-    Elevator.setMotorSpeed(0.0);
+    TurretedShooter.turret.set(0.0);
   }
 
   @Override

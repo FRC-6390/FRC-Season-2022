@@ -41,7 +41,8 @@ public class ElevatorUpCommand extends CommandBase {
         if(Elevator.getEncoder() >= -600){
             Elevator.setMotorSpeed(0.1);
         }
-        else{
+        
+        if(Elevator.getEncoder() <= -600){
             Elevator.setMotorSpeed(0.0);
             System.out.println("CLimbing Finished");
             done = true;

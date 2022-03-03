@@ -25,6 +25,8 @@ public class ShooterCommand extends CommandBase {
     TurretedShooter.shooterRight.set(-SHOOTER.SHOOTER_PID.calc(-TurretedShooter.shooterEncoder.getVelocity(), SHOOTER.VELOCITY));
     if(SHOOTER.SHOOTER_PID.threshhold() || shooterTimeout < System.currentTimeMillis() ){
         TurretedShooter.preLeftShooter.set(1);
+    }else{
+      TurretedShooter.preLeftShooter.set(0.0);
     }
   }
 

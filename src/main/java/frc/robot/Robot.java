@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-      if(RobotContainer.controller.getLeftTriggerAxis() >0.5) CommandScheduler.getInstance().schedule(new ShooterCommand());
+      if(RobotContainer.controller.getRightTriggerAxis() >0.5) CommandScheduler.getInstance().schedule(new ShooterCommand());
   }  
 
   @Override

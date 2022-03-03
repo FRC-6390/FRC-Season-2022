@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.CONTROLLER;
 import frc.robot.Constants.SWERVE;
+import frc.robot.commands.AutoElevator;
 import frc.robot.commands.DesiredPositionCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorCommand;
@@ -18,7 +19,7 @@ import frc.robot.utils.DebouncedButton;
 
 public class RobotContainer {
   public static DriveTrain driveTrain = new DriveTrain(2, 2);
-  // public static TurretedShooter turretedShooter = new TurretedShooter();
+  public static TurretedShooter turretedShooter = new TurretedShooter();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
   public static JoystickButton a = new JoystickButton(controller, CONTROLLER.A),
@@ -52,11 +53,9 @@ public class RobotContainer {
  
   private void configureButtonBindings() {
 
-    x.whenPressed(new Runnable() {
-      public void run() {
-        driveTrain.reset(x.get());
-      }
-    });
+    x.whenPressed(() -> driveTrain.reset(true));
+
+  
 
     back.whenPressed(new Runnable() {
       public void run() {
@@ -79,18 +78,13 @@ public class RobotContainer {
       }
     });
     
-    // a.whenHeld(new LimeLightTurretCommand(true));
-    // a.whenReleased(new LimeLightTurretCommand(false));
 
     y.whileHeld(new ElevatorCommand(0.2));
     a.whileHeld(new ElevatorCommand(-0.2));
-    b.whenPressed(new ElevatorDownCommand(-0.1, 50));
-    // x.whenPressed(new ElevatorUpCommand(-0.1, 50));
-    x.whenPressed(new ReleaseArms(0.5));
-    // right.whenPressed(() -> turretedShooter.home());
+    b.whenPressed(new AutoElevator());
     controller.getLeftTriggerAxis();
     
-    leftBumper.whileHeld(new IntakeAndFeederCommand(0.4, 0.4));   //intake and feeder
+    leftBumper.whileHeld(new IntakeAndFeederCommand(1, 0.4));   //intake and feeder
     rightBumper.whileHeld(new IntakeAndFeederCommand(-0.4, 0.0)); //reverse the intake
 
   }

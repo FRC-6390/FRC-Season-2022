@@ -6,6 +6,7 @@ import frc.robot.subsystems.TurretedShooter;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.ReleaseArms;
 
 public class ElevatorDownCommand extends CommandBase {
 
@@ -46,7 +47,7 @@ public class ElevatorDownCommand extends CommandBase {
           //change to desired encoder position
           if(Elevator.getEncoder() >= releaseArms){
             System.out.println("Servos Released");
-            // ClimbArms.open();
+            // new ReleaseArms()
           }
       } 
       else{
