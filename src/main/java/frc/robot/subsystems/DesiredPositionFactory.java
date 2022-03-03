@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AUTO;
-import frc.robot.utils.PID;
+import frc.robot.subsystems.utils.PID;
 
 public class DesiredPositionFactory {
 
