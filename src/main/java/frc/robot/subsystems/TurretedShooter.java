@@ -100,7 +100,7 @@ public class TurretedShooter extends SubsystemBase {
     seeking = false;
     if(!isHome()){
       turret.set(0.1);
-      if((!leftLimit.get() || !rightLimit.get()) && timeout < System.currentTimeMillis()) {
+      if((!leftLimit.get()) && timeout < System.currentTimeMillis()) {
         turret.setInverted(!turret.getInverted()); 
         timeout = System.currentTimeMillis() + seconds;
       }
