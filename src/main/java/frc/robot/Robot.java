@@ -13,6 +13,7 @@ import frc.robot.subsystems.DriveTrain;
 public class Robot extends TimedRobot {
 
   RobotContainer container;
+  ShooterCommand shooterCommand = new ShooterCommand();
   
   @Override
   public void robotInit() {
@@ -59,8 +60,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-      if(RobotContainer.controller.getLeftTriggerAxis() >0.5) CommandScheduler.getInstance().schedule(new ShooterCommand());
-  }  
+      if(RobotContainer.controller.getLeftTriggerAxis() >0.5) CommandScheduler.getInstance().schedule(shooterCommand);
+      else CommandScheduler.getInstance().cancel(shooterCommand);
+    }  
 
   @Override
   public void testInit() {

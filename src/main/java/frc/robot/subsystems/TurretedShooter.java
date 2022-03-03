@@ -28,7 +28,7 @@ public class TurretedShooter extends SubsystemBase {
   private static DigitalInput rightLimit, leftLimit;
   private static NetworkTable limelight;
   public static CANCoder shooterEncoder;
-  private static boolean auto = true;
+  private static boolean seeking = true;
   private static double shooterStart = Timer.getFPGATimestamp();
   private static ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
   
@@ -47,7 +47,6 @@ public class TurretedShooter extends SubsystemBase {
     shooterLeft.follow(shooterRight, true);
     tab.getLayout("Shooter", BuiltInLayouts.kList).addBoolean("right limit", () -> rightLimit.get());
     tab.getLayout("Shooter", BuiltInLayouts.kList).addBoolean("left limit", () -> leftLimit.get());
-    
   }
 
   public TurretedShooter() {
@@ -55,9 +54,9 @@ public class TurretedShooter extends SubsystemBase {
   
 
   //Will rotate the turret back and forth
-  private double timeout = System.currentTimeMillis();
-  private double seconds = 2 * 1000;
-  private boolean seek(){
+  private static double timeout = System.currentTimeMillis();
+  private static double seconds = 0.5 * 1000;
+  private static boolean seek(){
     if(!seeTarget() || timeout > System.currentTimeMillis()){
       turret.set(0.1);
       if((!leftLimit.get() || !rightLimit.get()) && timeout < System.currentTimeMillis()) {
@@ -73,7 +72,7 @@ public class TurretedShooter extends SubsystemBase {
   }
 
   //Will check if limelight has found the goal and is currently looking at it
-  private boolean lock(){
+  private static boolean lock(){
     double tv = limelight.getEntry("tv").getDouble(0.0);
     double tx = limelight.getEntry("tx").getDouble(0.0);
     if(tv == 0) return false;
@@ -89,19 +88,16 @@ public class TurretedShooter extends SubsystemBase {
     return SHOOTER.TURRET_PID.threshhold();
   }
 
-  public boolean seeTarget(){
+  public static boolean seeTarget(){
     return limelight.getEntry("tv").getDouble(0.0) != 0;
   }
-  //Will rev shooter to the velocity then shoot the ball, if the shooter doesnt reach the velocity in the given time it will fire anyways
-  public void shoot(){
-   
+
+  public static boolean isHome(){
+    return !rightLimit.get();
   }
 
-  public boolean isHome(){
-    return rightLimit.get();
-  }
-
-  public void home(){
+  public static void home(){
+    seeking = false;
     if(!isHome()){
       turret.set(0.1);
       if((!leftLimit.get() || !rightLimit.get()) && timeout < System.currentTimeMillis()) {
@@ -115,8 +111,6 @@ public class TurretedShooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(seek()) {
-      Leds.set(LED_COLOURS.Green);
-    }
+    if(seeking)if(seek()) Leds.set(LED_COLOURS.Green);
   }
 }

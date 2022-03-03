@@ -2,13 +2,12 @@ package frc.robot;
 
 import java.util.Iterator;
 
-import frc.robot.utils.swervelib.SdsModuleConfigurations;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.subsystems.DesiredPosition;
 import frc.robot.subsystems.DesiredPositionFactory;
+import frc.robot.subsystems.utils.swervelib.SdsModuleConfigurations;
 
 public interface Constants {
 
@@ -76,9 +75,9 @@ public interface Constants {
     }
 
     public interface AUTO {
-        frc.robot.utils.PID DEFUALT_X_PID = new frc.robot.utils.PID(1,0,0, 0, 0.05);
-        frc.robot.utils.PID DEFUALT_Y_PID = new frc.robot.utils.PID(1,0,0, 0, 0.05);
-        frc.robot.utils.PID DEFUALT_ROTATION_PID = new frc.robot.utils.PID(0.021,0.00,0,0,1);
+        frc.robot.subsystems.utils.PID DEFUALT_X_PID = new frc.robot.subsystems.utils.PID(1,0,0, 0, 0.05);
+        frc.robot.subsystems.utils.PID DEFUALT_Y_PID = new frc.robot.subsystems.utils.PID(1,0,0, 0, 0.05);
+        frc.robot.subsystems.utils.PID DEFUALT_ROTATION_PID = new frc.robot.subsystems.utils.PID(0.021,0.00,0,0,1);
         DesiredPosition[] AUTO_TEST_XY_POSITIONS = {new DesiredPosition(new Pose2d(1,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,1,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(3,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,3,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0)))};
         DesiredPosition[] AUTO_TEST_X = {new DesiredPosition(new Pose2d(3*1.25,2,Rotation2d.fromDegrees(0)))}; 
         DesiredPosition[] AUTO_TEST_ROTATION_POSITIONS = {new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(90)))};
@@ -126,8 +125,8 @@ public interface Constants {
         double TURRET_MIN = 0;
         double VELOCITY = 30000;
         double TIMEOUT = 3;
-        frc.robot.utils.PID TURRET_PID = new frc.robot.utils.PID(0.02,0,0,0,0.1);
-        frc.robot.utils.PID SHOOTER_PID = new frc.robot.utils.PID(0.000368,0,0,0,4000);
+        frc.robot.subsystems.utils.PID TURRET_PID = new frc.robot.subsystems.utils.PID(0.02,0,0,0,0.1);
+        frc.robot.subsystems.utils.PID SHOOTER_PID = new frc.robot.subsystems.utils.PID(0.000368,0,0,0,4000);
     }
 
     public interface ODOMETERY {
