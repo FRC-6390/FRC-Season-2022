@@ -19,13 +19,14 @@ public class ClimbArms extends SubsystemBase {
     }
 
     public static void open(){
-        left.setAngle(ELEVATOR.SERVO_MIN);
-        right.setAngle(ELEVATOR.SERVO_MAX);
+        right.setAngle(90);
+        left.setAngle(90);
     }
 
     public static void close(){
-        right.setAngle(ELEVATOR.SERVO_MIN);
-        left.setAngle(ELEVATOR.SERVO_MAX);
+        
+        right.setAngle(0);
+        left.setAngle(180);
     }
 
     @Override

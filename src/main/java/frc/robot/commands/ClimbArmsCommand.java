@@ -15,15 +15,16 @@ public class ClimbArmsCommand extends CommandBase {
   @Override
   public void execute() {
     //releases the servos allowing the arms to extend
-    ClimbArms.open();
+    ClimbArms.close();
   }
 
   @Override
   public void end(boolean interrupted) {
+   // ClimbArms.close();
   }
 
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

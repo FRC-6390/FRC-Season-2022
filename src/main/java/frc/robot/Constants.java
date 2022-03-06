@@ -5,6 +5,8 @@ import java.util.Iterator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.commands.IntakeAndFeederCommand;
+import frc.robot.commands.IntakeOutCommand;
 import frc.robot.subsystems.DesiredPosition;
 import frc.robot.subsystems.DesiredPositionFactory;
 import frc.robot.subsystems.utils.swervelib.SdsModuleConfigurations;
@@ -75,8 +77,8 @@ public interface Constants {
     }
 
     public interface AUTO {
-        frc.robot.subsystems.utils.PID DEFUALT_X_PID = new frc.robot.subsystems.utils.PID(1,0,0, 0, 0.05);
-        frc.robot.subsystems.utils.PID DEFUALT_Y_PID = new frc.robot.subsystems.utils.PID(1,0,0, 0, 0.05);
+        frc.robot.subsystems.utils.PID DEFUALT_X_PID = new frc.robot.subsystems.utils.PID(0.5,0,0, 0, 0.05);
+        frc.robot.subsystems.utils.PID DEFUALT_Y_PID = new frc.robot.subsystems.utils.PID(0.5,0,0, 0, 0.05);
         frc.robot.subsystems.utils.PID DEFUALT_ROTATION_PID = new frc.robot.subsystems.utils.PID(0.021,0.00,0,0,1);
         DesiredPosition[] AUTO_TEST_XY_POSITIONS = {new DesiredPosition(new Pose2d(1,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,1,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(3,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,3,Rotation2d.fromDegrees(0))), new DesiredPosition(new Pose2d(2,2,Rotation2d.fromDegrees(0)))};
         DesiredPosition[] AUTO_TEST_X = {new DesiredPosition(new Pose2d(3*1.25,2,Rotation2d.fromDegrees(0)))}; 
@@ -85,7 +87,7 @@ public interface Constants {
         Iterator<DesiredPosition> AUTO_FACTORY_XY_POSITION = new DesiredPositionFactory(2,2,0).to(2, 3).to(2,2).to(2, 1).to(2, 2).to(1, 2).to(2, 2).to(3, 2).to(2, 2).build();
         Iterator<DesiredPosition> AUTO_FACTORY_RELATIVE_XY_POSITION = new DesiredPositionFactory(2,2,0).relative(1, 0).relative(-1,0).relative(-1, 0).relative(1, 0).relative(0, 1).relative(0, -1).relative(0, 1).relative(0, -1).build();
         Iterator<DesiredPosition> AUTO_FACTORY_MIXED_XY_POSITION = new DesiredPositionFactory(2,2,0).relative(1, 0).origin().to(1, 2).origin().relative(0, 1).origin().to(2, 1).origin().build();
-        Iterator<DesiredPosition> AUTO_1 = new DesiredPositionFactory(0,0,0).relative(1, 0).build();
+        Iterator<DesiredPosition> AUTO_1 = new DesiredPositionFactory(0,0,0).to(3, 0).build();
         // DesiredPosition[] AUTO_1_POSITIONS = {new DesiredPosition(1,0,0)};
     }
 
@@ -98,8 +100,8 @@ public interface Constants {
         double DOWN_VELOCITY = 0.2;
         int TOP_LIMIT_SWITCH = 0;
         int BOTTOM_LIMIT_SWITCH = 1;
-        int SERVO_MIN = 40;
-        int SERVO_MAX = 100;
+        int SERVO_MIN = 0;
+        int SERVO_MAX = 70;
         int ENCODER = 12;
     }
 
@@ -124,10 +126,11 @@ public interface Constants {
 
         double TURRET_MAX = 0;
         double TURRET_MIN = 0;
-        double VELOCITY = 30000;
+        double HIGH_VELOCITY = 30000;
+        double LOW_VELOCITY = 12000;
         double TIMEOUT = 3;
         frc.robot.subsystems.utils.PID TURRET_PID = new frc.robot.subsystems.utils.PID(0.02,0,0,0,0.1);
-        frc.robot.subsystems.utils.PID SHOOTER_PID = new frc.robot.subsystems.utils.PID(0.000368,0,0,0,4000);
+        frc.robot.subsystems.utils.PID SHOOTER_PID = new frc.robot.subsystems.utils.PID(0.0003,0,0,0,1000);
     }
 
     public interface ODOMETERY {

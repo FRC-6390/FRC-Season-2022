@@ -2,8 +2,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.CONTROLLER;
+import frc.robot.Constants.SHOOTER;
 import frc.robot.Constants.SWERVE;
 import frc.robot.commands.AutoElevator;
 import frc.robot.commands.DesiredPositionCommand;
@@ -13,12 +15,15 @@ import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.ElevatorUpCommand;
 import frc.robot.commands.IntakeAndFeederCommand;
 import frc.robot.commands.ReleaseArms;
+import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.TurretMove;
+import frc.robot.subsystems.ClimbArms;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.TurretedShooter;
 import frc.robot.subsystems.utils.DebouncedButton;
 
 public class RobotContainer {
-  public static DriveTrain driveTrain = new DriveTrain(2, 2);
+  public static DriveTrain driveTrain = new DriveTrain(0, 0);
   public static TurretedShooter turretedShooter = new TurretedShooter();
 
   public static XboxController controller = new XboxController(CONTROLLER.PORT);
@@ -52,43 +57,19 @@ public class RobotContainer {
   }
  
   private void configureButtonBindings() {
-
     x.whenPressed(() -> driveTrain.reset(true));
-
-  
-
-    x.whenPressed(() -> driveTrain.reset(true));
-
-    back.whenPressed(new Runnable() {
-      public void run() {
-        
-        new ElevatorDownCommand(-0.1, 50);
-        if(top.get()){
-          // ClimbArms.open();
-          System.out.println("Manually Releasing Arms");
-        }
-
-        if(bottom.get()){
-          // new ElevatorDownCommand(0.1, false);
-          System.out.println("Starting Auto Climb");
-        }
-
-        if(start.get()){
-          // new ElevatorDownCommand(0.0, true);
-          System.out.println("Abort Auto Climb");
-        }
-      }
-    });
+    // 
     
-
-    y.whileHeld(new ElevatorCommand(0.2));
-    a.whileHeld(new ElevatorCommand(-0.2));
-    b.whenPressed(new AutoElevator());
-    controller.getLeftTriggerAxis();
     
-    leftBumper.whileHeld(new IntakeAndFeederCommand(1, 0.4));   //intake and feeder
-    rightBumper.whileHeld(new IntakeAndFeederCommand(-0.4, 0.0)); //reverse the intake
-
+    b.whileHeld(new ShooterCommand(SHOOTER.LOW_VELOCITY));
+    leftBumper.whileHeld(new IntakeAndFeederCommand(1, 0));   //intake and feeder
+    rightBumper.whileHeld(new IntakeAndFeederCommand(-0.4, -0.4)); //reverse the intake
+    y.whileHeld(new ElevatorCommand(0.3, true));
+    a.whileHeld(new ElevatorCommand(-0.6,true));
+    leftStick.whileHeld(new TurretMove(0.1));
+    rightStick.whileHeld(new TurretMove(-0.1));
+    back.whileHeld(() -> ClimbArms.close());
+    start.whenPressed(() -> TurretedShooter.forceOff = !TurretedShooter.forceOff);
   }
 
   private static double deadband(double value, double deadband) {
@@ -119,7 +100,7 @@ public class RobotContainer {
 
   //sets the auto command
   public Command getAutoCommand(){
-    return new DesiredPositionCommand(driveTrain, Constants.AUTO.AUTO_TEST_X);
+    return new DesiredPositionCommand(driveTrain, Constants.AUTO.AUTO_1);
   }
 
 }

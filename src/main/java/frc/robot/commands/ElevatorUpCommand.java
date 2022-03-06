@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ClimbArms;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.TurretedShooter;
@@ -30,6 +31,7 @@ public class ElevatorUpCommand extends CommandBase {
   @Override
   public void execute() {
 
+    if(RobotContainer.start.debounced()) cancel();
     //rotate turret till limit switch is false
     if(TurretedShooter.getHomePosition() == true){
       TurretedShooter.turret.set(-0.1);
@@ -41,7 +43,7 @@ public class ElevatorUpCommand extends CommandBase {
         System.out.println("Relese the CLIMBER: " + Elevator.getEncoder());
 
         if(Elevator.getEncoder() >= -600){
-            Elevator.setMotorSpeed(0.1);
+            Elevator.setMotorSpeed(velocity);
         }else{
             Elevator.setMotorSpeed(0.0);
             System.out.println("CLimbing Finished");

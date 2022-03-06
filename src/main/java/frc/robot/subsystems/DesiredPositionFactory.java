@@ -62,6 +62,10 @@ public class DesiredPositionFactory {
         return withCommand(new DesiredCommand(command));
     }
 
+    public DesiredPositionFactory withCommand(Command command, boolean waitToFinish){
+        return withCommand(new DesiredCommand(command), waitToFinish);
+    }
+
     public DesiredPositionFactory withCommand(DesiredCommand command){
         return withCommand(command, false);
     }

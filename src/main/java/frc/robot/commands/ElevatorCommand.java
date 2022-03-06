@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ElevatorCommand extends CommandBase {
 
   private double velocity;
+  private boolean override;
 
-  public ElevatorCommand(double speed) {
+  public ElevatorCommand(double speed, boolean override) {
     velocity = speed;
+    this.override = override;
   }
 
   @Override
@@ -22,11 +24,11 @@ public class ElevatorCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(TurretedShooter.getHomePosition() == true){
+    if(!override&&TurretedShooter.getHomePosition() == true){
       TurretedShooter.turret.set(-0.1);
     }
 
-    if(TurretedShooter.getHomePosition() == false){
+    if(override||TurretedShooter.getHomePosition() == false){
       TurretedShooter.turret.set(0.0);
       Elevator.setMotorSpeed(velocity);
     }

@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ClimbArms;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.TurretedShooter;
@@ -13,7 +14,7 @@ public class ReleaseArms extends CommandBase {
 
   private double velocity;
   private boolean done = false;
-  private double seconds = 1.8 * 1000;
+  private double seconds = 2.3 * 1000;
   private double timeout;
 
   public ReleaseArms(double speed) {
@@ -32,12 +33,13 @@ public class ReleaseArms extends CommandBase {
   @Override
   public void execute() {
 
+    if(RobotContainer.start.debounced()) cancel();
     //center the turret to release the arms
     TurretedShooter.turret.set(0.1);
 
     if(timeout < System.currentTimeMillis()){
       TurretedShooter.turret.set(0.0);
-      ClimbArms.open();
+      ClimbArms.close();
       Timer.delay(1.5);
       done = true;
     }

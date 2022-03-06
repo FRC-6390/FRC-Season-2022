@@ -7,11 +7,9 @@ public class AutoElevator extends SequentialCommandGroup {
   
   public AutoElevator() {
     addCommands(
-        // Drive forward the specified distance
-        new ElevatorDownCommand(-0.1, 50),
+        new ElevatorDownCommand(-0.6, 50),
         new ReleaseArms(0.1),
-        new ElevatorUpCommand(0.1, 20)
+        new ElevatorUpCommand(0.3, 20)
     );
-
   }
 }
