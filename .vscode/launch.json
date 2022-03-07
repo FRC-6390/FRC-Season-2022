@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch PID",
+      "request": "launch",
+      "mainClass": "utilities.controllib.pid.PID",
+      "projectName": "FRC-Season-2022"
+    },
+    {
+      "type": "java",
       "name": "Launch Test",
       "request": "launch",
       "mainClass": "frc.robot.Test",
