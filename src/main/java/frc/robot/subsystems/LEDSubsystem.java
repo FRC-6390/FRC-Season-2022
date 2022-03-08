@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ROBOT;
@@ -36,5 +37,11 @@ public class LEDSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     kBlinkin.set(kValue);
+  }
+  
+  @Override
+  public void initSendable(SendableBuilder builder) {
+      builder.setSmartDashboardType("LED");
+      builder.addDoubleProperty("Colour Value", ()->kValue, (val)->kValue = val);
   }
 }

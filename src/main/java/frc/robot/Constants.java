@@ -82,6 +82,10 @@ public interface Constants {
         double LOCK_THRESHOLD = 0.5;
         PID TURRET_PID = new PIDFactory().p(0.02).build();//0.1;
         PID SHOOTER_PID = new PIDFactory().p(0.0003).build();//1000;
+
+        double LIMELIGHT_MOUNTING_ANGLE = 45;
+        double LIMELIGHT_HEIGHT = 0;
+        double LIMELIGHT_GOAL_HEIGHT = 0;
     }
 
     public interface ROBOT {

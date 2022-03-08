@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.AUTONOMOUS;
 import utilities.controllib.pid.PID;
 
 public class DesiredPosition {
@@ -17,6 +18,9 @@ public class DesiredPosition {
 
     public DesiredPosition(Pose2d setPoint){
         this.kSetPoint = setPoint;
+        kXPID = AUTONOMOUS.DEFUALT_X_PID;
+        kYPID = AUTONOMOUS.DEFUALT_Y_PID;
+        kRPID = AUTONOMOUS.DEFUALT_ROTATION_PID;
     }
 
     public ChassisSpeeds getChassisSpeeds(Pose2d odometry){

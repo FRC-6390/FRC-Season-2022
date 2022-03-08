@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.INTAKE;
@@ -25,4 +26,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {}
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("Intake");
+        builder.addDoubleProperty("Left Motor Speed", kLeftMotor::get, null);
+        builder.addDoubleProperty("Right Motor Speed", kRightMotor::get, null);
+    }
 }

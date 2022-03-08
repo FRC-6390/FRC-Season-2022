@@ -5,6 +5,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
 public class SwerveDriveCommand extends CommandBase {
@@ -15,10 +16,13 @@ public class SwerveDriveCommand extends CommandBase {
     x = xSupplier;
     y = ySupplier;
     r = rSupplier;
+    addRequirements(RobotContainer.getSwerveDriveSubsystem());
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // require(RobotContainer.getSwerveDriveSubsystem());
+  }
 
   @Override
   public void execute() {

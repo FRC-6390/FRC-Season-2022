@@ -18,7 +18,7 @@ import swervelib.Mk4SwerveModuleHelper;
 import swervelib.SwerveModule;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
-  //Sendable
+
   static SwerveDriveKinematics kDriveKinematics;
   static SwerveDriveOdometry kDriveOdometry;
   static SwerveModule[] kSwerveModules = new SwerveModule[4];
@@ -38,7 +38,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     kSwerveModules[3] = Mk4SwerveModuleHelper.createFalcon500(Mk4SwerveModuleHelper.GearRatio.L1, SWERVE.BACK_RIGHT[0], SWERVE.BACK_RIGHT[1], SWERVE.BACK_RIGHT[2], SWERVE.BACK_RIGHT_OFFSET);
   
     kDriveOdometry = new SwerveDriveOdometry(kDriveKinematics, rotation());
-
+    kChassisSpeeds = new ChassisSpeeds();
     SWERVE.DRIFT_CORRECTION_PID.setkCurrentSupplier(()->rotation().getRadians());
     SWERVE.DRIFT_CORRECTION_PID.setkSetPointSupplier(()->heading().getRadians());
   }

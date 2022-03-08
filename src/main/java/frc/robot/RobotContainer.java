@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.AUTONOMOUS;
 import frc.robot.Constants.TURRET;
 import frc.robot.commands.autonomous.DesiredPositionAutoCommand;
@@ -44,4 +45,29 @@ public class RobotContainer {
   public Command getAutoCommand(){
     return new DesiredPositionAutoCommand(AUTONOMOUS.AUTO_1);
   }
+
+  public static Subsystem getSwerveDriveSubsystem(){
+    return swerveDriveSubsystem;
+  }
+
+  public static Subsystem getClimberSubsystem(){
+    return climberSubsystem;
+  }
+
+  public static Subsystem getFeederSubsystem(){
+    return feederSubsystem;
+  }
+
+  public static Subsystem getIntakeSubsystem(){
+    return intakeSubsystem;
+  }
+
+  public static Subsystem getLEDSubsystem(){
+    return ledSubsystem;
+  }
+
+  public static Subsystem getTurretSubsystem(){
+    return turretSubsystem;
+  }
+
 }

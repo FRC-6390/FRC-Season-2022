@@ -4,19 +4,20 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TURRET;
 import frc.robot.subsystems.LEDSubsystem.LEDColour;
+import utilities.vissionlib.Limelight;
+import utilities.vissionlib.LimelightFactory;
 
 public class TurretSubsystem extends SubsystemBase {
   
   static CANSparkMax kTurretMotor, kLeftPreShooterMotor, kRightPreShooterMotor, kLeftShooterMotor, kRightShooterMotor;
   static CANCoder kShooterEncoder;
   static DigitalInput kLeftLimitSwitch, kRightLimitSwitch;
-  static NetworkTable kLimeLight;
+  static Limelight kLimeLight;
   static boolean kSeeking = false;
   static double kTimeout = System.currentTimeMillis();
   static double kTimeoutSeconds = TURRET.TURRET_TIMEOUT * 1000;
@@ -30,8 +31,10 @@ public class TurretSubsystem extends SubsystemBase {
     kShooterEncoder = new CANCoder(TURRET.ENCODER);
     kLeftLimitSwitch = new DigitalInput(TURRET.LEFT_LIMIT_SWITCH);
     kRightLimitSwitch = new DigitalInput(TURRET.RIGHT_LIMIT_SWITCH);
-    kLimeLight = NetworkTableInstance.getDefault().getTable("limelight");
-
+    kLimeLight = new LimelightFactory().mountingAngle(TURRET.LIMELIGHT_MOUNTING_ANGLE)
+                                       .mountingHeight(TURRET.LIMELIGHT_HEIGHT)
+                                       .goalHeight(TURRET.LIMELIGHT_GOAL_HEIGHT)
+                                       .build();
   }
 
   public static void setTurretSpeed(double speed){
@@ -84,7 +87,7 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   private boolean foundTarget(){
-    return kLimeLight.getEntry("tv").getDouble(0.0) != 0.0;
+    return getTV() != 0.0;
   }
 
   private void invertDirection() {
@@ -103,7 +106,15 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   private static double getTX(){
-    return kLimeLight.getEntry("tx").getDouble(0.0);
+    return kLimeLight.tx();
+  }
+
+  private static double getTV(){
+    return kLimeLight.tv();
+  }
+
+  private static double getDistanceFromTarget(){
+    return kLimeLight.distance();
   }
 
   private void lockTarget(){
@@ -129,6 +140,19 @@ public class TurretSubsystem extends SubsystemBase {
     if(targetLocked()) LEDSubsystem.setValue(LEDColour.Green);
     else if(foundTarget()) LEDSubsystem.setValue(LEDColour.Yellow);
     else LEDSubsystem.setValue(LEDColour.Red);
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+      builder.setSmartDashboardType("Turret");
+      builder.addDoubleProperty("Shooter Velocity", kShooterEncoder::getVelocity, null);
+      builder.addDoubleProperty("Distance From Target", () -> getDistanceFromTarget(), null);
+      builder.addBooleanProperty("Left Limit", ()->getLeftLimit(), null);
+      builder.addBooleanProperty("Right Limit", ()->getRightLimit(), null);
+      builder.addBooleanProperty("Seeking Enabled", ()->getSeeking(), (val)->setSeeking(val));
+      builder.addBooleanProperty("Found Target", ()->foundTarget(), null);
+      builder.addBooleanProperty("Target Locked", ()->targetLocked(), null);
+      builder.addDoubleProperty("Timeout", ()->kTimeout, null);
   }
 
 }

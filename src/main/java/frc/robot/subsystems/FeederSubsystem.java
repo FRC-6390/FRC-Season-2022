@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FEEDER;
@@ -32,4 +33,10 @@ public class FeederSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {}
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+      builder.setSmartDashboardType("Feeder");
+      builder.addDoubleProperty("Feeder Motor Speed", kFeederMotor::get, null);
+  }
 }
