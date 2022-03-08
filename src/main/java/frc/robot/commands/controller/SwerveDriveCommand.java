@@ -20,9 +20,7 @@ public class SwerveDriveCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-    // require(RobotContainer.getSwerveDriveSubsystem());
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
