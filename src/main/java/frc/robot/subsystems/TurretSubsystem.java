@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TURRET;
 import frc.robot.subsystems.LEDSubsystem.LEDColour;
+import utilities.LimitSwitch;
 import utilities.vissionlib.Limelight;
 import utilities.vissionlib.LimelightFactory;
 
@@ -16,7 +17,7 @@ public class TurretSubsystem extends SubsystemBase {
   
   static CANSparkMax kTurretMotor, kLeftPreShooterMotor, kRightPreShooterMotor, kLeftShooterMotor, kRightShooterMotor;
   static CANCoder kShooterEncoder;
-  static DigitalInput kLeftLimitSwitch, kRightLimitSwitch;
+  static LimitSwitch kLeftLimitSwitch, kRightLimitSwitch;
   static Limelight kLimeLight;
   static boolean kSeeking = false;
   static double kTimeout = System.currentTimeMillis();
@@ -29,8 +30,8 @@ public class TurretSubsystem extends SubsystemBase {
     kLeftShooterMotor = new CANSparkMax(TURRET.LEFT, MotorType.kBrushless);;
     kRightShooterMotor = new CANSparkMax(TURRET.RIGHT, MotorType.kBrushless);;
     kShooterEncoder = new CANCoder(TURRET.ENCODER);
-    kLeftLimitSwitch = new DigitalInput(TURRET.LEFT_LIMIT_SWITCH);
-    kRightLimitSwitch = new DigitalInput(TURRET.RIGHT_LIMIT_SWITCH);
+    kLeftLimitSwitch = new LimitSwitch(TURRET.LEFT_LIMIT_SWITCH);
+    kRightLimitSwitch = new LimitSwitch(TURRET.RIGHT_LIMIT_SWITCH);
     kLimeLight = new LimelightFactory().mountingAngle(TURRET.LIMELIGHT_MOUNTING_ANGLE)
                                        .mountingHeight(TURRET.LIMELIGHT_HEIGHT)
                                        .goalHeight(TURRET.LIMELIGHT_GOAL_HEIGHT)
@@ -67,11 +68,11 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public static boolean getLeftLimit(){
-    return !kLeftLimitSwitch.get();
+    return kLeftLimitSwitch.get();
   }
 
   public static boolean getRightLimit(){
-    return !kRightLimitSwitch.get();
+    return kRightLimitSwitch.get();
   }
 
   public static void setSeeking(boolean seeking){

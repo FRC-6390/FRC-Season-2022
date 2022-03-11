@@ -9,19 +9,20 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ELEVATOR;
+import utilities.LimitSwitch;
 
 public class ClimberSubsystem extends SubsystemBase {
 
   static CANSparkMax kLeftMotor, kRightMotor; 
   static CANCoder kElevatorEncoder;
-  static DigitalInput kBottomLimit;
+  static LimitSwitch kBottomLimit;
 
 
   static {
     kLeftMotor = new CANSparkMax(ELEVATOR.LEFT, MotorType.kBrushless);
     kRightMotor = new CANSparkMax(ELEVATOR.RIGHT, MotorType.kBrushless);
     kElevatorEncoder = new CANCoder(ELEVATOR.ENCODER);
-    kBottomLimit = new DigitalInput(3);
+    kBottomLimit = new LimitSwitch(ELEVATOR.BOTTOM_LIMIT_SWITCH);
     kLeftMotor.setIdleMode(IdleMode.kBrake);
     kRightMotor.setIdleMode(IdleMode.kBrake);
   }
@@ -45,5 +46,6 @@ public class ClimberSubsystem extends SubsystemBase {
       builder.setSmartDashboardType("Climber");
       builder.addDoubleProperty("Left Motor Speed", kLeftMotor::get, null);
       builder.addDoubleProperty("Right Motor Speed", kRightMotor::get, null);
+      builder.addBooleanProperty("Limit Switch", kBottomLimit::get, null);
   }
 }
