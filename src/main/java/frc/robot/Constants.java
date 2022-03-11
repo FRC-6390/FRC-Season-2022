@@ -46,8 +46,7 @@ public interface Constants {
         int RIGHT_SERVO = 1;
         double UP_VELOCITY = 0.2;
         double DOWN_VELOCITY = 0.2;
-        int TOP_LIMIT_SWITCH = 0;
-        int BOTTOM_LIMIT_SWITCH = 1;
+        int LIMIT_SWITCH = 1;
         int SERVO_MIN = 0;
         int SERVO_MAX = 70;
         int ENCODER = 12;

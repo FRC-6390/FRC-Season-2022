@@ -21,7 +21,7 @@ public class ClimberSubsystem extends SubsystemBase {
     kLeftMotor = new CANSparkMax(ELEVATOR.LEFT, MotorType.kBrushless);
     kRightMotor = new CANSparkMax(ELEVATOR.RIGHT, MotorType.kBrushless);
     kElevatorEncoder = new CANCoder(ELEVATOR.ENCODER);
-    kBottomLimit = new LimitSwitch(ELEVATOR.BOTTOM_LIMIT_SWITCH);
+    kBottomLimit = new LimitSwitch(ELEVATOR.LIMIT_SWITCH);
     kLeftMotor.setIdleMode(IdleMode.kBrake);
     kRightMotor.setIdleMode(IdleMode.kBrake);
   }

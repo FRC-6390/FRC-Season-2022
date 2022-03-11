@@ -1,7 +1,6 @@
 package utilities;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalSource;
 
 public class LimitSwitch extends DigitalInput{
 
