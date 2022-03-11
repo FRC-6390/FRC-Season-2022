@@ -16,7 +16,6 @@ public class ClimberSubsystem extends SubsystemBase {
   static CANCoder kElevatorEncoder;
   static LimitSwitch kBottomLimit;
 
-
   static {
     kLeftMotor = new CANSparkMax(ELEVATOR.LEFT, MotorType.kBrushless);
     kRightMotor = new CANSparkMax(ELEVATOR.RIGHT, MotorType.kBrushless);
@@ -27,7 +26,7 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public static void setElevatorSpeed(double speed){
-    if(!kBottomLimit.get()) speed = 0;
+    if(kBottomLimit.get()) speed = 0;
     kRightMotor.set(speed);
     kLeftMotor.set(speed);
   }
