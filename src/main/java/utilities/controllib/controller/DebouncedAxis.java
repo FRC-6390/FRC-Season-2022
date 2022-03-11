@@ -3,6 +3,7 @@ package utilities.controllib.controller;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class DebouncedAxis extends TriggerableAxis{
 
@@ -24,6 +25,10 @@ public class DebouncedAxis extends TriggerableAxis{
 
     public DebouncedAxis whenDebounced(Command command){
         return whenDebounced(command, true);
+    }
+
+    public DebouncedAxis whenDebounced(Runnable runnable, boolean interruptible){
+        return whenDebounced(new InstantCommand(runnable));
     }
 
     public DebouncedAxis whenDebounced(Command command, boolean interruptible){

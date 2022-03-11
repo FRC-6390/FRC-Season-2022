@@ -40,6 +40,7 @@ public class RobotContainer {
     controller.LeftBumper().whileHeld(new IntakeCommand(-0.7, -0.7));
     controller.Y().whileHeld(new ClimbCommand(0.8));
     controller.A().whileHeld(new ClimbCommand(-0.8));
+    controller.X().whenDebounced(() -> SwerveDriveSubsystem.reset());
   }
 
   public Command getAutoCommand(){
