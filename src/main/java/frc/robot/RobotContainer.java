@@ -35,7 +35,7 @@ public class RobotContainer {
  
   private void configureButtonBindings() {
     controller.RightTrigger().whileHeld(new ShootCommand(TURRET.HIGH_VELOCITY));
-    controller.RightBumper().whenPressed(() -> TurretSubsystem.setSeeking(!TurretSubsystem.getSeeking()));
+    controller.RightBumper().whenDebounced(() -> TurretSubsystem.setSeeking(!TurretSubsystem.getSeeking()));
     controller.LeftTrigger().whileHeld(new IntakeCommand(0.7, 0.7));
     controller.LeftBumper().whileHeld(new IntakeCommand(-0.7, -0.7));
     controller.Y().whileHeld(new ClimbCommand(0.8));

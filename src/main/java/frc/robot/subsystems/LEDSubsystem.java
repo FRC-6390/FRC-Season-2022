@@ -1,32 +1,21 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ROBOT;
+import utilities.sensorlib.Blinkin;
+import utilities.sensorlib.Blinkin.BlinkinColour;
 
 public class LEDSubsystem extends SubsystemBase {
 
-  static Spark kBlinkin; 
+  static Blinkin kBlinkin; 
   static double kValue;
-  
-  public static enum LEDColour {
-    Green(-0.37),
-    Blue(-0.41),
-    Yellow(0.69),
-    Red(-0.57);
-
-    double value;
-    private LEDColour(double val){
-        value = val;
-    }
-  }
 
   static {
-    kBlinkin = new Spark(ROBOT.BLINKIN);
+    kBlinkin = new Blinkin(ROBOT.BLINKIN);
   }
 
-  public static void setValue(LEDColour colour){
+  public static void setValue(BlinkinColour colour){
     setValue(colour.value);
   }
 

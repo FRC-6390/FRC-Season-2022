@@ -7,8 +7,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TURRET;
-import frc.robot.subsystems.LEDSubsystem.LEDColour;
-import utilities.LimitSwitch;
+import utilities.sensorlib.LimitSwitch;
+import utilities.sensorlib.Blinkin.BlinkinColour;
 import utilities.vissionlib.Limelight;
 import utilities.vissionlib.LimelightFactory;
 
@@ -137,9 +137,9 @@ public class TurretSubsystem extends SubsystemBase {
       else lockTarget();
     }
 
-    if(targetLocked()) LEDSubsystem.setValue(LEDColour.Green);
-    else if(foundTarget()) LEDSubsystem.setValue(LEDColour.Yellow);
-    else LEDSubsystem.setValue(LEDColour.Red);
+    if(targetLocked()) LEDSubsystem.setValue(BlinkinColour.Solid_Green);
+    else if(foundTarget()) LEDSubsystem.setValue(BlinkinColour.Solid_Yellow);
+    else LEDSubsystem.setValue(BlinkinColour.Solid_Red);
   }
 
   @Override
