@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ELEVATOR;
 
@@ -13,16 +14,20 @@ public class ClimberSubsystem extends SubsystemBase {
 
   static CANSparkMax kLeftMotor, kRightMotor; 
   static CANCoder kElevatorEncoder;
+  static DigitalInput kBottomLimit;
+
 
   static {
     kLeftMotor = new CANSparkMax(ELEVATOR.LEFT, MotorType.kBrushless);
     kRightMotor = new CANSparkMax(ELEVATOR.RIGHT, MotorType.kBrushless);
     kElevatorEncoder = new CANCoder(ELEVATOR.ENCODER);
+    kBottomLimit = new DigitalInput(3);
     kLeftMotor.setIdleMode(IdleMode.kBrake);
     kRightMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public static void setElevatorSpeed(double speed){
+    if(!kBottomLimit.get()) speed = 0;
     kRightMotor.set(speed);
     kLeftMotor.set(speed);
   }
