@@ -13,7 +13,7 @@ public class ClimbCommand extends CommandBase {
   
     @Override
     public void initialize() {
-
+        
     }
   
     @Override
