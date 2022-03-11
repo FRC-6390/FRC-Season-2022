@@ -113,7 +113,8 @@ public class Blinkin {
         }
       }
 
-    public Blinkin (int port){
+    //https://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf
+    public Blinkin(int port){
         kBlinkin = new Spark(port);
     }
 
