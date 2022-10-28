@@ -27,7 +27,7 @@ public class TurretedShooter extends SubsystemBase {
   public static CANSparkMax turret, shooterLeft, shooterRight, preLeftShooter,preRightShooter;
   private static DigitalInput rightLimit, leftLimit;
   private static NetworkTable limelight;  public static CANCoder shooterEncoder;
-  public static boolean seeking = false, forceOff = false;
+  public static boolean seeking = false, forceOff = true;
   private static double shooterStart = Timer.getFPGATimestamp();
   private static ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
   

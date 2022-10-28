@@ -19,6 +19,7 @@ public class DriveCommand extends CommandBase {
   public DriveCommand(DriveTrain subsystem, DoubleSupplier xSupplier, DoubleSupplier ySupplier, DoubleSupplier rSupplier) {
     driveTrain = subsystem;
     x = xSupplier;
+
     y = ySupplier;
     r = rSupplier;
     addRequirements(subsystem);
