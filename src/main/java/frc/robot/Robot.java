@@ -69,8 +69,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // ClimbArms.open();
-    CommandScheduler.getInstance().schedule(new SystemsTest());
-    // CommandScheduler.getInstance().schedule(container.getDriveCommand());
+    //CommandScheduler.getInstance().schedule(new SystemsTest());
+    CommandScheduler.getInstance().schedule(container.getDriveCommand());
     RobotContainer.driveTrain.reset(true);
   }
 

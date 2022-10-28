@@ -27,7 +27,7 @@ public class Leds extends SubsystemBase {
   }
 
   static {
-    Blinkin = new Servo(2);
+    Blinkin = new Servo(1);
   }
 
   public static void setCustom(double value) {

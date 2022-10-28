@@ -107,7 +107,7 @@ public interface Constants {
 
     public interface INTAKE {
         int LEFT = 3;
-        int RIGHT = 4;
+        int RIGHT = 0;
     }
 
     public interface FEEDER {
