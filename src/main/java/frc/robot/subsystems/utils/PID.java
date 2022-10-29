@@ -23,7 +23,7 @@ public class PID {
         double errorRate = (error - prevError) / dt;
         prevError = error;
         previousTime = Timer.getFPGATimestamp();
-        return p*error + i *errorSum + d * errorRate + f * setpoint;
+        return p*error + i *errorSum + d * errorRate;
     }
 
     public double calc(double error){
